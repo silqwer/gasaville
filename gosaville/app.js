@@ -1,15 +1,30 @@
 
 /**
  * Module dependencies.
+ * 웹서버가 실행될때 최초로 실행되는 파일
+ * express에서 권장하는 이름은 app.js 
+ * 
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , path = require('path');
+// 필요한 모듈들을 require
+var express = require('express')			//웹 서버를 실행하는 역활을 하는 http 모듈
+  , routes = require('./routes')			//서버 관련?
+  , user = require('./routes/user')			//서버 관련? 
+  , http = require('http')					//웹 서버를 실행하는 역활을 하는 http 모듈
+  , path = require('path')					//경로 설정시 유용하게 해주는 path 모듈
+  , mysql = require('mysql')
+  , option = {
+		host     : '10.10.10.24',
+		user     : 'user_swprodg',
+		password : 'xpzmqlf',
+		port	 : 3306,
+		database : 'gosa'
+	};
+var client = mysql.createConnection(option);
+// 이건 내꺼 
+var app = express();						//app에 express() 모듈을 담는다. 
 
-var app = express();
+ 
 
 // all environments
 app.set('port', process.env.PORT || 3000);
