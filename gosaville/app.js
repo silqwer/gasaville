@@ -21,7 +21,7 @@ var express = require('express')			//웹 서버를 실행하는 역활을 하는
 		database : 'gosa'
 	};
 var client = mysql.createConnection(option);
-// 이건 내꺼 
+// 이건 내꺼 이걸 dev 브런치에 머지 하고 싶다. 
 var app = express();						//app에 express() 모듈을 담는다. 
 
  
