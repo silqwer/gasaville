@@ -10,8 +10,8 @@
 
 
 참여 인력 :<br>
-  e-training lab. WOOSUNG CHOI / db engineer<br>
-  e-training lab. YONGHO KIM    / project manager / front&server-side developer<br>
+  e-training lab. WOOSUNG CHOI / db engineer / front&server-side developer<br>
+  e-training lab. YONGHO KIM    / project manager!! / front&server-side developer<br>
   e-training lab. SEUNGYUNG YANG / front&server-side developer<br>
   e-training lab. CHANGHWA SON / front&server-side developer<br>
   solustion lab. HANA CHOI / publisher & front-side develpoer <br>
