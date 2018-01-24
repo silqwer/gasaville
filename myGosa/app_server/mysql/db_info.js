@@ -31,5 +31,5 @@ module.exports = (function(){
 			password: 'xpzmqlf',
 			database: 'gosa'
 		}
-	}
+	};
 })();
