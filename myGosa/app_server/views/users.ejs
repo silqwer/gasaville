@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="UTF-8">
+    <title>내가 만든 유저 페이지</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>내가 만든 유저 페이지</h1>
+    <%
+    	for(var i=0; i<userList.length; ++i){
+    		var item = userList[i];
+    %>
+    <p>아이디 : <%= item.MEMBER_ID %></p>
+    <p>비밀번호 : <%= item.MEMBER_PW %></p>
+    
+    <%}%>
+  </body>
+</html>
