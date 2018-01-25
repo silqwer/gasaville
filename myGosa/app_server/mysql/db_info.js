@@ -30,6 +30,13 @@ module.exports = (function(){
 			user: 'user_swprodg',
 			password: 'xpzmqlf',
 			database: 'gosa'
+		},
+		buddhaSon: {
+			host: 'localhost',
+			port: '3306',
+			user: 'root',
+			password: '123456',
+			database: 'gosaville'
 		}
 	};
 })();
