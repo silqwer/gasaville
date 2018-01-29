@@ -5,8 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./app_server/routes/index');
-var users = require('./app_server/routes/users');
+var index = require('./app_server/routes/gsv/index');
+var users = require('./app_server/routes/gsv/users');
+var admin = require('./app_server/routes/adm/index');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //호출할 URL 매핑
 app.use('/', index);
 app.use('/users', users);
+app.use('/admin', admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

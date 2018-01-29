@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var ctrlUsers = require('../controllers/users');
+var ctrlUsers = require('../../controllers/gsv/users');
 
 
 /* GET users listing. */
