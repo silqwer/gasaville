@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/gvs/css/style.css' />
+    <title>로그인</title>
+    <link rel='stylesheet' href='/adm/css/style.css' />
   </head>
   <body>
-    <h1>관리자페이지 </h1>
-    <p>Welcome to <%= title %></p>
+    <h1>관리자페이지</h1>
+    <p>Welcome to 로그인</p>
+    <div>
+    	<form action="/admin/login" method="post">
+    		<label>아이디:</label>
+    		<input type="text" id="mbrId">
+    		<br>
+    		<label>비밀번호:</label>
+    		<input type="password" id="mbrPw">
+    		<input type="submit" value="LOGIN">
+    	</form>
+    </div>
+    <div>
+    <button id="joinMbrBtn">회원가입</button>
+    </div>
   </body>
 </html>
