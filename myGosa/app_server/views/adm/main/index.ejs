@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>메인</title>
+    <title><%= title %></title>
     <link rel='stylesheet' href='/adm/css/style.css' />
   </head>
   <body>
-    <h1>관리자메인페이지</h1>
-    <p><%= title %></p>
-    <p>Welcome to 아이디??</p>
+    <h1><%= title %></h1>
+    <p>SEQ : <%= userInfo.SEQ %></p>
+    <p>ID : <%= userInfo.ID %></p>
+    <p>NAME : <%= userInfo.NAME %></p>
+    <p>PASSWORD : <%= userInfo.PASSWORD %></p>
+    <p>CELLPHONE : <%= userInfo.CELLPHONE %></p>
+    <p>DEPARTMENT : <%= userInfo.DEPARTMENT_SEQ %></p>
+    <p>POSITION : <%= userInfo.POSITION_SEQ %></p>
   </body>
 </html>
+
