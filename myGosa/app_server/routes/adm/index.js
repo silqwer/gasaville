@@ -14,9 +14,6 @@ router.post('/login', passport.authenticate('local-login', {
 //module.exports = router;
 
 module.exports = function (passport){
-	router.get('/', ctrlMain.index);
-	router.get('/login', ctrlMain.index);
-	
 	var ensureAuthenticated = function (req, res, next){
 		// 로그인이 되어 있으면, 다음 파이프라인으로 진행
 
@@ -29,7 +26,18 @@ module.exports = function (passport){
 
 	};
 	
-	router.get('/main', ensureAuthenticated, ctrlMain.main);
+	router.get('/', ctrlMain.index);										// 관리자 메인 
+	router.get('/main', ensureAuthenticated, ctrlMain.main);				// 관리자 홈 
+	router.get('/login', ensureAuthenticated, ctrlMain.index);				// 관리자 로그인 
+	router.get('/schedule', ensureAuthenticated, ctrlMain.schedule);		// 일정 관리 
+	router.get('/exam', ensureAuthenticated, ctrlMain.exam);				// 고사장 관리 
+	router.get('/periods', ensureAuthenticated, ctrlMain.periods);			// 기수 관리 
+	router.get('/request', ensureAuthenticated, ctrlMain.request);			// 신청 관리  
+	router.get('/users', ensureAuthenticated, ctrlMain.users);				// 회원 관리 
+	router.get('/department', ensureAuthenticated, ctrlMain.department);	// 부서 관리 
+	router.get('/notice', ensureAuthenticated, ctrlMain.notice);			// 공지 관리 
+	
+	
 	
 	router.post('/login', passport.authenticate('local-login', {
 		successRedirect : '/admin/main',

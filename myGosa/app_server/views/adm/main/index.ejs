@@ -5,6 +5,8 @@
     <link rel='stylesheet' href='/adm/css/style.css' />
   </head>
   <body>
+  	<% include ../common/header %>
+  	<% include ../common/menu %>
     <h1><%= title %></h1>
     <p>SEQ : <%= userInfo.SEQ %></p>
     <p>ID : <%= userInfo.ID %></p>
@@ -13,6 +15,7 @@
     <p>CELLPHONE : <%= userInfo.CELLPHONE %></p>
     <p>DEPARTMENT : <%= userInfo.DEPARTMENT_SEQ %></p>
     <p>POSITION : <%= userInfo.POSITION_SEQ %></p>
+    <% include ../common/footer %>
   </body>
 </html>
 
