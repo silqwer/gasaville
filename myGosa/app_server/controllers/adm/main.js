@@ -26,13 +26,6 @@ module.exports.schedule = function(req, res){
 	}); 
 };
 
-//고사장 관리  
-module.exports.exam = function(req, res){
-	res.render('adm/index', { 
-		title : '고사장 관리',
-		userInfo : req.user	
-	}); 	
-};
 
 //기수 관리   
 module.exports.periods = function(req, res){

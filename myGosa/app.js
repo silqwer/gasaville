@@ -15,6 +15,7 @@ var index = require('./app_server/routes/gsv/index');
 var users = require('./app_server/routes/gsv/users');
 var admin = require('./app_server/routes/adm/index')(passport); // index.js 에 passport 객체를 넘기고 admin으로 라우터 모듈을 받아옴
 
+
 var app = express();
 
 // view engine setup
