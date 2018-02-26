@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <script src='/common/js/jquery/jquery.min.js'></script>
+    <script src='/adm/js/gosa.js'></script>
+    <link rel='stylesheet' href='/adm/css/style.css' />
+  </head>
+  <body>
+  	<input type="hidden" id="examPage" name="examPage" value="<%=page%>">
+	<input type="hidden" id="examSeq" name="examSeq" value="<%=exam.SEQ%>">
+    <form id="commonForm" name="commonForm"></form>
+    <h1><%= title %></h1>
+   	<table>
+   		<tr>
+   			<th>고사장 이름</th>
+   			<th>학교 이름</th>
+   			<th>주소</th>		
+   		</tr>
+   		<tr>
+   			<td><input type="text" id="examName" name="examName" value="<%=exam.NAME%>"></td>
+   			<td><input type="text" id="examSch" name="examSch" value="<%=exam.SCHOOL%>"></td>
+   			<td><input type="text" id="examAddr" name="examAddr" value="<%=exam.ADDR%>"></td>
+   			
+   		</tr>
+   	</table>
+   
+    <div>
+    	<button id="updateBtn">수정</button>
+    	<button id="deleteBtn">삭제</button>
+    	<button id="cancelBtn">취소</button>
+    </div>
+  </body>
+ 
+  <script src='/adm/js/read.js'></script>
+</html>
