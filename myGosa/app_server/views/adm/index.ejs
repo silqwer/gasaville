@@ -1,24 +1,37 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/adm/css/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to 로그인</p>
-    <div>
-    	<form action="/admin/login" id="loginForm" method="post">
-    		<label>아이디:</label>
-    		<input type="text" id="userId" name="userId">
-    		<br>
-    		<label>비밀번호:</label>
-    		<input type="password" id="userPw" name="userPw">
-    		<input type="submit" value="LOGIN">
-    	</form>
-    </div>
-    <div>
-    <button id="joinMbrBtn">회원가입</button>
-    </div>
-  </body>
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="robots" content="noindex, nofollow"/>
+    <title>Document</title>
+	<link rel="stylesheet" type="text/css" href="/adm/css/style.css">
+</head>
+
+<body>
+	<div class="container login">
+		<img src="" alt="">
+		<h2>출석고사 신청 및 관리자 로그인</h2>
+		<form action="/admin/login" id="loginForm" method="post">
+			<div class="group">
+				<input type="text" id="userId" name="userId" style="width:244px" required>
+				<span class="bar" style="width:244px"></span>
+				<label>아이디</label>
+			</div>
+			<div class="group">
+				<input type="password"  id="userPw" name="userPw" style="width:244px" required>
+				<span class="bar" style="width:244px"></span>
+				<label>비밀번호</label>
+			</div>	
+			<div class="chk">
+				<input type="checkbox" id="check">
+				<label for="check"><span></span>아이디 저장</label>
+			</div>
+			<input type="submit" value="로그인" style="width:250px; height:40px" class="bigbtn sky">
+		</form>
+	</div>
+</body>
 </html>
