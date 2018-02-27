@@ -11,8 +11,7 @@ var passport = require('passport');
 require('./app_server/config/passport')(passport); // 내가 작성한 passport.js 에 passport 객체를 넘김
 
 //라우터 연결
-var index = require('./app_server/routes/gsv/index');
-var users = require('./app_server/routes/gsv/users');
+var gsv = require('./app_server/routes/gsv/index')(passport);
 var admin = require('./app_server/routes/adm/index')(passport); // index.js 에 passport 객체를 넘기고 admin으로 라우터 모듈을 받아옴
 
 
@@ -23,7 +22,7 @@ app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/common/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -44,9 +43,9 @@ app.use(flash());
 
 //호출할 URL과 라우터 매핑, 라우터분리
 // /users, 사용자 페이지 라우터 담당 
-// /admin, 관리자 페이지 라우터 담당 
-app.use('/', index);
-app.use('/users', users);
+// /admin, 관리자 페이지 라우터 담당\
+app.use('/',gsv);
+app.use('/gsv', gsv);
 app.use('/admin', admin);
 
 

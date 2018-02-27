@@ -1,0 +1,306 @@
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+
+<div class="main-wrap">
+	<div class="clock-wrap">
+		<p>신청은 10시 시작입니다.</p>
+		<div class="hour-wrap">
+			<div class="digit-top">
+				<div class="front">00</div>
+				<div class="back">00</div>
+			</div>
+			<div class="digit-bottom">
+				<div class="front">00</div>
+			</div>
+		</div>
+		<div class="min-wrap">
+			<div class="digit-top">
+				<div class="front">00</div>
+				<div class="back">00</div>
+			</div>
+			<div class="digit-bottom">
+				<div class="front">00</div>
+			</div>
+		</div>
+		<div class="sec-wrap">
+			<div class="digit-top">
+				<div class="front">00</div>
+				<div class="back">00</div>
+			</div>
+			<div class="digit-bottom">
+				<div class="front">00</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="content-wrap">
+		<div class="menu">
+			<ul class="fl">
+				<li class="on"><a href="#">신청</a></li>
+				<li><a href="#">신청관리</a></li>
+				<li><a href="#">지인관리</a></li>
+			</ul>
+			<ul class="fr">
+				 <li><a href="#">공지사항</a></li>
+				 <li><a href="#">로그아웃</a></li>
+			</ul>
+		</div>
+		<div class="content">
+			<div class="photo">
+				<img src="" alt=""/>
+			</div>
+			<div class="list">
+				<table class="thead-tbl">
+					<colgroup>
+						<col style="width:6%">
+						<col style="width:10%">
+						<col style="width:25%">
+						<col style="width:10%">
+						<col style="width:8%">
+						<col style="width:*">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>NO</th>
+							<th>고사장</th>
+							<th>학교명</th>
+							<th>강의실</th>
+							<th>분반</th>
+							<th>신청</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>강릉</td>
+							<td><a href="#">강릉중학교<i class="fas fa-map-marker-alt icon"></i></a></td>
+							<td>1</td>
+							<td>1</td>
+							<td><input type="button" value="신청하기" class="smallbtn blue" style="width:90px"></td>
+						</tr>
+						<tr>
+							<td rowspan="3">2</td>
+							<td rowspan="3">광주</td>
+							<td rowspan="3"><a href="#">금호중앙중학교<i class="fas fa-map-marker-alt icon"></i></a></td>
+							<td rowspan="3">3</td>
+							<td>1</td>
+							<td>솔루션사업부 디자인기획팀 최하나님</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td><input type="button" value="신청하기" class="smallbtn blue" style="width:90px"></td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td><input type="button" value="신청하기" class="smallbtn blue" style="width:90px"></td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>구리/남양주</td>
+							<td><a href="#">교문중학교<i class="fas fa-map-marker-alt icon"></i></a></td>
+							<td>1</td>
+							<td>1</td>
+							<td><input type="button" value="신청대기" class="smallbtn blue disabled" disabled style="width:90px"></td>
+						</tr>
+						<tr>
+							<td rowspan="2">4</td>
+							<td rowspan="2">대전</td>
+							<td rowspan="2"><a href="#">대전여자중학교<i class="fas fa-map-marker-alt icon"></i></a></td>
+							<td rowspan="2">2</td>
+							<td>1</td>
+							<td><input type="button" value="신청완료" class="smallbtn green" style="width:90px"></td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td><input type="button" value="신청취소" class="smallbtn red" style="width:90px"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script src='http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js'></script>
+<script type="text/javascript">
+
+Element.Properties.transform = {
+
+  set: function(transform){
+    var property = 'transform';
+		console.log(Browser);
+		if(Browser.chrome) property = 'WebkitTransform';
+		if(Browser.firefox)  property = 'MozTransform';
+		if(Browser.opera) property = 'OTransform';
+		
+		this.style[property] = transform;
+		this.store('transform', transform);
+	},
+
+	get: function(){
+		return this.retrieve('transform', '');
+	}
+
+};
+
+Element.implement({
+
+	setTransform: function(value){
+		return this.set('transform', value);
+	},
+
+	getTransform: function(){
+		return this.get('transform');
+	}
+
+});
+
+$(window).addEvent('domready', function()
+{
+  var $hourWrap = $$('.hour-wrap');
+	var $hourFront = $hourWrap.getElement('div.front');
+	var $hourBack = $hourWrap.getElement('div.back')
+	var $hourTop = $hourWrap.getElement('div.digit-top');
+	var $hourBottom = $hourWrap.getElement('div.digit-bottom .front');
+
+	var $minWrap = $$('.min-wrap');
+	var $minFront = $minWrap.getElement('div.front');
+	var $minBack = $minWrap.getElement('div.back');
+	var $minTop = $minWrap.getElement('div.digit-top');
+	var $minBottom = $minWrap.getElement('div.digit-bottom .front');
+  
+  
+  var $secWrap = $$('.sec-wrap');
+	var $secFront = $secWrap.getElement('div.front');
+	var $secBack = $secWrap.getElement('div.back');
+	var $secTop = $secWrap.getElement('div.digit-top');
+	var $secBottom = $secWrap.getElement('div.digit-bottom .front');
+
+	var currentHour = 0;
+	var currentMin = 0;
+  var currentSec = 0;
+
+	var setClock = function()
+	{
+		var time = new Date();
+		var hour = time.getHours();
+		var min = time.getMinutes();
+    var sec = time.getSeconds();
+
+		if(currentHour != hour)
+		{
+			currentHour = hour;
+			var hourText = hour < 10 ? '0'+hour : hour;
+
+			// make el to sit behind the top digit
+			var $newHourTop = new Element('div', {class: 'digit-top', html: $hourTop.get('html'), style: 'z-index:1;'})
+			var $newHourFront = $newHourTop.getElement('div.front');
+			var $newHourBack = $newHourTop.getElement('div.back');
+
+			$newHourFront.set('text', hourText);
+			$hourWrap.adopt($newHourTop);
+
+			// start the animation
+			$hourFront.setTransform('rotateX(180deg)');
+			$hourBack.setTransform('rotateX(0deg)');
+			$hourBack.setStyle('zIndex', 40);
+
+			// set the min back
+			$hourBack.set('text', hourText);
+
+			(function()
+			{
+				$hourTop.destroy();
+				$hourFront.destroy();
+				$hourBack.destroy();
+
+				$hourTop = $newHourTop;
+				$hourFront = $newHourFront;
+				$hourBack = $newHourBack;
+
+				$hourTop.setStyle('zIndex', 10);
+				$hourBottom.set('text', hourText);
+			}).delay(800);
+		}
+
+		if(currentMin != min)
+		{
+			currentMin = min;
+			var minText = min < 10 ? '0'+min : min;
+
+			// make el to sit behind the top digit
+			var $newMinTop = new Element('div', {class: 'digit-top', html: $minTop.get('html'), style: 'z-index:1;'})
+			var $newMinFront = $newMinTop.getElement('div.front');
+			var $newMinBack = $newMinTop.getElement('div.back');
+
+			$newMinFront.set('text', minText);
+			$minWrap.adopt($newMinTop);
+
+			// start the animation
+			$minFront.setTransform('rotateX(180deg)');
+			$minBack.setTransform('rotateX(0deg)');
+			$minBack.setStyle('zIndex', 40);
+
+			// set the min back
+			$minBack.set('text', minText);
+
+			(function()
+			{
+				$minTop.destroy();
+				$minFront.destroy();
+				$minBack.destroy();
+
+				$minTop = $newMinTop;
+				$minFront = $newMinFront;
+				$minBack = $newMinBack;
+
+				$minTop.setStyle('zIndex', 10);
+				$minBottom.set('text', minText);
+			}).delay(800);
+		}
+    
+    
+    if(currentSec != sec)
+		{
+			currentSec = sec;
+			var secText = sec < 10 ? '0'+sec : sec;
+
+			// make el to sit behind the top digit
+			var $newSecTop = new Element('div', {class: 'digit-top', html: $secTop.get('html'), style: 'z-index:1;'})
+			var $newSecFront = $newSecTop.getElement('div.front');
+			var $newSecBack = $newSecTop.getElement('div.back');
+
+			$newSecFront.set('text', secText);
+			$secWrap.adopt($newSecTop);
+
+			// start the animation
+			$secFront.setTransform('rotateX(180deg)');
+			$secBack.setTransform('rotateX(0deg)');
+			$secBack.setStyle('zIndex', 40);
+
+			// set the min back
+			$secBack.set('text', secText);
+
+			(function()
+			{
+				$secTop.destroy();
+				$secFront.destroy();
+				$secBack.destroy();
+
+				$secTop = $newSecTop;
+				$secFront = $newSecFront;
+				$secBack = $newSecBack;
+
+				$secTop.setStyle('zIndex', 10);
+				$secBottom.set('text', secText);
+			}).delay(800);
+		}
+
+		//$hourEls.set('text', hour);
+		
+	}
+
+	setClock.periodical(1000);
+});
+</script>
