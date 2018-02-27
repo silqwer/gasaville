@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/adm/css/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <div>
+    	<select>
+		  <option value="name" selected="selected">고사장</option>
+		  <option value="school">학교명</option>
+		  <option value="addr">주소</option>
+		</select>
+    </div>
+    <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
+   	<table>
+   		<tr>
+   			<th>번호</th>
+   			<th>고사장 이름</th>
+   			<th>학교 이름</th>
+   			<th>주소</th>		
+   		</tr>
+   		<% for(let i=0; i<list.length; ++i){ %>
+   		<tr>
+   			<td><%=max-i%></td>
+   			<td><%=list[i].NAME%></td>
+   			<td><a href="/admin/exam/update/<%=page%>/<%=list[i].SEQ%>"><%=list[i].SCHOOL%></a></td>
+   			<td><%=list[i].ADDR%></td>
+   		</tr>
+   		<% } %>
+   	</table>
+   	<div>
+      <% if(page > pageSize) { %>
+        [ <a href="/admin/exam/list/1" style="text-decoration: none;">◀◀</a> ]
+        [ <a href="/admin/exam/list/<%=startPage-1%>" style="text-decoration: none;">◀</a> ]
+      <% } %>
+     
+      &nbsp;&nbsp;
+      <% for (var i=startPage; i<=endPage; i++) { %>
+        <% if (i== page) {%>
+          [ <%=i%> ]
+        <% } else { %>
+          [ <a href="/admin/exam/list/<%=i%>" style="text-decoration: none;"><%=i%></a> ]
+        <% } %>
+      <% } %>
+      &nbsp;&nbsp;
+      <% if (endPage < totalPage) { %>
+        [ <a href="/admin/exam/list/<%=endPage+1%>" style="text-decoration: none;">▶</a> ]
+        [ <a href="/admin/exam/list/<%=totalPage%>" style="text-decoration: none;">▶▶</a> ]
+      <% } %>
+      
+    </div>
+    <div>
+    <button id="addBtn">추가</button>
+    </div>
+  </body>
+</html>

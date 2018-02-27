@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="UTF-8">
+    <title>회원정보 가져오기</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>회원정보 가져오기</h1>
+    <%
+    	for(var i=0; i<userList.length; ++i){
+    		var item = userList[i];
+    %>
+    <p>아이디 : <%= item.ID %></p>
+    <p>비밀번호 : <%= item.PASSWORD %></p>
+    
+    <%}%>
+  </body>
+</html>
