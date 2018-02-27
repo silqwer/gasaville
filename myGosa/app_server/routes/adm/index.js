@@ -37,7 +37,7 @@ module.exports = function (passport){
 	router.get('/exam/read/:page/:seq', ensureAuthenticated, ctrlExam.readPage);		// 고사장 관리 글 읽기 페이지 호출
 	router.get('/exam/update/:page/:seq', ensureAuthenticated, ctrlExam.updatePage);	// 고사장 관리 글 수정 페이지 호출 
 	router.post('/exam/update', ensureAuthenticated, ctrlExam.update);				// 고사장 관리 글 수정   
-	
+	router.post('/exam/delete', ensureAuthenticated, ctrlExam.delete);				// 고사장 관리 글 삭제 
 	
 	router.get('/periods', ensureAuthenticated, ctrlMain.periods);			// 기수 관리 
 	router.get('/request', ensureAuthenticated, ctrlMain.request);			// 신청 관리  

@@ -18,11 +18,10 @@
 	
 	$("#deleteBtn").on({
 		click:function(){
-			var comSubmitForm = this.createSubmitForm('commonForm');
-			comSubmitForm.setUrl('/sw/login/logout.do');
-			comSubmitForm.addParam("OS", OSInfoDev());
-			comSubmitForm.addParam("BROWSER", this.contactBrowser());
-			comSubmitForm.addParam("URL", document.URL);
+			var comSubmitForm = window.gosa.createSubmitForm('commonForm');
+			comSubmitForm.setUrl('/admin/exam/delete');
+			comSubmitForm.addParam("PAGE", $('#examPage').val());
+			comSubmitForm.addParam("SEQ", $('#examSeq').val());
 			comSubmitForm.submit();
 		}
 	});
