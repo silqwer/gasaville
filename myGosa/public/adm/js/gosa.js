@@ -1,7 +1,7 @@
 const Gosa = (function(){
 	class Gosa {
 		constructor(){
-			
+			this.schedule; 
 		}
 		
 		checkFormId (id) {
@@ -139,8 +139,16 @@ const Gosa = (function(){
 		updateLayerPopup(el, schedule) {
 			var $el = $(el);        //레이어의 id를 $el 변수에 저장
 			var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
-			console.log(schedule);
-	        isDim ? $('.dim-layer2').fadeIn() : $el.fadeIn();
+			
+			$('#udtSchName').val(schedule.title);
+			$('#udtAppDate').val(schedule.start._i);
+			$('#udtAttDate').val(schedule.attendance_date);
+			$('#udtSchSeq').val(schedule.seq);
+			$('#udtSchId').val(schedule._id);
+			
+			this.schedule = schedule;
+		
+			isDim ? $('.dim-layer2').fadeIn() : $el.fadeIn();
 
 	        var $elWidth = ~~($el.outerWidth()),
 	            $elHeight = ~~($el.outerHeight()),
@@ -171,9 +179,8 @@ const Gosa = (function(){
 		addLayerPopup (el) {
 		
 			var $el = $(el);        //레이어의 id를 $el 변수에 저장
-			console.log($el);
 			var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
-			console.log(isDim);
+			
 	        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
 	        
 	        $('#scheduleName').val('');

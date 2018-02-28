@@ -6,7 +6,7 @@
 		click:function(){
 			
 			let callback = (data) => {
-				console.log(data);
+				
 				if(data.result){
 					let eventData = {
 							seq: data.seq,
@@ -17,11 +17,10 @@
 				    };
 				 
 					$('#calendar').fullCalendar('renderEvent', eventData, true);
-					console.log('seq:'+eventData.seq);
 				}
 				
 				$('#calendar').fullCalendar('unselect');
-				console.log('seq:'+eventData.seq);
+				
 			}
 			
 			let comAjaxForm = window.gosa.createAjaxForm('commonForm');
@@ -36,6 +35,60 @@
 	});
 	
 	//일정 삭제 
+	$("#deleteBtn").on({
+		click:function(){
+			
+			let callback = (data) => {
+				
+				if(data.result){
+				 
+					let scheduleId = $('#udtSchId').val();
+					$("#calendar").fullCalendar('removeEvents', scheduleId);
+				}
+				
+				$('#calendar').fullCalendar('unselect');
+				
+			}
+			
+			let comAjaxForm = window.gosa.createAjaxForm('commonForm');
+			comAjaxForm.setUrl('/admin/schedule/delete');
+			comAjaxForm.addParam("SEQ", $('#udtSchSeq').val());
+			comAjaxForm.setCallback(callback);
+			comAjaxForm.ajax();
+			
+		}
+	});
+	
 	//일정 수정
+	$("#updateBtn").on({
+		click:function(){
+			
+			let callback = (data) => {
+				
+				if(data.result){
+					let eventDate = window.gosa.schedule;
+					eventDate.title = $('#udtSchName').val();
+					eventDate.start._i= $('#udtAppDate').val();
+					eventDate.attendance_date = $('#udtAttDate').val();
+					
+					$('#calendar').fullCalendar('updateEvent', eventDate);
+					
+				}
+				
+				$('#calendar').fullCalendar('unselect');
+				
+			}
+		
+			let comAjaxForm = window.gosa.createAjaxForm('commonForm');
+			comAjaxForm.setUrl('/admin/schedule/update');
+			comAjaxForm.addParam("SEQ", $('#udtSchSeq').val());
+			comAjaxForm.addParam("NAME", $('#udtSchName').val());
+			comAjaxForm.addParam("APPLY_DATE", $('#udtAppDate').val());
+			comAjaxForm.addParam("ATTENDANCE_DATE", $('#udtAttDate').val());
+			comAjaxForm.setCallback(callback);
+			comAjaxForm.ajax();
+			
+		}
+	});
 	
 })();
