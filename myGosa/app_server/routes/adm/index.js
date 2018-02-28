@@ -34,7 +34,9 @@ module.exports = function (passport){
 	
 	//스케줄 관리
 	router.get('/schedule', ensureAuthenticated, ctrlMain.schedule);				// 일정 관리 
-	router.post('/schedule/insert', ensureAuthenticated, ctrlSchedule.insert);				// 일정 관리 
+	router.post('/schedule/insert', ensureAuthenticated, ctrlSchedule.insert);		// 일정 등록 
+	router.post('/schedule/delete', ensureAuthenticated, ctrlSchedule.delete);		// 일정 삭제 
+	router.post('/schedule/update', ensureAuthenticated, ctrlSchedule.update);		// 일정 수정 
 	
 	//고사장 관리 
 	router.get('/exam', ensureAuthenticated, ctrlExam.exam);							// 고사장 관리 

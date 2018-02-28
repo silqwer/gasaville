@@ -19,6 +19,19 @@ var Schedule = {
 	insert : function (params, callback) {
 		return connection.query("INSERT INTO SCHEDULE (NAME, APPLY_DATE, ATTENDANCE_DATE)" +
 				"VALUES (?, ?, ?)", [params.name, params.applyDate, params.attendanceDate], callback);
+	}, 
+	
+	delete : function (seq, callback) {
+		return connection.query("DELETE FROM SCHEDULE WHERE SEQ = ?", [seq], callback);
+	}, 
+	
+	update : function (params, callback) {
+	
+		return connection.query("UPDATE SCHEDULE " +
+				"SET NAME = ?, " +
+				"APPLY_DATE = ?, " +
+				"ATTENDANCE_DATE = ? " +
+				"WHERE SEQ = ?", [params.name, params.applyDate, params.attendanceDate, params.seq], callback);
 	} 
 
 	

@@ -27,7 +27,7 @@ module.exports.schedule = (req, res) => {
 			console.error(err);
 			throw err;
 		}
-		console.log(rows);
+		
 		res.render('adm/schedule/list', { 
 			'title': '일정 관리',
 			'userInfo': req.user, 
