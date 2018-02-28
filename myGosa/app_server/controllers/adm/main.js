@@ -4,14 +4,15 @@
 
 var users =  require('../../models/adm/users');
 var bcrypt = require('bcrypt-nodejs');
+var schedule =  require('../../models/adm/schedule');
 
 //메인 
-module.exports.index = function(req, res){
+module.exports.index = (req, res) => {
 	res.render('adm/index', { title : '관리자 로그인' } ); 	//그릴 페이지, 보낼 객체 
 };
 
 //관리자 홈
-module.exports.main = function(req, res){
+module.exports.main = (req, res) => {
 	res.render('adm/main/index', { 
 		title : '관리자 로그인',
 		userInfo : req.user				//세션 정보
@@ -19,16 +20,26 @@ module.exports.main = function(req, res){
 };
 
 //일정 관리 
-module.exports.schedule = function(req, res){
-	res.render('adm/schedule/list', { 
-		title : '일정 관리',
-		userInfo : req.user	
-	}); 
+module.exports.schedule = (req, res) => {
+	
+	schedule.list(function(err, rows){
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		console.log(rows);
+		res.render('adm/schedule/list', { 
+			'title': '일정 관리',
+			'userInfo': req.user, 
+			'list': rows
+		}); 
+	});
+
 };
 
 
 //기수 관리   
-module.exports.periods = function(req, res){
+module.exports.periods = (req, res) => {
 	res.render('adm/index', { 
 		title : '기수 관리',
 		userInfo : req.user	
@@ -36,7 +47,7 @@ module.exports.periods = function(req, res){
 };
 
 //신청 관리   
-module.exports.request = function(req, res){
+module.exports.request = (req, res) => {
 	res.render('adm/index', { 
 		title : '신청 관리',
 		userInfo : req.user	
@@ -44,7 +55,7 @@ module.exports.request = function(req, res){
 };
 
 //회원 관리   
-module.exports.users = function(req, res){
+module.exports.users = (req, res) => {
 	res.render('adm/index', { 
 		title : '회원 관리',
 		userInfo : req.user	
@@ -52,7 +63,7 @@ module.exports.users = function(req, res){
 };
 
 //부서 관리   
-module.exports.department = function(req, res){
+module.exports.department = (req, res) => {
 	res.render('adm/index', { 
 		title : '부서 관리 ',
 		userInfo : req.user	
@@ -60,7 +71,7 @@ module.exports.department = function(req, res){
 };
 
 //공지 관리   
-module.exports.notice = function(req, res){
+module.exports.notice = (req, res) => {
 	res.render('adm/index', { 
 		title : '공지 관리',
 		userInfo : req.user	

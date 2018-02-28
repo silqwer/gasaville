@@ -84,6 +84,11 @@ a:hover{color:#337ab7}
 	opacity:0.4;
 }
 
+.login-btn {
+	width:250px; 
+	height:40px;
+}
+
 /*블릿*/
 .bullet-red{
 	background:#c92033; 
@@ -126,6 +131,10 @@ a:hover{color:#337ab7}
 .group input{
 	border-bottom:1px solid #ccc;
 	padding:6px 3px
+}
+.group input, 
+.group span {
+	width:244px;
 }
 .group label{
 	position:absolute; 
@@ -430,4 +439,3 @@ input:focus ~ .bar:after {
 /*pop*/
 .pop{width:800px}
 .pop-con1{overflow:hidden}
-
