@@ -2,9 +2,12 @@
 <html>
   <head>
     <title><%= title %></title>
+    <script src='/common/js/jquery/jquery.min.js'></script>
+    <script src='/adm/js/gosa.js'></script>
     <link rel='stylesheet' href='/adm/css/style.css' />
   </head>
   <body>
+  	<input type="hidden" id="examPage" name="examPage" value="<%=page%>">
     <h1><%= title %></h1>
     <div>
     	<select>
@@ -55,4 +58,5 @@
     <button id="addBtn">추가</button>
     </div>
   </body>
+  <script src='/adm/js/exam.js'></script>
 </html>

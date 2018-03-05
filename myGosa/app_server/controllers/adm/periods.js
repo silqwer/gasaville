@@ -2,16 +2,15 @@
  * http://usejsdoc.org/
  */
 
-var exam =  require('../../models/adm/exam');
+var periods =  require('../../models/adm/periods');
 
-//고사장 관리  
-module.exports.exam = (req, res) =>{
-	res.redirect('/admin/exam/list/1');
+//기수 관리  
+module.exports.periods = (req, res) =>{
+	res.redirect('/admin/periods/list/1');
 };
 
 module.exports.listPage = (req, res) => {
-	
-	exam.count(function(err, rows){
+	periods.count(function(err, rows){
 		let page = req.params.page;
 		page = parseInt(page, 10);					// 십진수 만들기 
 		let size = 10; 								// 한 페이지에 보여줄 개수		
@@ -28,10 +27,9 @@ module.exports.listPage = (req, res) => {
 		}
 		
 		let max = cnt - ((page-1) * size);			// 전체 글이 존재하는 개수
-		
-		exam.list(begin, size, function(err, rows){
-			res.render('adm/exam/list', { 
-				'title' : '고사장 관리',
+		periods.list(begin, size, function(err, rows){
+			res.render('adm/periods/list', { 
+				'title' : '기수 관리',
 				'userInfo' : req.user,
 				'list' : rows, 
 				'page' : page, 
@@ -49,12 +47,12 @@ module.exports.readPage = (req, res) => {
 	let page = req.params.page; 
 	let seq = req.params.seq; 
 	
-	exam.read(seq, function(err, rows){
+	periods.read(seq, function(err, rows){
 	
-		res.render('adm/exam/read', { 
+		res.render('adm/periods/read', { 
 			'title' : '고사장 관리',
 			'userInfo' : req.user,
-			'exam' : rows[0], 
+			'periods' : rows[0], 
 			'page' : page
 		}); 
 	});
@@ -64,48 +62,20 @@ module.exports.updatePage = (req, res) => {
 	let page = req.params.page; 
 	let seq = req.params.seq; 
 	
-	exam.read(seq, function(err, rows){
+	periods.read(seq, function(err, rows){
 	
-		res.render('adm/exam/update', { 
+		res.render('adm/periods/update', { 
 			'title' : '고사장 관리',
 			'userInfo' : req.user,
-			'exam' : rows[0], 
+			'periods' : rows[0], 
 			'page' : page
 		}); 
 	});
 };
 
-module.exports.insertPage = (req, res) =>{
-	let page = req.params.page; 
-	console.log('page:'+page);
-	res.render('adm/exam/insert', { 
-		'title' : '고사장 등록',
-		'userInfo' : req.user, 
-		'page' : page
-	});
-};
-
-module.exports.insert = (req, res) => {
-	 
-	let params = {
-			'name': req.body.NAME, 
-			'school': req.body.SCHOOL, 
-			'addr': req.body.ADDR
-	};
-	
-	exam.insert(params, function(err, rows){
-		if (err) {
-			console.error(err);
-			throw err;
-		}
-
-		res.redirect('/admin/exam/list/1');
-	});
-	
-};
-
 module.exports.update = (req, res) =>{
 	let page = req.body.PAGE; 
+	
 	let params = {
 			'seq': req.body.SEQ, 
 			'name': req.body.NAME, 
@@ -113,8 +83,8 @@ module.exports.update = (req, res) =>{
 			'addr': req.body.ADDR
 	};
 	
-	exam.update(params, function(err, rows){
-		res.redirect('/admin/exam/list/'+page);
+	periods.update(params, function(err, rows){
+		res.redirect('/admin/periods/list/'+page);
 	});
 };
 
@@ -122,8 +92,8 @@ module.exports.delete = (req, res) => {
 	let page = req.body.PAGE; 
 	let seq = req.body.SEQ; 
 	
-	exam.delete(seq, function(err, rows){
-		res.redirect('/admin/exam/list/'+page);
+	periods.delete(seq, function(err, rows){
+		res.redirect('/admin/periods/list/'+page);
 	});
 };
 

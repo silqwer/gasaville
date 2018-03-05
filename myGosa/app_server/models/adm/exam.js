@@ -38,7 +38,12 @@ var Exam = {
 	
 	delete : function (seq, callback ) {
 		return connection.query("DELETE FROM EXAM WHERE SEQ = ?", [seq], callback);
-	}
+	}, 
+	
+	insert : function (params, callback) {
+		return connection.query("INSERT INTO EXAM (NAME, SCHOOL, ADDR)" +
+				"VALUES (?, ?, ?)", [params.name, params.school, params.addr], callback);
+	}, 
 	
 };
 
