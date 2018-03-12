@@ -412,7 +412,7 @@ input:focus ~ .bar:after {
 /*table*/
 .thead-tbl{width:100%}
 .thead-tbl tr > *{
-	padding:8px 0;
+	padding:8px 10px;
 	text-align:center
 }
 .thead-tbl thead{border-bottom:2px solid #666}
@@ -425,8 +425,69 @@ input:focus ~ .bar:after {
 	border-right:1px solid #ddd
 }
 .thead-tbl tbody td:last-child{border-right:none}
+caption{display:none}
 /*.thead-tbl tbody tr:hover{background:#eee}*/
 
 /*pop*/
-.pop{width:800px}
-.pop-con1{overflow:hidden}
+.pop-container{
+	padding:20px;
+	position:absolute;
+	top:0;
+	left:0;
+	background:#fff;
+	z-index:1;
+	border:1px solid #337ab7;
+	box-shadow: 0 2px 2px rgba(0,0,0,.1)
+}
+.dimbg{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:#000;
+	opacity:0.5;
+}
+.close{
+	position:absolute;
+	top:0;
+	left:0;
+	background:#337ab7;
+	width:100%;
+	overflow:hidden
+}
+.close a{
+	float:right;
+	margin-right:10px;
+	padding:4px 0;
+	color:#fff;
+}
+.pop-con1{
+	overflow:hidden;
+	margin-top:30px
+}
+.pop-con1 iframe{
+	width:450px;
+	height:300px;
+	margin-right:15px
+}
+.pop-con1 .fl .thead-tbl{width:340px}
+.pop-con2 .thead-tbl tbody tr td:nth-child(2){text-align:left}
+
+/*page number*/
+.pagenum{
+	overflow:hidden;
+	text-align:center;
+	display:inline-block;
+}
+.pagenum li{
+	float:left;
+	margin-left:5px;
+	font-size:14px;
+	font-weight:bold
+}
+.pagenum li:first-child{margin-left:0}
+.pagenum li a{font-size:14px}
+.pagenum li a:hover{color:#337ab7}
+.pagenum li:first-child a,
+.pagenum li:last-child a{color:#999}
