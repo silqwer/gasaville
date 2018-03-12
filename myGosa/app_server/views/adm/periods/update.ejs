@@ -31,8 +31,11 @@
   </head>
   <body>
   	<input type="hidden" id="examPage" name="examPage" value="<%=page%>">
+  	<input type="hidden" id="selectedSchSeq" name="selectedSchSeq" value="<%=selected_schedule_seq%>">
+  	<input type="hidden" id="selectedSchName" name="selectedSchName" value="<%=selected_schedul_name%>">
     <form id="commonForm" name="commonForm"></form>
     <h1><%= title %></h1>
+    <h1><%= selected_schedul_name %></h1>
    	<div class="schedule">
    		<% for(let i=0; i<schedule.length; ++i){ %>
    			<% if(schedule[i].CHECKED === "checked"){ %>
@@ -59,7 +62,8 @@
    	</div>
    
     <div>
-    	<button id="insertBtn">등록</button>
+    	<button id="updateBtn">수정</button>
+    	<button id="deleteBtn">삭제</button>
     	<button id="cancelBtn">취소</button>
     </div>
   </body>
