@@ -47,12 +47,15 @@ module.exports = function (passport){
 	router.get('/exam/update/:page/:seq', ensureAuthenticated, ctrlExam.updatePage);	// 고사장 관리 글 수정 페이지 호출 
 	router.post('/exam/update', ensureAuthenticated, ctrlExam.update);					// 고사장 관리 글 수정   
 	router.post('/exam/delete', ensureAuthenticated, ctrlExam.delete);					// 고사장 관리 글 삭제 
-	router.get('/exam/insert/:page', ensureAuthenticated, ctrlExam.insertPage);				// 고사장 일정 등록 페이지 호출
-	router.post('/exam/insert', ensureAuthenticated, ctrlExam.insert);					// 고사장 일정 등록 
+	router.get('/exam/insert/:page', ensureAuthenticated, ctrlExam.insertPage);			// 고사장 등록 페이지 호출
+	router.post('/exam/insert', ensureAuthenticated, ctrlExam.insert);					// 고사장 등록 
 	
-	router.get('/periods', ensureAuthenticated, ctrlPeriods.periods);				// 기수 관리 
-	router.get('/periods/list/:page', ensureAuthenticated, ctrlPeriods.listPage);		// 기수 관리 리스트 출력  
-	      
+	router.get('/periods', ensureAuthenticated, ctrlPeriods.periods);						// 기수 관리 
+	router.get('/periods/list/:page', ensureAuthenticated, ctrlPeriods.listPage);			// 기수 관리 리스트 출력  
+	router.get('/periods/insert/:page', ensureAuthenticated, ctrlPeriods.insertPage);		// 기수 등록 페이지 호출
+	router.post('/periods/insert/', ensureAuthenticated, ctrlPeriods.insert);				// 기수 등록 페이지 호출
+	router.get('/periods/update/:page/:seq', ensureAuthenticated, ctrlPeriods.updatePage);	// 기수 수정 페이지 호출 
+	
 	router.get('/request', ensureAuthenticated, ctrlMain.request);			// 신청 관리  
 	router.get('/users', ensureAuthenticated, ctrlMain.users);				// 회원 관리 
 	router.get('/department', ensureAuthenticated, ctrlMain.department);	// 부서 관리 

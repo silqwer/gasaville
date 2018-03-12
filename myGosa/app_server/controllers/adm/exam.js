@@ -77,7 +77,7 @@ module.exports.updatePage = (req, res) => {
 
 module.exports.insertPage = (req, res) =>{
 	let page = req.params.page; 
-	console.log('page:'+page);
+	
 	res.render('adm/exam/insert', { 
 		'title' : '고사장 등록',
 		'userInfo' : req.user, 

@@ -9,17 +9,52 @@ var Periods = {
 	
 	list : function(begin, size, callback) {
 		return connection.query("SELECT " +
-				"SEQ, " +
-				"NAME, " +
-				"DATE_FORMAT(APPLY_DATE, '%Y-%m-%d') AS APPLY_DATE, " +
-				"DATE_FORMAT(ATTENDANCE_DATE, '%Y-%m-%d') AS ATTENDANCE_DATE " +
-				"FROM SCHEDULE ORDER BY ATTENDANCE_DATE DESC " +
+				"DISTINCT  (SELECT NAME FROM SCHEDULE WHERE SEQ = P.SCHEDULE_SEQ) AS SCHEDULE_NAME, " +
+				"SCHEDULE_SEQ " +
+				"FROM PERIOD P ORDER BY SCHEDULE_SEQ DESC " +
 				"LIMIT ?, ?", [begin, size], callback);
 	},
 	
+	schedule : function(callback) {
+		return connection.query("SELECT SEQ, NAME FROM SCHEDULE " +
+				"WHERE SEQ NOT IN (SELECT DISTINCT SCHEDULE_SEQ FROM PERIOD) ORDER BY ATTENDANCE_DATE DESC", callback);
+	},
+	
+	selected_schedule : function(seq, callback) {
+		return connection.query("SELECT SEQ, NAME, " +
+				"(SELECT IF((SELECT DISTINCT P.SCHEDULE_SEQ  FROM PERIOD P WHERE P.SCHEDULE_SEQ = S.SEQ AND P.SCHEDULE_SEQ = ?) IS NULL, '', 'checked')) AS CHECKED " + 
+				"FROM SCHEDULE S ORDER BY ATTENDANCE_DATE DESC", [seq], callback);
+	}, 
+	
+	exam : function( callback) {
+		return connection.query("SELECT SEQ, NAME FROM EXAM ORDER BY NAME ASC", callback);
+	}, 
+	
+	selected_exam : function(seq, callback) {
+		return connection.query("SELECT E.SEQ AS SEQ, " +
+				"E.NAME AS NAME, " +
+				"(SELECT IF((SELECT DISTINCT P.SCHEDULE_SEQ  FROM PERIOD P WHERE P.EXAM_SEQ = E.SEQ AND P.SCHEDULE_SEQ = ?) IS NULL, '', 'checked')) AS CHECKED, " + 
+				"(SELECT IF(D.SCHEDULE_SEQ = ?, D.CLASS, 0)) AS CLASS	" + 
+				"FROM EXAM E LEFT JOIN PERIOD D " +
+				"ON E.SEQ = D.EXAM_SEQ ORDER BY NAME ASC", [seq, seq], callback);
+	}, 
+	
+	
 	count : function (callback) {
-		return connection.query('SELECT COUNT(*) AS CNT FROM SCHEDULE', callback);
-	}
+		return connection.query('SELECT COUNT(*) AS CNT FROM PERIOD', callback);
+	},
+	
+	insert : function (params, callback) {
+		return connection.query("INSERT INTO PERIOD (SCHEDULE_SEQ, EXAM_SEQ, CLASS)" +
+				"VALUES (?, ?, ?)", [params.schSeq, params.examSeq, params.examClass], callback);
+	}, 
+	
+	read : function (seq, callback) {
+		return connection.query("SELECT " +
+				"SEQ, NAME, SCHOOL, ADDR " +
+				"FROM EXAM " +
+				"WHERE SEQ = ?", [seq], callback);
+	}, 
 	
 };
 

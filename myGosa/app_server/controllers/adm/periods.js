@@ -58,19 +58,63 @@ module.exports.readPage = (req, res) => {
 	});
 };
 
+module.exports.insertPage = (req, res) =>{
+	let page = req.params.page; 
+	
+	periods.schedule(function(err, rows){
+		let schedule = rows;
+		
+		periods.exam(function(err, rows){
+			res.render('adm/periods/insert', { 
+				'title' : '기수 등록',
+				'userInfo' : req.user, 
+				'page' : page, 
+				'schedule' : schedule, 
+				'exam' : rows
+			});
+		});
+	});
+};
+
+module.exports.insert = (req, res) => {
+	
+	let arr = req.body.ARR;
+	let jsonString = arr.replace(/'/g, "\"");
+	let jsonPeriod = JSON.parse(jsonString);
+	
+	for(let i=0; i<jsonPeriod.length; ++i){
+		
+		periods.insert(jsonPeriod[i], function(err, rows){
+			if (err) {
+				console.error(err);
+				throw err;
+			}
+		});
+	}
+	
+	res.redirect('/admin/periods/list/1');
+	
+};
+
 module.exports.updatePage = (req, res) => {
 	let page = req.params.page; 
 	let seq = req.params.seq; 
 	
-	periods.read(seq, function(err, rows){
+	periods.selected_schedule(seq, function(err, rows){
+		let schedule = rows;
+		
+		periods.selected_exam(seq, function(err, rows){
 	
-		res.render('adm/periods/update', { 
-			'title' : '고사장 관리',
-			'userInfo' : req.user,
-			'periods' : rows[0], 
-			'page' : page
-		}); 
+			res.render('adm/periods/update', { 
+				'title' : '기수 수정',
+				'userInfo' : req.user, 
+				'page' : page, 
+				'schedule' : schedule, 
+				'exam' : rows
+			});
+		});
 	});
+	
 };
 
 module.exports.update = (req, res) =>{

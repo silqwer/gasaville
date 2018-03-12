@@ -15,7 +15,7 @@
 			
 			//수정값 벨리데이션 체크 	
 			
-			var comSubmitForm = window.gosa.createSubmitForm('commonForm');
+			let comSubmitForm = window.gosa.createSubmitForm('commonForm');
 			comSubmitForm.setUrl('/admin/exam/insert');
 			comSubmitForm.addParam("NAME", $('#examName').val());
 			comSubmitForm.addParam("SCHOOL", $('#examSch').val());
@@ -31,7 +31,7 @@
 			
 			//수정값 벨리데이션 체크 	
 			
-			var comSubmitForm = window.gosa.createSubmitForm('commonForm');
+			let comSubmitForm = window.gosa.createSubmitForm('commonForm');
 			comSubmitForm.setUrl('/admin/exam/update');
 			comSubmitForm.addParam("NAME", $('#examName').val());
 			comSubmitForm.addParam("SCHOOL", $('#examSch').val());
@@ -44,7 +44,7 @@
 	
 	$("#deleteBtn").on({
 		click:function(){
-			var comSubmitForm = window.gosa.createSubmitForm('commonForm');
+			let comSubmitForm = window.gosa.createSubmitForm('commonForm');
 			comSubmitForm.setUrl('/admin/exam/delete');
 			comSubmitForm.addParam("PAGE", $('#examPage').val());
 			comSubmitForm.addParam("SEQ", $('#examSeq').val());
