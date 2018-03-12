@@ -26,7 +26,14 @@ var Periods = {
 				"FROM SCHEDULE S ORDER BY ATTENDANCE_DATE DESC", [seq], callback);
 	}, 
 	
-	exam : function( callback) {
+	selected_periods : function (seq, callback) {
+		return connection.query("SELECT " +
+				"DISTINCT  (SELECT NAME FROM SCHEDULE WHERE SEQ = P.SCHEDULE_SEQ) AS SCHEDULE_NAME, " +
+				"P.SCHEDULE_SEQ AS SCHEDULE_SEQ " +
+				"FROM PERIOD P WHERE P.SCHEDULE_SEQ = ? ", [seq], callback);
+	}, 
+	
+	exam : function(callback) {
 		return connection.query("SELECT SEQ, NAME FROM EXAM ORDER BY NAME ASC", callback);
 	}, 
 	
@@ -39,6 +46,9 @@ var Periods = {
 				"ON E.SEQ = D.EXAM_SEQ ORDER BY NAME ASC", [seq, seq], callback);
 	}, 
 	
+	countApply : function (seq, callback) {
+		return connection.query('SELECT COUNT(*) AS CNT FROM APPLY WHERE SCHEDULE_SEQ = ?',[seq], callback);
+	}, 
 	
 	count : function (callback) {
 		return connection.query('SELECT COUNT(*) AS CNT FROM PERIOD', callback);
@@ -55,6 +65,10 @@ var Periods = {
 				"FROM EXAM " +
 				"WHERE SEQ = ?", [seq], callback);
 	}, 
+	
+	delete : function (seq, callback ) {
+		return connection.query("DELETE FROM PERIOD WHERE SCHEDULE_SEQ = ?", [seq], callback);
+	},
 	
 };
 

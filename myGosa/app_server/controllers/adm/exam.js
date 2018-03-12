@@ -30,6 +30,12 @@ module.exports.listPage = (req, res) => {
 		let max = cnt - ((page-1) * size);			// 전체 글이 존재하는 개수
 		
 		exam.list(begin, size, function(err, rows){
+			
+			if (err) {
+				console.error(err);
+				throw err;
+			}
+			
 			res.render('adm/exam/list', { 
 				'title' : '고사장 관리',
 				'userInfo' : req.user,
@@ -50,7 +56,12 @@ module.exports.readPage = (req, res) => {
 	let seq = req.params.seq; 
 	
 	exam.read(seq, function(err, rows){
-	
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
 		res.render('adm/exam/read', { 
 			'title' : '고사장 관리',
 			'userInfo' : req.user,
@@ -65,7 +76,12 @@ module.exports.updatePage = (req, res) => {
 	let seq = req.params.seq; 
 	
 	exam.read(seq, function(err, rows){
-	
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
 		res.render('adm/exam/update', { 
 			'title' : '고사장 관리',
 			'userInfo' : req.user,
@@ -114,6 +130,12 @@ module.exports.update = (req, res) =>{
 	};
 	
 	exam.update(params, function(err, rows){
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
 		res.redirect('/admin/exam/list/'+page);
 	});
 };
@@ -121,6 +143,11 @@ module.exports.update = (req, res) =>{
 module.exports.delete = (req, res) => {
 	let page = req.body.PAGE; 
 	let seq = req.body.SEQ; 
+	
+	if (err) {
+		console.error(err);
+		throw err;
+	}
 	
 	exam.delete(seq, function(err, rows){
 		res.redirect('/admin/exam/list/'+page);
