@@ -75,9 +75,37 @@ module.exports.updatePage = (req, res) => {
 	});
 };
 
+module.exports.insertPage = (req, res) =>{
+	let page = req.params.page; 
+	
+	res.render('adm/exam/insert', { 
+		'title' : '고사장 등록',
+		'userInfo' : req.user, 
+		'page' : page
+	});
+};
+
+module.exports.insert = (req, res) => {
+	 
+	let params = {
+			'name': req.body.NAME, 
+			'school': req.body.SCHOOL, 
+			'addr': req.body.ADDR
+	};
+	
+	exam.insert(params, function(err, rows){
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+
+		res.redirect('/admin/exam/list/1');
+	});
+	
+};
+
 module.exports.update = (req, res) =>{
 	let page = req.body.PAGE; 
-	
 	let params = {
 			'seq': req.body.SEQ, 
 			'name': req.body.NAME, 

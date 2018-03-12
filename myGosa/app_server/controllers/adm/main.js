@@ -5,6 +5,7 @@
 var users =  require('../../models/adm/users');
 var bcrypt = require('bcrypt-nodejs');
 var schedule =  require('../../models/adm/schedule');
+var periods =  require('../../models/adm/periods');
 
 //메인 
 module.exports.index = (req, res) => {
@@ -35,15 +36,6 @@ module.exports.schedule = (req, res) => {
 		}); 
 	});
 
-};
-
-
-//기수 관리   
-module.exports.periods = (req, res) => {
-	res.render('adm/index', { 
-		title : '기수 관리',
-		userInfo : req.user	
-	}); 	
 };
 
 //신청 관리   

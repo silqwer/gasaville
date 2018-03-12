@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <script src='/common/js/jquery/jquery.min.js'></script>
+    <script src='/adm/js/gosa.js'></script>
+    <link rel='stylesheet' href='/adm/css/style.css' />
+  </head>
+  <body>
+    <input type="hidden" id="examPage" name="examPage" value="<%=page%>">
+    <h1><%= title %></h1>
+   
+   	<table>
+   		<tr>
+   			<th>번호</th>
+   			<th>일정명</th>		
+   		</tr>
+   		<% for(let i=0; i<list.length; ++i){ %>
+   		<tr>
+   			<td><%=max-i%></td>
+   			<td><a href="/admin/periods/update/<%=page%>/<%=list[i].SCHEDULE_SEQ%>"><%=list[i].SCHEDULE_NAME%></a></td>
+   		</tr>
+   		<% } %>
+   	</table>
+   	<div>
+      <% if(page > pageSize) { %>
+        [ <a href="/admin/periods/list/1" style="text-decoration: none;">◀◀</a> ]
+        [ <a href="/admin/periods/list/<%=startPage-1%>" style="text-decoration: none;">◀</a> ]
+      <% } %>
+     
+      &nbsp;&nbsp;
+      <% for (var i=startPage; i<=endPage; i++) { %>
+        <% if (i== page) {%>
+          [ <%=i%> ]
+        <% } else { %>
+          [ <a href="/admin/periods/list/<%=i%>" style="text-decoration: none;"><%=i%></a> ]
+        <% } %>
+      <% } %>
+      &nbsp;&nbsp;
+      <% if (endPage < totalPage) { %>
+        [ <a href="/admin/periods/list/<%=endPage+1%>" style="text-decoration: none;">▶</a> ]
+        [ <a href="/admin/periods/list/<%=totalPage%>" style="text-decoration: none;">▶▶</a> ]
+      <% } %> 
+      
+    </div>
+    <div>
+    <button id="addBtn">등록</button>
+    </div>
+  </body>
+  <script src='/adm/js/periods.js'></script>
+</html>
