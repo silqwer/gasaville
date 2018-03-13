@@ -38,10 +38,11 @@ var Periods = {
 	}, 
 	
 	selected_exam : function(seq, callback) {
-		return connection.query("SELECT E.SEQ AS SEQ, " +
+		return connection.query("SELECT DISTINCT " +
+				"E.SEQ AS SEQ, " +
 				"E.NAME AS NAME, " +
 				"(SELECT IF((SELECT DISTINCT P.SCHEDULE_SEQ  FROM PERIOD P WHERE P.EXAM_SEQ = E.SEQ AND P.SCHEDULE_SEQ = ?) IS NULL, '', 'checked')) AS CHECKED, " + 
-				"(SELECT IF(D.SCHEDULE_SEQ = ?, D.CLASS, 0)) AS CLASS	" + 
+				"(SELECT COUNT(C.CLASS) FROM PERIOD C WHERE C.EXAM_SEQ = D.EXAM_SEQ) AS CLASS " + 
 				"FROM EXAM E LEFT JOIN PERIOD D " +
 				"ON E.SEQ = D.EXAM_SEQ ORDER BY NAME ASC", [seq, seq], callback);
 	}, 

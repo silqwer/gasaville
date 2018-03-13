@@ -84,13 +84,22 @@ module.exports.insert = (req, res) => {
 	let jsonPeriod = JSON.parse(jsonString);
 	
 	for(let i=0; i<jsonPeriod.length; ++i){
+		let examClass = jsonPeriod[i].examClass;
+		for(let j=0; j<examClass; ++j){
+			let period = {
+					'schSeq' : jsonPeriod[i].schSeq,
+					'examSeq' : jsonPeriod[i].examSeq,
+					'examClass' : j+1
+			};
+			
+			periods.insert(period, function(err, rows){
+				if (err) {
+					console.error(err);
+					throw err;
+				}
+			});
+		}
 		
-		periods.insert(jsonPeriod[i], function(err, rows){
-			if (err) {
-				console.error(err);
-				throw err;
-			}
-		});
 	}
 	
 	res.redirect('/admin/periods/list/1');
