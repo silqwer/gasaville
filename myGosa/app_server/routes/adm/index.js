@@ -2,8 +2,11 @@ var express = require('express');
 var router = express.Router();
 var ctrlMain = require('../../controllers/adm/main');
 var ctrlExam = require('../../controllers/adm/exam');
+var ctrlComment = require('../../controllers/adm/comment');
+
 var ctrlSchedule = require('../../controllers/adm/schedule');
 var ctrlPeriods = require('../../controllers/adm/periods');
+
 
 
 /*router.get('/', ctrlMain.index);
@@ -43,13 +46,21 @@ module.exports = function (passport){
 	//고사장 관리 
 	router.get('/exam', ensureAuthenticated, ctrlExam.exam);							// 고사장 관리 
 	router.get('/exam/list/:page', ensureAuthenticated, ctrlExam.listPage);				// 고사장 관리 리스트 출력  
-	router.get('/exam/read/:page/:seq', ensureAuthenticated, ctrlExam.readPage);		// 고사장 관리 글 읽기 페이지 호출
+	router.get('/exam/list/:page/:seq', ensureAuthenticated, ctrlExam.readPage);		// 고사장 관리 글 읽기 페이지 호출
 	router.get('/exam/update/:page/:seq', ensureAuthenticated, ctrlExam.updatePage);	// 고사장 관리 글 수정 페이지 호출 
 	router.post('/exam/update', ensureAuthenticated, ctrlExam.update);					// 고사장 관리 글 수정   
 	router.post('/exam/delete', ensureAuthenticated, ctrlExam.delete);					// 고사장 관리 글 삭제 
 	router.get('/exam/insert/:page', ensureAuthenticated, ctrlExam.insertPage);			// 고사장 등록 페이지 호출
 	router.post('/exam/insert', ensureAuthenticated, ctrlExam.insert);					// 고사장 등록 
 	
+	//고사장 후기 관리 
+	router.get('/coment', ensureAuthenticated, ctrlComment.comment);						// 고사장 관리 
+	router.get('/comment/list/:page', ensureAuthenticated, ctrlComment.listPage);			// 고사장 후기 리스트 출력
+	router.get('/comment/list/:page/:number/:seq', ensureAuthenticated, ctrlComment.updatePage);		// 고사장 후기 수정 페이지 호출 
+	router.post('/comment/delete', ensureAuthenticated, ctrlComment.delete);		// 고사장 후기 수정 페이지 호출 
+
+	
+	//기수관리 
 	router.get('/periods', ensureAuthenticated, ctrlPeriods.periods);						// 기수 관리 
 	router.get('/periods/list/:page', ensureAuthenticated, ctrlPeriods.listPage);			// 기수 관리 리스트 출력  
 	router.get('/periods/insert/:page', ensureAuthenticated, ctrlPeriods.insertPage);		// 기수 등록 페이지 호출
@@ -58,6 +69,8 @@ module.exports = function (passport){
 	router.post('/periods/update', ensureAuthenticated, ctrlPeriods.update);				// 기수 수정
 	router.post('/periods/check/apply', ensureAuthenticated, ctrlPeriods.checkApply);		// 신청 정보 체크 
 	router.post('/periods/delete', ensureAuthenticated, ctrlPeriods.delete);				// 기수 정보 삭제 
+	
+	
 	
 	
 	router.get('/request', ensureAuthenticated, ctrlMain.request);			// 신청 관리  

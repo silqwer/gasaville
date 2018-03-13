@@ -144,12 +144,15 @@ module.exports.delete = (req, res) => {
 	let page = req.body.PAGE; 
 	let seq = req.body.SEQ; 
 	
-	if (err) {
-		console.error(err);
-		throw err;
-	}
 	
 	exam.delete(seq, function(err, rows){
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
+		
 		res.redirect('/admin/exam/list/'+page);
 	});
 };
