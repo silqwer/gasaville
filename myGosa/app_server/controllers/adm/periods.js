@@ -130,9 +130,6 @@ module.exports.updatePage = (req, res) => {
 			});
 		});
 	});
-	
-	
-	
 };
 
 module.exports.checkApply = (req, res) => {
@@ -200,8 +197,6 @@ module.exports.delete = (req, res) => {
 			res.redirect('/admin/periods/list/'+page);
 		});
 	});
-	
-	
 };
 
 
