@@ -9,6 +9,12 @@ module.exports.exam = (req, res) =>{
 	res.redirect('/admin/exam/list/1');
 };
 
+//고사장 참여 이력관리
+module.exports.history = (req, res) =>{
+	res.redirect('/admin/exam/history/list/1');
+};
+
+//고사장 관리 리스트 페이지 
 module.exports.listPage = (req, res) => {
 	
 	exam.count(function(err, rows){
@@ -38,6 +44,49 @@ module.exports.listPage = (req, res) => {
 			
 			res.render('adm/exam/list', { 
 				'title' : '고사장 관리',
+				'userInfo' : req.user,
+				'list' : rows, 
+				'page' : page, 
+				'pageSize' : pageSize,
+				'startPage' : startPage,
+				'endPage' : endPage,
+				'totalPage' : totalPage,
+				'max' : max
+			}); 
+		});
+	});
+};
+
+//고사장 참여이력 관리 리스트 페이지 
+module.exports.historyListPage = (req, res) => {
+	
+	exam.historyCount(function(err, rows){
+		let page = req.params.page;
+		page = parseInt(page, 10);					// 십진수 만들기 
+		let size = 10; 								// 한 페이지에 보여줄 개수		
+		let begin = (page - 1) * size;				// 시작 번호
+		let cnt = rows[0].CNT;						// 전체 글 개수 
+		let totalPage = Math.ceil(cnt / size);		// 전체 페이지 수 
+		let pageSize = 10;							// 페이지 링크 갯수 
+		
+		let startPage = Math.floor((page-1) / pageSize) * pageSize + 1;
+		let endPage = startPage + (pageSize - 1);
+		
+		if(endPage > totalPage){
+			endPage = totalPage;
+		}
+		
+		let max = cnt - ((page-1) * size);			// 전체 글이 존재하는 개수
+		
+		exam.historyList(begin, size, function(err, rows){
+			
+			if (err) {
+				console.error(err);
+				throw err;
+			}
+			
+			res.render('adm/exam/history/list', { 
+				'title' : '고사장 참여이력 관리',
 				'userInfo' : req.user,
 				'list' : rows, 
 				'page' : page, 

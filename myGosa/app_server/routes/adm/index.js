@@ -53,6 +53,10 @@ module.exports = function (passport){
 	router.get('/exam/insert/:page', ensureAuthenticated, ctrlExam.insertPage);			// 고사장 등록 페이지 호출
 	router.post('/exam/insert', ensureAuthenticated, ctrlExam.insert);					// 고사장 등록 
 	
+	//고사장 참여 이력관리 
+	router.get('/exam/history', ensureAuthenticated, ctrlExam.history);						//고사장 참여 이력관리 			
+	router.get('/exam/history/list/:page', ensureAuthenticated, ctrlExam.historyListPage);	//고사장 참여 이력 리스트 출력  페이지
+	
 	//고사장 후기 관리 
 	router.get('/coment', ensureAuthenticated, ctrlComment.comment);						// 고사장 관리 
 	router.get('/comment/list/:page', ensureAuthenticated, ctrlComment.listPage);			// 고사장 후기 리스트 출력
