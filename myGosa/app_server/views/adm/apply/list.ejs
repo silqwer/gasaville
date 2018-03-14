@@ -7,16 +7,26 @@
     <link rel='stylesheet' href='/adm/css/style.css' />
   </head>
   <body>
-  	<input type="hidden" id="examPage" name="examPage" value="<%=page%>">
+  	<input type="hidden" id="applyPage" name="applyPage" value="<%=page%>">
     <h1><%= title %></h1>
+    
+     <div>
+    	<select>
+    	<% for(let i=0; i<schList.length; ++i){ %>
+    	  <option value="<%=schList[i].SEQ%>"><%=schList[i].NAME%></option>
+    	<%}%>
+		</select>
+    </div>
+    
     <div>
     	<select>
 		  <option value="name" selected="selected">고사장</option>
 		  <option value="school">학교명</option>
-		  <option value="period">기수</option>
 		  <option value="department">소속</option>
 		  <option value="position">직책</option>
 		  <option value="name">이름</option>
+		  <option value="cellphone">연락처</option>
+		  <option value="state">신청</option>
 		</select>
     </div>
     <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
@@ -25,20 +35,23 @@
    			<th>번호</th>
    			<th>고사장</th>
    			<th>학교</th>
-   			<th>기수</th>
+   			<th>반</th>
 			<th>소속</th>
    			<th>직책</th>
-   			<th>이름</th>		
+   			<th>이름</th>	
+   			<th>연락처 </th>	
    		</tr>
    		<% for(let i=0; i<list.length; ++i){ %>
    		<tr>
    			<td><%=max-i%></td>
    			<td><%=list[i].EXAM_NAME%></td>
    			<td><%=list[i].EXAM_SCHOOL%></td>
-   			<td><%=list[i].SCHEDULE_NAME%></td>
+   			<td><%=list[i].CLASS%></td>
    			<td><%=list[i].DEPARTMENT%></td>
    			<td><%=list[i].POSITION%></td>
    			<td><%=list[i].USER_NAME%></td>
+   			<td><%=list[i].CHELLPHONE%></td>
+   			<td><%=list[i].STATE%></td>
    		</tr>
    		<% } %>
    	</table>

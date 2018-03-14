@@ -38,14 +38,6 @@ module.exports.schedule = (req, res) => {
 
 };
 
-//신청 관리   
-module.exports.request = (req, res) => {
-	res.render('adm/index', { 
-		title : '신청 관리',
-		userInfo : req.user	
-	}); 	
-};
-
 //회원 관리   
 module.exports.users = (req, res) => {
 	res.render('adm/index', { 

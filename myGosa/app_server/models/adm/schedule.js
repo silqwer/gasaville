@@ -9,10 +9,10 @@ var Schedule = {
 	
 	list : function(callback) {
 		return connection.query("SELECT " +
-				"SEQ AS seq, " +
-				"NAME AS title, " +
-				"DATE_FORMAT(APPLY_DATE, '%Y-%m-%d') AS start, " +
-				"DATE_FORMAT(ATTENDANCE_DATE, '%Y-%m-%d') AS attendance_date " +
+				"SEQ, " +
+				"NAME, " +
+				"DATE_FORMAT(APPLY_DATE, '%Y-%m-%d') AS APPLY_DATE, " +
+				"DATE_FORMAT(ATTENDANCE_DATE, '%Y-%m-%d') AS ATTENDANCE_DATE " +
 				"FROM SCHEDULE", callback);
 	}, 
 	

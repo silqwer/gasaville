@@ -6,6 +6,8 @@ var ctrlComment = require('../../controllers/adm/comment');
 
 var ctrlSchedule = require('../../controllers/adm/schedule');
 var ctrlPeriods = require('../../controllers/adm/periods');
+var ctrlApply = require('../../controllers/adm/apply');
+
 
 
 
@@ -74,12 +76,17 @@ module.exports = function (passport){
 	router.post('/periods/check/apply', ensureAuthenticated, ctrlPeriods.checkApply);		// 신청 정보 체크 
 	router.post('/periods/delete', ensureAuthenticated, ctrlPeriods.delete);				// 기수 정보 삭제 
 	
+	//신청관리 
+	router.get('/apply', ensureAuthenticated, ctrlApply.apply);							// 신청 관리  
+	router.get('/apply/list/:page', ensureAuthenticated, ctrlApply.listPage);			// 신청 관리 리스트 출력 
 	
-	
-	
-	router.get('/request', ensureAuthenticated, ctrlMain.request);			// 신청 관리  
+	//회원 관리 
 	router.get('/users', ensureAuthenticated, ctrlMain.users);				// 회원 관리 
+	
+	//부서관리 
 	router.get('/department', ensureAuthenticated, ctrlMain.department);	// 부서 관리 
+	
+	//공지관리 
 	router.get('/notice', ensureAuthenticated, ctrlMain.notice);			// 공지 관리 
 	
 	
