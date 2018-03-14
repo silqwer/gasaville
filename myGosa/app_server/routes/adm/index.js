@@ -8,20 +8,8 @@ var ctrlSchedule = require('../../controllers/adm/schedule');
 var ctrlPeriods = require('../../controllers/adm/periods');
 var ctrlApply = require('../../controllers/adm/apply');
 var ctrlUsers = require('../../controllers/adm/users');
+var ctrlDepart = require('../../controllers/adm/department');
 
-
-
-
-/*router.get('/', ctrlMain.index);
-router.get('/login', ctrlMain.index);
-							   
-router.post('/login', passport.authenticate('local-login', {
-	successRedirect : 'adm/main/index',
-	failureRedirect : '/login',
-	failureFlash : true
-}),ctrlMain.login);*/
-
-//module.exports = router;
 
 module.exports = function (passport){
 	var ensureAuthenticated = function (req, res, next){
@@ -86,14 +74,15 @@ module.exports = function (passport){
 	router.get('/users/list/:page', ensureAuthenticated, ctrlUsers.listPage);			// 회원 관리 리스트 출력 
 	router.get('/users/update/:page/:seq', ensureAuthenticated, ctrlUsers.updatePage);	// 회원 수정 페이지 호출
 	router.post('/users/update', ensureAuthenticated, ctrlUsers.update);				// 회원 수정
-	router.post('/users/delete', ensureAuthenticated, ctrlUsers.delete);			// 회원 삭제 
+	router.post('/users/delete', ensureAuthenticated, ctrlUsers.delete);				// 회원 삭제 
 	
 	//부서관리 
-	router.get('/department', ensureAuthenticated, ctrlMain.department);	// 부서 관리 
+	router.get('/department', ensureAuthenticated, ctrlDepart.department);		// 부서 관리 
+	router.post('/department/update', ensureAuthenticated, ctrlDepart.update);	// 부서 수정
+	router.post('/department/delete', ensureAuthenticated, ctrlDepart.delete);		// 부서 삭제 
 	
 	//공지관리 
 	router.get('/notice', ensureAuthenticated, ctrlMain.notice);			// 공지 관리 
-	
 	
 	
 	router.post('/login', passport.authenticate('local-login', {

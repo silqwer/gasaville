@@ -38,14 +38,6 @@ module.exports.schedule = (req, res) => {
 
 };
 
-//부서 관리   
-module.exports.department = (req, res) => {
-	res.render('adm/index', { 
-		title : '부서 관리 ',
-		userInfo : req.user	
-	}); 	
-};
-
 //공지 관리   
 module.exports.notice = (req, res) => {
 	res.render('adm/index', { 
