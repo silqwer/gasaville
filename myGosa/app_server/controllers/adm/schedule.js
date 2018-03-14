@@ -64,5 +64,4 @@ module.exports.delete = (req, res) => {
 			'result': true
 		});
 	});
-	
 };

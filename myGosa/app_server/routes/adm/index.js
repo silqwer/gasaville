@@ -7,6 +7,7 @@ var ctrlComment = require('../../controllers/adm/comment');
 var ctrlSchedule = require('../../controllers/adm/schedule');
 var ctrlPeriods = require('../../controllers/adm/periods');
 var ctrlApply = require('../../controllers/adm/apply');
+var ctrlUsers = require('../../controllers/adm/users');
 
 
 
@@ -81,7 +82,11 @@ module.exports = function (passport){
 	router.get('/apply/list/:page', ensureAuthenticated, ctrlApply.listPage);			// 신청 관리 리스트 출력 
 	
 	//회원 관리 
-	router.get('/users', ensureAuthenticated, ctrlMain.users);				// 회원 관리 
+	router.get('/users', ensureAuthenticated, ctrlUsers.users);							// 회원 관리 
+	router.get('/users/list/:page', ensureAuthenticated, ctrlUsers.listPage);			// 회원 관리 리스트 출력 
+	router.get('/users/update/:page/:seq', ensureAuthenticated, ctrlUsers.updatePage);	// 회원 수정 페이지 호출
+	router.post('/users/update', ensureAuthenticated, ctrlUsers.update);				// 회원 수정
+	router.post('/users/delete', ensureAuthenticated, ctrlUsers.delete);			// 회원 삭제 
 	
 	//부서관리 
 	router.get('/department', ensureAuthenticated, ctrlMain.department);	// 부서 관리 

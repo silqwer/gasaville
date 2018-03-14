@@ -5,8 +5,7 @@ var mysql_dbc = require('../../mysql/db_con.js')();
 var connection = mysql_dbc.init();
 
 
-var Apply = {
-	
+var Department = {
 	count : function (callback) {
 		return connection.query("SELECT COUNT(*) AS CNT " +
 				"FROM APPLY A INNER JOIN PERIOD P " +
@@ -32,7 +31,9 @@ var Apply = {
 				"LIMIT ?, ?", [begin, size], callback);
 	}, 
 	
-	
+	allLists : function (callback) {
+		return connection.query("SELECT SEQ, NAME FROM DEPARTMENT", callback);
+	}, 
 };
 
-module.exports = Apply; 
+module.exports = Department; 
