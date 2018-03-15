@@ -31,4 +31,29 @@
 		}
 	});
 	
+	$("#addBtn").on({
+		click:function(){
+			let callback = (data) => {
+				if(data.result){
+					//등록
+					let comSubmitForm = window.gosa.createSubmitForm('commonForm');
+					comSubmitForm.setUrl('/admin/department/insert');
+					comSubmitForm.addParam("NAME", data.name);
+					comSubmitForm.submit();
+				}else{
+					alert(data.name + '은 이미 등록된 부서명 입니다.');
+					return ;
+				}
+			}
+			
+			let comAjaxForm = window.gosa.createAjaxForm('commonForm');
+			comAjaxForm.setUrl('/admin/department/check');
+			comAjaxForm.addParam("NAME", $('#name').val());
+			comAjaxForm.setCallback(callback);
+			comAjaxForm.ajax();
+		}
+	});
+	
+
+	
 })();

@@ -38,13 +38,4 @@ module.exports.schedule = (req, res) => {
 
 };
 
-//공지 관리   
-module.exports.notice = (req, res) => {
-	res.render('adm/index', { 
-		title : '공지 관리',
-		userInfo : req.user	
-	}); 	
-};
-
-
 
