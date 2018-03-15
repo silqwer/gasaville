@@ -9,7 +9,7 @@ var ctrlPeriods = require('../../controllers/adm/periods');
 var ctrlApply = require('../../controllers/adm/apply');
 var ctrlUsers = require('../../controllers/adm/users');
 var ctrlDepart = require('../../controllers/adm/department');
-
+var ctrlNotice = require('../../controllers/adm/notice');
 
 module.exports = function (passport){
 	var ensureAuthenticated = function (req, res, next){
@@ -84,9 +84,15 @@ module.exports = function (passport){
 	router.post('/department/insert', ensureAuthenticated, ctrlDepart.insert);	// 부서 수정
 	
 	//공지관리 
-	router.get('/notice', ensureAuthenticated, ctrlMain.notice);			// 공지 관리 
-	
-	
+	router.get('/notice', ensureAuthenticated, ctrlNotice.notice);			// 공지 관리 
+	router.get('/notice/list/:page', ensureAuthenticated, ctrlNotice.listPage);				// 공지사항 리스트 출력  
+	router.get('/notice/insert/:page', ensureAuthenticated, ctrlNotice.insertPage);			// 공지사항 등록 페이지 호출
+	router.post('/notice/insert', ensureAuthenticated, ctrlNotice.insert);					// 공지사항 등록 
+	router.get('/notice/update/:page/:seq', ensureAuthenticated, ctrlNotice.updatePage);	// 공지사항 수정 페이지 호출 
+	router.post('/notice/update', ensureAuthenticated, ctrlNotice.update);					// 공지사항 수정
+	router.post('/notice/delete', ensureAuthenticated, ctrlNotice.delete);					// 공지사항 삭제
+
+	//로그인 
 	router.post('/login', passport.authenticate('local-login', {
 		successRedirect : '/admin/main',
 		failureRedirect : '/admin/login',
