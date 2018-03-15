@@ -18,10 +18,7 @@ module.exports = function (passport){
 	router.get('/', ctrlMain.index);												// 사용자 로그인  
 	router.get('/join', ctrlMain.join);												// 사용자 회원가입
 	router.get('/main', ensureAuthenticated, ctrlMain.main);						// 사용자 메인화면
-	router.get('/logout', function(req, res) {										// 사용자 로그아웃
-		req.logout();
-		res.redirect('/');
-	});
+	router.get('/logout', ensureAuthenticated, ctrlMain.logout);					// 사용자 로그아웃
 
 	router.post('/', passport.authenticate('local-login', {
 		successRedirect : '/gsv/main',
