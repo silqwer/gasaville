@@ -137,8 +137,8 @@ const Gosa = (function(){
 		}
 		
 		updateLayerPopup(el, schedule) {
-			var $el = $(el);        //레이어의 id를 $el 변수에 저장
-			var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
+			let $el = $(el);        //레이어의 id를 $el 변수에 저장
+			let isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
 			
 			$('#udtSchName').val(schedule.title);
 			$('#udtAppDate').val(schedule.start._i);
@@ -150,7 +150,7 @@ const Gosa = (function(){
 		
 			isDim ? $('.dim-layer2').fadeIn() : $el.fadeIn();
 
-	        var $elWidth = ~~($el.outerWidth()),
+	        let $elWidth = ~~($el.outerWidth()),
 	            $elHeight = ~~($el.outerHeight()),
 	            docWidth = $(document).width(),
 	            docHeight = $(document).height();
@@ -178,8 +178,8 @@ const Gosa = (function(){
 		
 		addLayerPopup (el) {
 		
-			var $el = $(el);        //레이어의 id를 $el 변수에 저장
-			var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
+			let $el = $(el);        //레이어의 id를 $el 변수에 저장
+			let isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
 			
 	        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
 	        
@@ -187,7 +187,7 @@ const Gosa = (function(){
 	        $('#applyDate').val('');
 	        $('#attendanceDate').val('');
 	        
-	        var $elWidth = ~~($el.outerWidth()),
+	        let $elWidth = ~~($el.outerWidth()),
 	            $elHeight = ~~($el.outerHeight()),
 	            docWidth = $(document).width(),
 	            docHeight = $(document).height();
