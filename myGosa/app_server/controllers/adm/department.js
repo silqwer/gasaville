@@ -39,7 +39,33 @@ module.exports.update = (req, res) => {
 			'seq': rows.insertId
 		});
 	});
+};
+
+module.exports.check = (req, res) => {
 	
+	let name = req.body.NAME;
+
+	
+	department.check(name, function(err, rows){
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
+		let result = true;
+		console.log(name);
+		console.log(rows[0]);
+		
+		if(rows[0].CNT > 0){
+			result = false;
+		}
+		
+		res.send({
+			'result': result,
+			'name': name,
+			'seq': rows.insertId
+		});
+	});
 };
 
 module.exports.delete = (req, res) => {
@@ -53,6 +79,20 @@ module.exports.delete = (req, res) => {
 	});
 	
 	res.redirect('/admin/department');
+	
+};
+
+module.exports.insert = (req, res) => {
+	let name = req.body.NAME;
+	
+	department.insert(name, function(err, rows){
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+
+		res.redirect('/admin/department');
+	});
 	
 };
 

@@ -79,7 +79,9 @@ module.exports = function (passport){
 	//부서관리 
 	router.get('/department', ensureAuthenticated, ctrlDepart.department);		// 부서 관리 
 	router.post('/department/update', ensureAuthenticated, ctrlDepart.update);	// 부서 수정
-	router.post('/department/delete', ensureAuthenticated, ctrlDepart.delete);		// 부서 삭제 
+	router.post('/department/delete', ensureAuthenticated, ctrlDepart.delete);	// 부서 삭제 
+	router.post('/department/check', ensureAuthenticated, ctrlDepart.check);	// 부서 체크
+	router.post('/department/insert', ensureAuthenticated, ctrlDepart.insert);	// 부서 수정
 	
 	//공지관리 
 	router.get('/notice', ensureAuthenticated, ctrlMain.notice);			// 공지 관리 

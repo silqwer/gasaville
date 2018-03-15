@@ -20,6 +20,18 @@ var Department = {
 		return connection.query("DELETE FROM DEPARTMENT WHERE SEQ = ?", [seq], callback);
 	}, 
 	
+	allLists : function (callback) {
+		return connection.query("SELECT SEQ, NAME FROM DEPARTMENT", callback);
+	},
+	
+	check : function (name, callback) {
+		return connection.query("SELECT COUNT(*) AS CNT " +
+				"FROM DEPARTMENT WHERE NAME = ?", [name], callback);
+	}, 
+	
+	insert : function (name, callback) {
+		return connection.query("INSERT INTO DEPARTMENT (NAME) VALUES (?)", [name], callback);
+	}, 
 };
 
 module.exports = Department; 
