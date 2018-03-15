@@ -53,8 +53,6 @@ module.exports.check = (req, res) => {
 		}
 		
 		let result = true;
-		console.log(name);
-		console.log(rows[0]);
 		
 		if(rows[0].CNT > 0){
 			result = false;
