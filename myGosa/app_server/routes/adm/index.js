@@ -65,9 +65,13 @@ module.exports = function (passport){
 	router.post('/periods/check/apply', ensureAuthenticated, ctrlPeriods.checkApply);		// 신청 정보 체크 
 	router.post('/periods/delete', ensureAuthenticated, ctrlPeriods.delete);				// 기수 정보 삭제 
 	
+	
 	//신청관리 
 	router.get('/apply', ensureAuthenticated, ctrlApply.apply);							// 신청 관리  
 	router.get('/apply/list/:page', ensureAuthenticated, ctrlApply.listPage);			// 신청 관리 리스트 출력 
+	router.get('/apply/stats', ensureAuthenticated, ctrlApply.stats);					// 신청 관리 통계 페이지 출력 
+	router.get('/apply/stats/closs/best', ensureAuthenticated, ctrlApply.best);			// 신청 관리 마감 통계 페이지 출력 
+	router.get('/apply/stats/closs/worst', ensureAuthenticated, ctrlApply.worst);		// 신청 관리 마감 통계 페이지 출력 
 	
 	//회원 관리 
 	router.get('/users', ensureAuthenticated, ctrlUsers.users);							// 회원 관리 
@@ -92,6 +96,7 @@ module.exports = function (passport){
 	router.post('/notice/update', ensureAuthenticated, ctrlNotice.update);					// 공지사항 수정
 	router.post('/notice/delete', ensureAuthenticated, ctrlNotice.delete);					// 공지사항 삭제
 
+	
 	//로그인 
 	router.post('/login', passport.authenticate('local-login', {
 		successRedirect : '/admin/main',

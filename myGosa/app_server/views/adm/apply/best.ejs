@@ -1,0 +1,50 @@
+
+  	<div style="width:100%">
+		<canvas id="canvas"></canvas>
+	</div>
+	
+	<script>
+		
+	let color = parent.Chart.helpers.color;
+	let config = {
+			type: 'radar',
+			data: {
+				labels: [
+					  <% for(let i=0; i< list.length; ++i){%>
+					  	'<%=list[i].EXAM_NAME%>',
+					  <%}%>
+				],
+				datasets: [{
+					label: '신청 마감 시간 (초)',
+					backgroundColor: color(parent.window.chartColors.red).alpha(0.2).rgbString(),
+					borderColor: parent.window.chartColors.red,
+					pointBackgroundColor: parent.window.chartColors.red,
+					data: [
+						<% for(let i=0; i< list.length; ++i){%>
+					  		'<%=list[i].CLOSSING_TIME%>',
+					  	<%}%>
+						
+					]
+				}]
+			},
+			options: {
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: '<%=title%>'			// 차트 타이틀 
+				},
+				scale: {
+					ticks: {
+						beginAtZero: true
+					}
+				}
+			}
+		};
+
+		window.onload = function() {
+			window.myRadar = new parent.Chart(document.getElementById('canvas'), config);
+		};
+
+	</script>	

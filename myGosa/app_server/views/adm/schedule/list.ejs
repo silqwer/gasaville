@@ -30,8 +30,6 @@
 			} 
 			today = yyyy+'-'+mm+'-'+dd;
 			
-			
-			
 		    $('#calendar').fullCalendar({
 		      header: {
 		        left: 'prev,next today',
@@ -48,10 +46,11 @@
 
 		      }, 
 		      dayClick: function(date, jsEvent, view) {	//날짜 선택 이벤트 
-
-		          // change the day's background color just for fun
+		          // 팝업 레이어 
 		          window.gosa.addLayerPopup('#addLayer');
-
+		      
+		      	  //신청일 초기화 
+		          $('#applyDate').val(date.format('YYYY-MM-DD')+'T10:00');
 		      },
 		      editable: false,
 		      eventLimit: true, // allow "more" link when too many events
@@ -104,8 +103,8 @@
 	                <div>
 	                	<div>일정등록</div>
 	                	<div>일정명: <input type="text" id="scheduleName"> </div>
-	                	<div>신청일: <input type="date" id="applyDate"> </div>
-	                	<div>출석일: <input type="date" id="attendanceDate"> </div>
+	                	<div>신청일: <input type="datetime-local" id="applyDate" readonly="readonly"> </div>
+	                	<div>출석일: <input type="datetime-local" id="attendanceDate"> </div>
 	                </div>
 	                <a href="#" id="addBtn" class="btn-layerClose">등록</a>
 	            </div>

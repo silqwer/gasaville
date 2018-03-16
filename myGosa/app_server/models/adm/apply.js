@@ -32,7 +32,31 @@ var Apply = {
 				"LIMIT ?, ?", [begin, size], callback);
 	}, 
 	
+	clossingTime: function (callback) {
+		return connection.query("SELECT " +
+				"(SELECT NAME FROM EXAM WHERE SEQ = P.EXAM_SEQ) AS EXAM_NAME, " +
+				"(SELECT TIMESTAMPDIFF(SECOND, S.APPLY_DATE, A.DATE)) AS CLOSSING_TIME " +
+				"FROM APPLY A INNER JOIN PERIOD P INNER JOIN SCHEDULE S " +
+				"ON A.PERIOD_SEQ = P.SEQ AND P.SCHEDULE_SEQ = S.SEQ ", callback);
+	}, 
 	
+	best: function (callback) {
+		return connection.query("SELECT " +
+				"(SELECT NAME FROM EXAM WHERE SEQ = P.EXAM_SEQ) AS EXAM_NAME, " +
+				"(SELECT TIMESTAMPDIFF(SECOND, S.APPLY_DATE, A.DATE)) AS CLOSSING_TIME " +
+				"FROM APPLY A INNER JOIN PERIOD P INNER JOIN SCHEDULE S " +
+				"ON A.PERIOD_SEQ = P.SEQ AND P.SCHEDULE_SEQ = S.SEQ " +
+				"ORDER BY CLOSSING_TIME ASC LIMIT 0,5", callback);
+	}, 
+	
+	worst: function (callback) {
+		return connection.query("SELECT " +
+				"(SELECT NAME FROM EXAM WHERE SEQ = P.EXAM_SEQ) AS EXAM_NAME, " +
+				"(SELECT TIMESTAMPDIFF(SECOND, S.APPLY_DATE, A.DATE)) AS CLOSSING_TIME " +
+				"FROM APPLY A INNER JOIN PERIOD P INNER JOIN SCHEDULE S " +
+				"ON A.PERIOD_SEQ = P.SEQ AND P.SCHEDULE_SEQ = S.SEQ " +
+				"ORDER BY CLOSSING_TIME DESC LIMIT 0,5", callback);
+	}
 };
 
 module.exports = Apply; 
