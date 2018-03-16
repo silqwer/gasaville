@@ -7,10 +7,12 @@ var bcrypt = require('bcrypt-nodejs');
 
 module.exports.insert = (req, res) => {
 	
+	
+	
 	let params = {
 			'name': req.body.NAME, 
-			'applyDate': req.body.APPLY_DATE, 
-			'attendanceDate': req.body.ATTENDANCE_DATE
+			'applyDate': req.body.APPLY_DATE.replace('T', ' '), 
+			'attendanceDate': req.body.ATTENDANCE_DATE.replace('T', ' ')
 	};
 	
 	schedule.insert(params, function(err, rows){

@@ -15,7 +15,7 @@
 							applyDate: $('#applyDate').val(),
 							attendanceDate: $('#attendanceDate').val()
 				    };
-				 
+					
 					$('#calendar').fullCalendar('renderEvent', eventData, true);
 				}
 				

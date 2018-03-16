@@ -7,7 +7,6 @@ var schedule =  require('../../models/adm/schedule');
 
 //신청 관리  
 module.exports.apply = (req, res) =>{
-	
 	res.redirect('/admin/apply/list/1');
 };
 
@@ -64,8 +63,49 @@ module.exports.listPage = (req, res) => {
 	});
 };
 
+//신청 통계 stats
+module.exports.stats = (req, res) => {
+	
+	res.render('adm/apply/stats', { 
+		'title' : '신청 관리 통계',
+		'userInfo' : req.user
+	}); 
+	
+};
 
+module.exports.best = (req, res) => {
+	
+	apply.best(function(err, rows){
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
+		res.render('adm/apply/best', { 
+			'list': rows,
+			'title': '가장 신청 마감이 빠른 고사장'
+		}); 
+		
+	});
+	
+};
 
-
-
+module.exports.worst = (req, res) => {
+	
+	apply.worst(function(err, rows){
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
+		res.render('adm/apply/worst', { 
+			'list': rows,
+			'title': '가장 신청 마감이 늦은 고사장'
+		}); 
+		
+	});
+	
+};
 
