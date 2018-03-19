@@ -5,6 +5,9 @@
 </head>
 
 <body>
+	<% if(body!=='login' && body!=='login') { %>
+	<% include ./gnb.ejs %>
+	<% } %>
 	<%- include(body)  %>
 	<%- include ./common/footer.ejs %>
 </body>
