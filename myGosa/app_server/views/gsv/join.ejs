@@ -35,14 +35,15 @@
 		<div class="department">
 			<select class="select01">
 				<option selected>부서</option>
-				<option>경영지원부</option>
-				<option>티처빌사업부</option>
-				<option>교육플랫폼사업부</option>
-				<option>미래교육사업부</option>
-				<option>에듀테크연구소</option>
+				<% for(let rCnt=0; rCnt<department.length; rCnt++) { %>
+				<option value="<%=rCnt+1%>"><%=department[rCnt].NAME%></option>
+				<% } %>
 			</select>
 			<select class="select02">
 				<option selected>직급</option>
+				<% for(let rCnt=0; rCnt<position.length; rCnt++) { %>
+				<option value="<%=rCnt+1%>"><%=position[rCnt].NAME%></option>
+				<% } %>
 			</select>
 		</div>
 		<input type="button" value="회원가입" id="joinBtn" style="width:400px; height:50px" class="bigbtn sky">

@@ -7,12 +7,6 @@ module.exports.index = (req, res) => {
 	});
 };
 
-module.exports.join = (req, res) => {
-	res.render('gsv/index', {
-		body : 'join'
-	});
-};
-
 module.exports.main = (req, res) => {
 	res.render('gsv/index', {
 		body : 'main'
