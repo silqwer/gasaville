@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<%- include ./common/header.ejs %>
+</head>
+
+<body>
+	<% if(body!=='login' && body!=='login') { %>
+	<% include ./gnb.ejs %>
+	<% } %>
+	<%- include(body)  %>
+	<%- include ./common/footer.ejs %>
+</body>
+</html>
