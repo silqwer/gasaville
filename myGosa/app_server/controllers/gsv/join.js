@@ -40,6 +40,8 @@ module.exports.main = (req, res) => {
  
 		department = rows;
 
+		console.log(rows);
+
 		join.positionList(function(err, rows) {
 			if(err) {
 				console.log(err);

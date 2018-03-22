@@ -14,7 +14,11 @@
 				focusout: function() {
 					let self = $(this);
 
-					if(self.val().trim().length === 0) 	return false;
+					if(self.val().trim().length === 0) 	{
+						$('.no').html('아이디를 입력해 주세요.');
+						$('.no').show();
+						return false;
+					}
 				}
 			},
 
