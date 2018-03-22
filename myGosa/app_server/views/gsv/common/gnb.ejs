@@ -1,3 +1,53 @@
+<div class="main-wrap">
+	<div class="left-wrap">
+		<div class="clock-wrap">
+			<div class="hour-wrap">
+				<div class="digit-top">
+					<div class="front">00</div>
+					<div class="back">00</div>
+				</div>
+				<div class="digit-bottom">
+					<div class="front">00</div>
+				</div>
+			</div>
+			<div class="min-wrap">
+				<div class="digit-top">
+					<div class="front">00</div>
+					<div class="back">00</div>
+				</div>
+				<div class="digit-bottom">
+					<div class="front">00</div>
+				</div>
+			</div>
+			<div class="sec-wrap">
+				<div class="digit-top">
+					<div class="front">00</div>
+					<div class="back">00</div>
+				</div>
+				<div class="digit-bottom">
+					<div class="front">00</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="left-menu">
+			<ul>
+				<li class="on"><a href="/gsv/main">신청</a></li>
+				<li><a href="#">신청관리</a></li>
+				<li><a href="#">지인관리</a></li>
+				<li class="noti">
+					<a href="/gsv/notice/list">공지사항</a>
+					<ul class="none">
+						<li><a href=""><span class="fcgray">[공지] </span>신청일시는 2018년 1월 13일입니다.</a></li>
+						<li><a href=""><span class="fcgray">[공지] </span>18-3기 유의사항 공지</a></li>
+						<li><a href=""><span class="fcgray">[공지] </span>공지사항입니다.</a></li>
+					</ul>
+				</li>
+				<li class="loginout"><a href="/gsv/logout">로그아웃</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
 
 
 <script src='http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js'></script>
@@ -7,7 +57,7 @@ Element.Properties.transform = {
 
   set: function(transform){
     var property = 'transform';
-		console.log(Browser);
+		//console.log(Browser);
 		if(Browser.chrome) property = 'WebkitTransform';
 		if(Browser.firefox)  property = 'MozTransform';
 		if(Browser.opera) property = 'OTransform';
@@ -34,9 +84,9 @@ Element.implement({
 
 });
 
-$(window).addEvent('domready', function()
-{
-  var $hourWrap = $$('.hour-wrap');
+
+$(function(){
+  	var $hourWrap = $$('.hour-wrap');
 	var $hourFront = $hourWrap.getElement('div.front');
 	var $hourBack = $hourWrap.getElement('div.back')
 	var $hourTop = $hourWrap.getElement('div.digit-top');
@@ -49,7 +99,7 @@ $(window).addEvent('domready', function()
 	var $minBottom = $minWrap.getElement('div.digit-bottom .front');
   
   
-  var $secWrap = $$('.sec-wrap');
+  	var $secWrap = $$('.sec-wrap');
 	var $secFront = $secWrap.getElement('div.front');
 	var $secBack = $secWrap.getElement('div.back');
 	var $secTop = $secWrap.getElement('div.digit-top');
@@ -57,14 +107,14 @@ $(window).addEvent('domready', function()
 
 	var currentHour = 0;
 	var currentMin = 0;
-  var currentSec = 0;
+  	var currentSec = 0;
 
 	var setClock = function()
 	{
 		var time = new Date();
 		var hour = time.getHours();
 		var min = time.getMinutes();
-    var sec = time.getSeconds();
+    	var sec = time.getSeconds();
 
 		if(currentHour != hour)
 		{
@@ -181,4 +231,5 @@ $(window).addEvent('domready', function()
 
 	setClock.periodical(1000);
 });
+
 </script>

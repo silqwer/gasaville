@@ -23,7 +23,9 @@ module.exports = function (passport){
 
 	router.get('/join/main', ctrlJoin.main);										// 사용자 회원가입
 
-	router.get('/notice/list', ensureAuthenticated, ctrlNotice.list);				// 공지사항 목록
+	router.get('/notice/list', ensureAuthenticated, ctrlNotice.list);				// 공지사항 페이지
+	router.get('/notice/list/:page', ensureAuthenticated, ctrlNotice.listPage);		// 공지사항 특정 목록
+	router.get('/notice/list/:page/:view', ensureAuthenticated, ctrlNotice.viewPage);// 공지사항 특정 페이지
 
 	router.post('/join/insert', ctrlJoin.insert);									// 회원가입 insert
 
