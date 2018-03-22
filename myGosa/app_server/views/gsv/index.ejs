@@ -5,8 +5,8 @@
 </head>
 
 <body>
-	<% if(body!=='login' && body!=='login') { %>
-	<% include ./gnb.ejs %>
+	<% if(body!=='login' && body!=='join') { %>
+	<% include ./common/gnb.ejs %>
 	<% } %>
 	<%- include(body)  %>
 	<%- include ./common/footer.ejs %>
