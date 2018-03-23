@@ -1,0 +1,45 @@
+
+  	<div style="width:100%">
+		<canvas id="canvas"></canvas>
+	</div>
+	
+	<script>
+		var color = parent.Chart.helpers.color;
+		var barChartData = {
+			labels: [
+					<% for(let i=0; i<list.length; ++i){ %>
+			  		'<%=list[i].USER_NAME%>', 	
+			  		<% } %>
+					],
+			datasets: [{
+				label: '<%=date%>',
+				backgroundColor: color(parent.window.chartColors.red).alpha(0.5).rgbString(),
+				borderColor: parent.window.chartColors.red,
+				borderWidth: 1,
+				data: [
+					<% for(let i=0; i<list.length; ++i){ %>
+			  		'<%=list[i].CNT%>', 	
+			  		<% } %>
+				]
+			}]
+	
+		};
+	
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myBar = new parent.Chart(ctx, {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					legend: {
+						position: 'top',
+					},
+					title: {
+						display: true,
+						text: '<%=title%>'
+					}
+				}
+			});
+		};
+	</script>	

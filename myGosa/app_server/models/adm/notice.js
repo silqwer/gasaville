@@ -28,9 +28,19 @@ var Notice = {
 	read : function (seq, callback) {
 		return connection.query("SELECT SEQ, TITLE, CONTENTS, " +
 				"DATE_FORMAT(START_DATE, '%Y-%m-%d') AS START_DATE, " +
-				"DATE_FORMAT(END_DATE, '%Y-%m-%d') AS END_DATE " +
+				"DATE_FORMAT(END_DATE, '%Y-%m-%d') AS END_DATE, " +
+				"DATE_FORMAT(DATE, '%Y-%m-%d') AS DATE " +
 				"FROM NOTICE " +
 				"WHERE SEQ = ?", [seq], callback);
+	},
+	
+	upDown : function (seq, callback) {
+		let pre = Number(seq)-1;
+		let next = Number(seq)+1;
+		
+		return connection.query("SELECT SEQ,TITLE, DATE_FORMAT(DATE, '%Y-%m-%d') AS DATE FROM NOTICE WHERE SEQ = ? " +
+				"UNION " +
+				"SELECT SEQ, TITLE, DATE_FORMAT(DATE, '%Y-%m-%d') AS DATE FROM NOTICE WHERE SEQ = ?", [pre, next], callback);
 	},
 	
 	update : function (params, callback) {
