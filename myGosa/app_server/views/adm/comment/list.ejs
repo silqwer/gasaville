@@ -2,62 +2,79 @@
 <html>
   <head>
     <title><%= title %></title>
-    <script src='/common/js/jquery/jquery.min.js'></script>
-    <script src='/adm/js/gosa.js'></script>
-    <link rel='stylesheet' href='/adm/css/style.css' />
+		<% include ../common/head %>
   </head>
   <body>
   	<input type="hidden" id="commentPage" name="commentPage" value="<%=page%>">
-    <h1><%= title %></h1>
-    <div>
-    	<select>
-		  <option value="contents" selected="selected">내용</option>
-		  <option value="exam">고사장</option>
-		  <option value="school">학교명</option>
-		  <option value="name">이름</option>
-		</select>
-    </div>
-    <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
-   	<table>
-   		<tr>
-   			<th>번호</th>
-   			<th>내용</th>
-   			<th>고사장</th>
-   			<th>학교명</th>
-   			<th>이름</th>
-   		</tr>
-   		<% for(let i=0; i<list.length; ++i){ %>
-   		<tr>
-   			<td><%=max-i%></td>
-   			<td><a href="/admin/comment/list/<%=page%>/<%=max-i%>/<%=list[i].SEQ%>"><%=list[i].CONTENTS%></a></td>
-   			<td><%=list[i].EXAM%></td>
-   			<td><%=list[i].SCHOOL%></td>
-   			<td><%=list[i].NAME%></td>
-   		</tr>
-   		<% } %>
-   	</table>
-   	<div>
-      <% if(page > pageSize) { %>
-        [ <a href="/admin/comment/list/1" style="text-decoration: none;">◀◀</a> ]
-        [ <a href="/admin/comment/list/<%=startPage-1%>" style="text-decoration: none;">◀</a> ]
-      <% } %>
-     
-      &nbsp;&nbsp;
-      <% for (var i=startPage; i<=endPage; i++) { %>
-        <% if (i== page) {%>
-          [ <%=i%> ]
-        <% } else { %>
-          [ <a href="/admin/comment/list/<%=i%>" style="text-decoration: none;"><%=i%></a> ]
-        <% } %>
-      <% } %>
-      &nbsp;&nbsp;
-      <% if (endPage < totalPage) { %>
-        [ <a href="/admin/comment/list/<%=endPage+1%>" style="text-decoration: none;">▶</a> ]
-        [ <a href="/admin/comment/list/<%=totalPage%>" style="text-decoration: none;">▶▶</a> ]
-      <% } %>
-      
-    </div>
-    <div>
+    <div class="main-wrap">
+    	<% include ../common/menu %>
+    	<div class="content-wrap">
+    		<h2><%= title %></h2>
+    		<div>
+		    	<select>
+					  <option value="contents" selected="selected">내용</option>
+					  <option value="exam">고사장</option>
+					  <option value="school">학교명</option>
+					  <option value="name">이름</option>
+					</select>
+		    </div>
+		    <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
+		    
+		    <div>
+					<table class="thead-tbl">
+						<colgroup>
+							<col style="width:10%">
+							<col style="width:*%">
+							<col style="width:10%">
+							<col style="width:10%">
+							<col style="width:10%">
+						</colgroup>
+						<thead>
+							<tr>
+				   			<th>번호</th>
+				   			<th>내용</th>
+				   			<th>고사장</th>
+				   			<th>학교명</th>
+				   			<th>이름</th>
+				   		</tr>
+						</thead>
+						<tbody>
+							<% for(let i=0; i<list.length; ++i){ %>
+					   		<tr>
+					   			<td><%=max-i%></td>
+					   			<td><a href="/admin/comment/list/<%=page%>/<%=max-i%>/<%=list[i].SEQ%>"><%=list[i].CONTENTS%></a></td>
+					   			<td><%=list[i].EXAM%></td>
+					   			<td><%=list[i].SCHOOL%></td>
+					   			<td><%=list[i].NAME%></td>
+					   		</tr>
+					   		<% } %>
+						</tbody>
+					</table>
+				</div>
+				
+				<div class="pagenum">
+					<ul>
+						<% if(page > pageSize) { %>
+						<li><a href="/admin/comment/list/1"><i class="fa fa-angle-double-left"></i></a></li>
+						<li><a href="/admin/comment/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+						<% } %>
+						
+						<% for (var i=startPage; i<=endPage; i++) { %>
+			        	<% if (i== page) {%>
+			        	<li class="on"><%=i%></li>
+			        	<% } else { %>
+			        	<li><a href="/admin/comment/list/<%=i%>"><%=i%></a></li>
+			       		<% } %>
+			      		<% } %>
+						
+						<% if (endPage < totalPage) { %>
+						<li><a href="/admin/comment/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
+						<li><a href="/admin/comment/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+			      	    <% } %>
+					</ul>
+				</div>
+				
+    	</div>
     </div>
   </body>
   <script src='/adm/js/comment.js'></script>

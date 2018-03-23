@@ -1,51 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head>
+	<head>
     <title><%= title %></title>
-    <script src='/common/js/jquery/jquery.min.js'></script>
-    <script src='/adm/js/gosa.js'></script>
-    <link rel='stylesheet' href='/adm/css/style.css' />
+   	<% include ../common/head %>
   </head>
   <body>
-    <input type="hidden" id="examPage" name="examPage" value="<%=page%>">
-    <h1><%= title %></h1>
-   
-   	<table>
-   		<tr>
-   			<th>번호</th>
-   			<th>일정명</th>		
-   		</tr>
-   		<% for(let i=0; i<list.length; ++i){ %>
-   		<tr>
-   			<td><%=max-i%></td>
-   			<td><a href="/admin/periods/update/<%=page%>/<%=list[i].SCHEDULE_SEQ%>"><%=list[i].SCHEDULE_NAME%></a></td>
-   		</tr>
-   		<% } %>
-   	</table>
-   	<div>
-      <% if(page > pageSize) { %>
-        [ <a href="/admin/periods/list/1" style="text-decoration: none;">◀◀</a> ]
-        [ <a href="/admin/periods/list/<%=startPage-1%>" style="text-decoration: none;">◀</a> ]
-      <% } %>
-     
-      &nbsp;&nbsp;
-      <% for (var i=startPage; i<=endPage; i++) { %>
-        <% if (i== page) {%>
-          [ <%=i%> ]
-        <% } else { %>
-          [ <a href="/admin/periods/list/<%=i%>" style="text-decoration: none;"><%=i%></a> ]
-        <% } %>
-      <% } %>
-      &nbsp;&nbsp;
-      <% if (endPage < totalPage) { %>
-        [ <a href="/admin/periods/list/<%=endPage+1%>" style="text-decoration: none;">▶</a> ]
-        [ <a href="/admin/periods/list/<%=totalPage%>" style="text-decoration: none;">▶▶</a> ]
-      <% } %> 
-      
+    <input type="hidden" id="periodPage" name="periodPage" value="<%=page%>">
+    <div class="main-wrap">
+    	<% include ../common/menu %>
+    	<div class="content-wrap">
+    		<h2><%= title %></h2>
+    		<div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
+				
+				<div>
+					<table class="thead-tbl">
+						<colgroup>
+							<col style="width:10%">
+							<col style="width:*%">
+						</colgroup>
+						<thead>
+							<tr>
+				   			<th>번호</th>
+				   			<th>일정명</th>		
+				   		</tr>
+						</thead>
+						<tbody>
+							<% for(let i=0; i<list.length; ++i){ %>
+				   		<tr>
+				   			<td><%=max-i%></td>
+				   			<td><a href="/admin/periods/update/<%=page%>/<%=list[i].SCHEDULE_SEQ%>"><%=list[i].SCHEDULE_NAME%></a></td>
+				   		</tr>
+				   		<% } %>
+						</tbody>
+					</table>
+				</div>
+				
+				<div class="pagenum">
+					<ul>
+						<% if(page > pageSize) { %>
+						<li><a href="/admin/periods/list/1"><i class="fa fa-angle-double-left"></i></a></li>
+						<li><a href="/admin/periods/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+						<% } %>
+						
+						<% for (var i=startPage; i<=endPage; i++) { %>
+	        	<% if (i== page) {%>
+	        	<li class="on"><%=i%></li>
+	        	<% } else { %>
+	        	<li><a href="/admin/periods/list/<%=i%>"><%=i%></a></li>
+	       		<% } %>
+	      		<% } %>
+						
+						<% if (endPage < totalPage) { %>
+						<li><a href="/admin/periods/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
+						<li><a href="/admin/periods/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+			      <% } %>
+					</ul>
+				</div>
+
+				 <div><button id="addBtn">등록</button></div>
+
+    	</div>
     </div>
-    <div>
-    <button id="addBtn">등록</button>
-    </div>
+ 
   </body>
   <script src='/adm/js/periods.js'></script>
 </html>
