@@ -86,20 +86,39 @@ module.exports.updatePage = (req, res) => {
 	let page = req.params.page; 
 	let seq = req.params.seq; 
 	
-	notice.read(seq, function(err, rows){
-		
+	notice.upDown(seq, function (err, rows) {
 		if (err) {
 			console.error(err);
 			throw err;
 		}
 		
-		res.render('adm/notice/update', { 
-			'title' : '공지사항 관리',
-			'userInfo' : req.user,
-			'notice' : rows[0], 
-			'page' : page
-		}); 
+		let pre = null;
+		let next = null;
+		
+		if(rows[0] !== undefined){
+			pre = rows[0];
+		}
+		
+		if(rows[1] !== undefined){
+			next = rows[1];
+		}
+		
+		notice.read(seq, function(err, rows){
+			if (err) {
+				console.error(err);
+				throw err;
+			}
+			res.render('adm/notice/update', { 
+				'title' : '공지사항 관리',
+				'userInfo' : req.user,
+				'notice' : rows[0], 
+				'pre' : pre, 
+				'next' : next, 
+				'page' : page
+			}); 
+		});
 	});
+	
 };
 
 module.exports.update = (req, res) =>{

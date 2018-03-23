@@ -1,0 +1,54 @@
+
+  	<div style="width:100%">
+		<canvas id="canvas"></canvas>
+	</div>
+	
+	<script>
+		var color = parent.Chart.helpers.color;
+		var horizontalBarChartData = {
+			labels: [
+					<% for(let i=0; i<list.length; ++i){ %>
+				  		'<%=list[i].USER_NAME%>', 	
+				  	<% } %>
+					],
+			datasets: [{
+				label: '<%=title%>',
+				backgroundColor: color(parent.window.chartColors.red).alpha(0.5).rgbString(),
+				borderColor: parent.window.chartColors.red,
+				borderWidth: 1,
+				data: [
+					<% for(let i=0; i<list.length; ++i){ %>
+			  		'<%=list[i].CNT_SUM%>', 	
+			  		<% } %>
+				]
+			}]
+
+		};
+		
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myHorizontalBar = new parent.Chart(ctx, {
+				type: 'horizontalBar',
+				data: horizontalBarChartData,
+				options: {
+					// Elements options apply to all of the options unless overridden in a dataset
+					// In this case, we are setting the border of each horizontal bar to be 2px wide
+					elements: {
+						rectangle: {
+							borderWidth: 2,
+						}
+					},
+					responsive: true,
+					legend: {
+						position: 'right',
+					},
+					title: {
+						display: true,
+						text: '<%=examName%>'
+					}
+				}
+			});
+
+		};
+		
+	</script>	

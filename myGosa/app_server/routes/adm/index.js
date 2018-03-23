@@ -69,9 +69,18 @@ module.exports = function (passport){
 	//신청관리 
 	router.get('/apply', ensureAuthenticated, ctrlApply.apply);							// 신청 관리  
 	router.get('/apply/list/:page', ensureAuthenticated, ctrlApply.listPage);			// 신청 관리 리스트 출력 
-	router.get('/apply/stats', ensureAuthenticated, ctrlApply.stats);					// 신청 관리 통계 페이지 출력 
+	router.get('/apply/stats', ensureAuthenticated, ctrlApply.stats);					// 신청 관리 통계 페이지 출력
+	router.get('/apply/stats/closs', ensureAuthenticated, ctrlApply.closs);				// 신청 관리 마감 통계 페이지 출력 
 	router.get('/apply/stats/closs/best', ensureAuthenticated, ctrlApply.best);			// 신청 관리 마감 통계 페이지 출력 
 	router.get('/apply/stats/closs/worst', ensureAuthenticated, ctrlApply.worst);		// 신청 관리 마감 통계 페이지 출력 
+	router.get('/apply/stats/visit', ensureAuthenticated, ctrlApply.visit);				// 신청 관리 고사장별 신청 랭킹 통계 페이지 출력 
+	router.get('/apply/stats/visit/:seq', ensureAuthenticated, ctrlApply.visitPage);	// 신청 관리 고사장별 신청 랭킹 통계 페이지 출력 
+	router.get('/apply/stats/accrue', ensureAuthenticated, ctrlApply.accrue);			// 신청 관리 연간 출석 고사 참여횟수 통계 페이지 출력 
+	router.get('/apply/stats/accrue/:seq', ensureAuthenticated, ctrlApply.accruePage);	// 신청 관리 연간 출석 고사 참여횟수 통계 페이지 출력 
+	router.get('/apply/stats/user', ensureAuthenticated, ctrlApply.user);				// 신청 관리 개일별 참석 고사장 비율 통계 페이지 출력 
+	router.get('/apply/stats/user/:seq', ensureAuthenticated, ctrlApply.userPage);		// 신청 관리 개일별 참석 고사장 비율 통계 페이지 출력 
+	
+	
 	
 	//회원 관리 
 	router.get('/users', ensureAuthenticated, ctrlUsers.users);							// 회원 관리 

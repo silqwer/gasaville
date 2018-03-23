@@ -42,9 +42,11 @@ var Periods = {
 				"E.SEQ AS SEQ, " +
 				"E.NAME AS NAME, " +
 				"(SELECT IF((SELECT DISTINCT P.SCHEDULE_SEQ  FROM PERIOD P WHERE P.EXAM_SEQ = E.SEQ AND P.SCHEDULE_SEQ = ?) IS NULL, '', 'checked')) AS CHECKED, " + 
-				"(SELECT COUNT(C.CLASS) FROM PERIOD C WHERE C.EXAM_SEQ = D.EXAM_SEQ) AS CLASS " + 
+				"(SELECT COUNT(P.CLASS) FROM PERIOD P WHERE P.SCHEDULE_SEQ = D.SCHEDULE_SEQ AND P.EXAM_SEQ = D.EXAM_SEQ) AS CLASS " + 
 				"FROM EXAM E LEFT JOIN PERIOD D " +
-				"ON E.SEQ = D.EXAM_SEQ ORDER BY NAME ASC", [seq, seq], callback);
+				"ON E.SEQ = D.EXAM_SEQ " +
+				"AND D.SCHEDULE_SEQ = ?" +
+				"ORDER BY NAME ASC", [seq, seq], callback);
 	}, 
 	
 	countApply : function (seq, callback) {
@@ -52,7 +54,7 @@ var Periods = {
 	}, 
 	
 	count : function (callback) {
-		return connection.query('SELECT COUNT(*) AS CNT FROM PERIOD', callback);
+		return connection.query('SELECT COUNT(DISTINCT SCHEDULE_SEQ) AS CNT FROM PERIOD', callback);
 	},
 	
 	insert : function (params, callback) {

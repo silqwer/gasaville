@@ -2,29 +2,56 @@
 <html>
   <head>
     <title><%= title %></title>
-    <script src='/common/js/jquery/jquery.min.js'></script>
-    <script src='/adm/js/gosa.js'></script>
-    <link rel='stylesheet' href='/adm/css/style.css' />
+  	<% include ../common/head %>
   </head>
   <body>
   	<input type="hidden" id="noticePage" name="noticePage" value="<%=page%>">
   	<input type="hidden" id="noticeSeq" name="noticeSeq" value="<%=notice.SEQ%>">
     <form id="commonForm" name="commonForm"></form>
-   	<label>시작일</label>
-   	<input type="date" id="startDate" value="<%=notice.START_DATE%>"><br>
-   	<label>종료일</label>
-   	<input type="date" id="endDate" value="<%=notice.END_DATE%>"><br>
-   	<label>제목</label>
-   	<input type="text" id="title" value="<%=notice.TITLE%>"><br>
-   	<label>내용</label>
-   	<input type="text" id="contents" value="<%=notice.CONTENTS%>"><br>
-   	
-    <div>
-    	<button id="updateBtn">수정</button>
-    	<button id="deleteBtn">삭제</button>
-    	<button id="cancelBtn">취소</button>
-    </div>
+   	<div class="main-wrap">
+   		<% include ../common/menu %>
+   		<div class="content-wrap">
+   			<h2><%= title %></h2>
+   			<div class="view">
+   				<div class="title">
+					<p><%=notice.TITLE%></p>
+					<ul>
+						<li><span class="mr10">시작일</span><input type="date" id="startDate" value="<%=notice.START_DATE%>"></li>
+						<li><span class="mr10">종료일</span><input type="date" id="endDate" value="<%=notice.END_DATE%>"></li>
+						<li><span class="mr10">등록일</span><input type="date" id="Date" value="<%=notice.DATE%>"></li>
+					</ul>
+				</div>
+				<div class="text">
+					<textarea rows="" cols="" id="contents" >
+					<%=notice.CONTENTS%>
+					</textarea>
+				</div>
+				<div class="list">
+					<ul>
+						<% if (next != null) { %>
+						<li class="next">
+							<p><i class="fa fa-caret-up mr10"></i>다음글</p>
+							<a href="/admin/notice/update/<%=page%>/<%=next.SEQ%>"><%=next.TITLE %></a>
+							<span><%=next.DATE %></span>
+						</li>
+						<% } %>
+						
+						<% if (pre != null) { %>
+						<li class="pre">
+							<p><i class="fa fa-caret-down mr10"></i>이전글</p>
+							<a href="/admin/notice/update/<%=page%>/<%=pre.SEQ%>"><%=pre.TITLE %></a>
+							<span><%=pre.DATE %></span>
+						</li>
+						<% } %>
+						
+					</ul>
+					<button type="button" id="updateBtn" class="mbtn whitebtn mt20 fr">수정</button>
+					<button type="button" id="updateBtn" class="mbtn whitebtn mt20 fr">삭제</button>
+					<button type="button" id="cancelBtn" class="mbtn whitebtn mt20 fr">목록</button>
+				</div>
+   			</div>
+   		</div>
+   	</div>
   </body>
- 
   <script src='/adm/js/notice.js'></script>
 </html>

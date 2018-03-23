@@ -16,6 +16,13 @@ var Schedule = {
 				"FROM SCHEDULE", callback);
 	}, 
 	
+	dateList : function(callback) {
+		return connection.query("SELECT DISTINCT DATE_FORMAT(APPLY_DATE, '%Y') AS APPLY_DATE " +
+				"FROM SCHEDULE " +
+				"ORDER BY APPLY_DATE DESC " +
+				"LIMIT 0, 3", callback);
+	}, 
+	
 	insert : function (params, callback) {
 		return connection.query("INSERT INTO SCHEDULE (NAME, APPLY_DATE, ATTENDANCE_DATE)" +
 				"VALUES (?, ?, ?)", [params.name, params.applyDate, params.attendanceDate], callback);

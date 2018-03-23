@@ -1,0 +1,52 @@
+
+  	<div style="width:100%">
+		<canvas id="canvas"></canvas>
+	</div>
+	
+	<script>
+	
+	var config = {
+		type: 'doughnut',
+		data: {
+			datasets: [{
+				data: [
+					<% for(let i=0; i<list.length; ++i){ %>
+			  		'<%=list[i].EXAM_RATE%>', 	
+			  		<% } %>
+				],
+				backgroundColor: [
+					parent.window.chartColors.red,
+					parent.window.chartColors.orange,
+					parent.window.chartColors.yellow,
+					parent.window.chartColors.green,
+					parent.window.chartColors.blue,
+				],
+				label: '<%=name%>'
+			}],
+			labels: [
+				<% for(let i=0; i<list.length; ++i){ %>
+		  		'<%=list[i].EXAM_NAME%>', 	
+		  		<% } %>
+			]
+		},
+		options: {
+			responsive: true,
+			legend: {
+				position: 'top',
+			},
+			title: {
+				display: true,
+				text: '<%=title%>'
+			},
+			animation: {
+				animateScale: true,
+				animateRotate: true
+			}
+		}
+	};
+
+	window.onload = function() {
+		var ctx = document.getElementById('canvas').getContext('2d');
+		window.myDoughnut = new parent.Chart(ctx, config);
+	};
+	</script>	

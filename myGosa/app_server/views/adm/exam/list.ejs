@@ -2,14 +2,79 @@
 <html>
   <head>
     <title><%= title %></title>
-    <script src='/common/js/jquery/jquery.min.js'></script>
-    <script src='/adm/js/gosa.js'></script>
-    <link rel='stylesheet' href='/adm/css/style.css' />
+    <% include ../common/head %>
   </head>
   <body>
   	<input type="hidden" id="examPage" name="examPage" value="<%=page%>">
-    <h1><%= title %></h1>
-    <div>
+    <div class="main-wrap">
+  		<% include ../common/menu %>
+  		<div class="content-wrap">
+  			<h2><%= title %></h2>
+  			 <div>
+		    	<select>
+				  <option value="name" selected="selected">고사장</option>
+				  <option value="school">학교명</option>
+				  <option value="addr">주소</option>
+				</select>
+		    </div>
+		    <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
+  			<div>
+				<table class="thead-tbl">
+					<colgroup>
+						<col style="width:12%">
+						<col style="width:20%">
+						<col style="width:*%">
+						<col style="width:20%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>번호</th>
+				   			<th>고사장 이름</th>
+				   			<th>학교 이름</th>
+				   			<th>주소</th>		
+						</tr>
+					</thead>
+					<tbody>
+						<% for(let i=0; i<list.length; ++i){ %>
+				   		<tr>
+							<td><%=max-i%></td>
+							<td><%=list[i].NAME%></td>
+							<td><a href="/admin/exam/update/<%=page%>/<%=list[i].SEQ%>"><%=list[i].SCHOOL%></a></td>
+							<td><%=list[i].ADDR%></td>
+						</tr>
+				   		<% } %>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="pagenum">
+				<ul>
+					<% if(page > pageSize) { %>
+					<li><a href="/admin/exam/list/1"><i class="fa fa-angle-double-left"></i></a></li>
+					<li><a href="/admin/exam/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+					<% } %>
+					
+					<% for (var i=startPage; i<=endPage; i++) { %>
+		        	<% if (i== page) {%>
+		        	<li class="on"><%=i%></li>
+		        	<% } else { %>
+		        	<li><a href="/admin/exam/list/<%=i%>"><%=i%></a></li>
+		       		<% } %>
+		      		<% } %>
+					
+					<% if (endPage < totalPage) { %>
+					<li><a href="/admin/exam/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
+					<li><a href="/admin/exam/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+		      	    <% } %>
+				</ul>
+			</div>
+			
+			 <div><button id="addBtn">추가</button></div> 
+  		</div>
+  	</div>
+    
+    
+    <!-- <div>
     	<select>
 		  <option value="name" selected="selected">고사장</option>
 		  <option value="school">학교명</option>
@@ -56,7 +121,7 @@
     </div>
     <div>
     <button id="addBtn">추가</button>
-    </div>
+    </div> -->
   </body>
   <script src='/adm/js/exam.js'></script>
 </html>

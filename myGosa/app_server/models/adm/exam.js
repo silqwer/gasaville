@@ -16,6 +16,14 @@ var Exam = {
 				"LIMIT ?, ?", [begin, size], callback);
 	}, 
 	
+	allLists :  function(callback) {
+	
+		return connection.query("SELECT " +
+				"SEQ, NAME, SCHOOL, ADDR " +
+				"FROM EXAM " +
+				"ORDER BY SEQ DESC " , callback);
+	},  
+	
 	historyList : function(begin, size, callback) {
 	
 		return connection.query("SELECT " +

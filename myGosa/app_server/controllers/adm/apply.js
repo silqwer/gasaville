@@ -4,6 +4,7 @@
 
 var apply =  require('../../models/adm/apply');
 var schedule =  require('../../models/adm/schedule');
+var exam = require('../../models/adm/exam');
 
 //신청 관리  
 module.exports.apply = (req, res) =>{
@@ -70,6 +71,14 @@ module.exports.stats = (req, res) => {
 		'title' : '신청 관리 통계',
 		'userInfo' : req.user
 	}); 
+};
+
+module.exports.closs = (req, res) => {
+	
+	res.render('adm/apply/closs', { 
+		title : '고사장 마감 통계',
+		userInfo : req.user				//세션 정보
+	}); 	
 	
 };
 
@@ -109,3 +118,109 @@ module.exports.worst = (req, res) => {
 	
 };
 
+module.exports.visit = (req, res) => {
+	
+	exam.allLists(function(err, rows){
+		res.render('adm/apply/visit', { 
+			title : '고사장 마감 통계',
+			userInfo : req.user,				//세션 정보
+			examList : rows
+		}); 
+	});
+	
+};
+
+module.exports.visitPage = (req, res) => {
+	
+	let seq = req.params.seq;
+	
+	exam.read(seq, function(err, rows){
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
+		let examName = rows[0].NAME;
+		
+		apply.visit(seq, function(err, rows){
+			
+			if (err) {
+				console.error(err);
+				throw err;
+			}
+			
+			res.render('adm/apply/visitPage', { 
+				'list': rows,
+				'examName' : examName, 
+				'title': examName + ' 신청수 '
+			}); 
+		});
+	});
+};
+
+
+module.exports.accrue = (req, res) => {
+	
+	schedule.dateList(function(err, rows){
+		res.render('adm/apply/accrue', { 
+			title : '고사장 마감 통계',
+			userInfo : req.user,				//세션 정보
+			list : rows
+		}); 
+	});
+};
+
+module.exports.accruePage = (req, res) => {
+	
+	let date = req.params.seq;
+	
+	apply.accrue(date, function(err, rows){
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
+		res.render('adm/apply/accruePage', { 
+			'list' : rows,
+			'title' : date + ' 년 출석고사 참여횟수  ',
+			'date' : date
+		}); 
+	});
+};
+
+module.exports.user = (req, res) => {
+
+	apply.userList(function(err, rows){
+		res.render('adm/apply/user', { 
+			title : '개일별 참석 고사장 비율',
+			userInfo : req.user,				//세션 정보
+			list : rows
+		}); 
+	});
+};
+
+module.exports.userPage = (req, res) => {
+	
+	let seq = req.params.seq;
+	
+	apply.sum(seq, function(err, rows){
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
+		let sum = rows[0].SUM;
+		let name = rows[0].NAME;
+		
+		apply.examRate(sum, seq, function(err, rows){
+			res.render('adm/apply/userPage', { 
+				'list' : rows,
+				'title' : name + ' 참석 고사장 비율',
+				'name' : name
+			}); 
+		});
+	});
+};
