@@ -2,81 +2,104 @@
 <html>
   <head>
     <title><%= title %></title>
-    <script src='/common/js/jquery/jquery.min.js'></script>
-    <script src='/adm/js/gosa.js'></script>
-    <link rel='stylesheet' href='/adm/css/style.css' />
+    <% include ../common/head %>
   </head>
   <body>
   	<input type="hidden" id="applyPage" name="applyPage" value="<%=page%>">
-    <h1><%= title %></h1>
+    <div class="main-wrap">
+    	<% include ../common/menu %>
+  		<div class="content-wrap">
+  		<h2><%= title %></h2>
+  		<div>
+    		<select>
+    		<% for(let i=0; i<schList.length; ++i){ %>
+    	  	<option value="<%=schList[i].SEQ%>"><%=schList[i].NAME%></option>
+    		<%}%>
+				</select>
+    	</div>
+    	
+    	<div>
+	    	<select>
+				  <option value="name" selected="selected">고사장</option>
+				  <option value="school">학교명</option>
+				  <option value="department">소속</option>
+				  <option value="position">직책</option>
+				  <option value="name">이름</option>
+				  <option value="cellphone">연락처</option>
+				  <option value="state">신청</option>
+				</select>
+    	</div>
+    	
+    	<div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
     
-     <div>
-    	<select>
-    	<% for(let i=0; i<schList.length; ++i){ %>
-    	  <option value="<%=schList[i].SEQ%>"><%=schList[i].NAME%></option>
-    	<%}%>
-		</select>
+    	<div>
+					<table class="thead-tbl">
+						<colgroup>
+							<col style="width:10%">
+							<col style="width:*%">
+							<col style="width:10%">
+							<col style="width:10%">
+							<col style="width:15%">
+							<col style="width:10%">
+							<col style="width:10%">
+							<col style="width:10%">
+							<col style="width:10%">
+						</colgroup>
+						<thead>
+							<tr>
+				   			<th>번호</th>
+				   			<th>고사장</th>
+				   			<th>학교</th>
+				   			<th>반</th>
+								<th>소속</th>
+				   			<th>직책</th>
+				   			<th>이름</th>	
+				   			<th>연락처</th>
+				   			<th>신청상태</th>		
+				   		</tr>
+						</thead>
+						<tbody>
+							<% for(let i=0; i<list.length; ++i){ %>
+				   		<tr>
+				   			<td><%=max-i%></td>
+				   			<td><%=list[i].EXAM_NAME%></td>
+				   			<td><%=list[i].EXAM_SCHOOL%></td>
+				   			<td><%=list[i].CLASS%></td>
+				   			<td><%=list[i].DEPARTMENT%></td>
+				   			<td><%=list[i].POSITION%></td>
+				   			<td><%=list[i].USER_NAME%></td>
+				   			<td><%=list[i].CHELLPHONE%></td>
+				   			<td><%=list[i].STATE%></td>
+				   		</tr>
+				   		<% } %>
+						</tbody>
+					</table>
+				</div>
+  		
+  			<div class="pagenum">
+					<ul>
+						<% if(page > pageSize) { %>
+						<li><a href="/admin/exam/history/list/1"><i class="fa fa-angle-double-left"></i></a></li>
+						<li><a href="/admin/exam/history/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+						<% } %>
+						
+						<% for (var i=startPage; i<=endPage; i++) { %>
+			        	<% if (i== page) {%>
+			        	<li class="on"><%=i%></li>
+			        	<% } else { %>
+			        	<li><a href="/admin/exam/history/history/list/<%=i%>"><%=i%></a></li>
+			       		<% } %>
+			      		<% } %>
+						
+						<% if (endPage < totalPage) { %>
+						<li><a href="/admin/exam/history/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
+						<li><a href="/admin/exam/history/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+			      	    <% } %>
+					</ul>
+				</div>
+  		
+  		</div>
     </div>
     
-    <div>
-    	<select>
-		  <option value="name" selected="selected">고사장</option>
-		  <option value="school">학교명</option>
-		  <option value="department">소속</option>
-		  <option value="position">직책</option>
-		  <option value="name">이름</option>
-		  <option value="cellphone">연락처</option>
-		  <option value="state">신청</option>
-		</select>
-    </div>
-    <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
-   	<table>
-   		<tr>
-   			<th>번호</th>
-   			<th>고사장</th>
-   			<th>학교</th>
-   			<th>반</th>
-			<th>소속</th>
-   			<th>직책</th>
-   			<th>이름</th>	
-   			<th>연락처 </th>	
-   		</tr>
-   		<% for(let i=0; i<list.length; ++i){ %>
-   		<tr>
-   			<td><%=max-i%></td>
-   			<td><%=list[i].EXAM_NAME%></td>
-   			<td><%=list[i].EXAM_SCHOOL%></td>
-   			<td><%=list[i].CLASS%></td>
-   			<td><%=list[i].DEPARTMENT%></td>
-   			<td><%=list[i].POSITION%></td>
-   			<td><%=list[i].USER_NAME%></td>
-   			<td><%=list[i].CHELLPHONE%></td>
-   			<td><%=list[i].STATE%></td>
-   		</tr>
-   		<% } %>
-   	</table>
-   	<div>
-      <% if(page > pageSize) { %>
-        [ <a href="/admin/exam/history/list/1" style="text-decoration: none;">◀◀</a> ]
-        [ <a href="/admin/exam/history/list/<%=startPage-1%>" style="text-decoration: none;">◀</a> ]
-      <% } %>
-     
-      &nbsp;&nbsp;
-      <% for (var i=startPage; i<=endPage; i++) { %>
-        <% if (i== page) {%>
-          [ <%=i%> ]
-        <% } else { %>
-          [ <a href="/admin/exam/history/list/<%=i%>" style="text-decoration: none;"><%=i%></a> ]
-        <% } %>
-      <% } %>
-      &nbsp;&nbsp;
-      <% if (endPage < totalPage) { %>
-        [ <a href="/admin/exam/history/list/<%=endPage+1%>" style="text-decoration: none;">▶</a> ]
-        [ <a href="/admin/exam/history/list/<%=totalPage%>" style="text-decoration: none;">▶▶</a> ]
-      <% } %>
-      
-    </div>
-    <div>
-    </div>
   </body>
 </html>
