@@ -1,6 +1,16 @@
 (function(){
 	"use strict";
 	
+	$(document).ready(function() {
+		let category = $('#examCategory').val();
+		if(window.gosa.isNull(category)){
+			$('#searchCategory option[value=name]').attr('selected', 'selected');
+		}else{
+			$('#searchCategory option[value='+category+']').attr('selected', 'selected');
+		}
+		
+	});
+	
 	$("#addBtn").on({
 		click:function(){
 			
@@ -58,6 +68,19 @@
 			location.href = '/admin/exam/list/'+page;
 		}
 
+	});
+	
+	//검색 버튼 클릭 
+	$("#searchBtn").on({
+		click:function(){
+			let category = $('#searchCategory').val();
+			let word = $('#searchWord').val(); 
+			let page = $('#examPage').val();
+			
+			if(!window.gosa.isNull(word)){
+				location.href = '/admin/exam/list/'+page+'/'+category+'/'+word;
+			}
+		}
 	});
 	
 	

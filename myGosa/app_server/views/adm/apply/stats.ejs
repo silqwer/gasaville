@@ -2,17 +2,25 @@
 <html>
   <head>
     <title><%= title %></title>
-    <script src='/common/js/jquery/jquery.min.js'></script>
-    <script src="/common/js/chart/Chart.bundle.js"></script>
-	<script src="/common/js/chart/utils.js"></script>
-    <script src='/adm/js/gosa.js'></script>
-    <link rel='stylesheet' href='/adm/css/style.css' />
+    <% include ../common/head %>
   </head>
   <body>
-  	<button id="clossBtn">신청마감 통계</button>
-  	<button id="visitBtn">각 고사장 누적 방문 통계</button>
-	<button id="accrueBtn">누적 / 연간 출석고사 참여 통계</button>
-	<button id="userBtn">누적 / 연간 출석고사 참여 통계</button>
+  	<div class="main-wrap">
+  		<% include ../common/menu %>
+  		<div class="content-wrap">
+  			<h2><%= title %></h2>
+  			<div>
+  				<button id="clossBtn">신청마감 통계</button>
+			  	<button id="visitBtn">각 고사장 누적 방문 통계</button>
+					<button id="accrueBtn">누적 / 연간 출석고사 참여 통계</button>
+					<button id="userBtn">누적 / 연간 출석고사 참여 통계</button>
+  			</div>
+  			
+  				<iframe id="statsIframe" src="/admin/apply/stats/closs" style="width: 130%; height: 100%; min-height: 1000px;"></iframe>
+  			 
+  		</div>
+  	</div>
+		
   </body>
   <script src='/adm/js/stats.js'></script>
 </html>

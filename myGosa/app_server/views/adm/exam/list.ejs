@@ -6,19 +6,21 @@
   </head>
   <body>
   	<input type="hidden" id="examPage" name="examPage" value="<%=page%>">
+  	<input type="hidden" id="examCategory" name="examCategory" value="<%=category%>">
     <div class="main-wrap">
   		<% include ../common/menu %>
   		<div class="content-wrap">
   			<h2><%= title %></h2>
   			<div>
-		    	<select>
-					  <option value="name" selected="selected">고사장</option>
+		    	<select id="searchCategory">
+					  <option value="name">고사장</option>
 					  <option value="school">학교명</option>
 					  <option value="addr">주소</option>
 					</select>
 		    </div>
-		    <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
+		    <div><input type="text" id="searchWord" value="<%=word%>"><button id="searchBtn">검색</button></div>
   			
+  			<% if(result == true) { %>
   			<div>
 					<table class="thead-tbl">
 						<colgroup>
@@ -37,38 +39,43 @@
 						</thead>
 						<tbody>
 							<% for(let i=0; i<list.length; ++i){ %>
-					   		<tr>
+					   	<tr>
 								<td><%=max-i%></td>
 								<td><%=list[i].NAME%></td>
 								<td><a href="/admin/exam/update/<%=page%>/<%=list[i].SEQ%>"><%=list[i].SCHOOL%></a></td>
 								<td><%=list[i].ADDR%></td>
 							</tr>
-					   		<% } %>
+					   	<% } %>
 						</tbody>
 					</table>
 				</div>
+				<% }else{ %>
+				<div>게시물이 없습니다.</div>
+				<% } %>
 			
-				<div class="pagenum">
-					<ul>
-						<% if(page > pageSize) { %>
-						<li><a href="/admin/exam/list/1"><i class="fa fa-angle-double-left"></i></a></li>
-						<li><a href="/admin/exam/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
-						<% } %>
-						
-						<% for (var i=startPage; i<=endPage; i++) { %>
-			        	<% if (i== page) {%>
-			        	<li class="on"><%=i%></li>
-			        	<% } else { %>
-			        	<li><a href="/admin/exam/list/<%=i%>"><%=i%></a></li>
-			       		<% } %>
-			      		<% } %>
-						
-						<% if (endPage < totalPage) { %>
-						<li><a href="/admin/exam/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
-						<li><a href="/admin/exam/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
-			      	    <% } %>
-					</ul>
-				</div>
+				<% if(result == true) { %>
+					<div class="pagenum">
+						<ul>
+							<% if(page > pageSize) { %>
+							<li><a href="/admin/exam/list/1/<%=search%>"><i class="fa fa-angle-double-left"></i></a></li>
+							<li><a href="/admin/exam/list/<%=startPage-1%>/<%=search%>"><i class="fa fa-angle-left"></i></a></li>
+							<% } %>
+							
+							<% for (var i=startPage; i<=endPage; i++) { %>
+				        	<% if (i== page) {%>
+				        	<li class="on"><%=i%></li>
+				        	<% } else { %>
+				        	<li><a href="/admin/exam/list/<%=i%>/<%=search%>"><%=i%></a></li>
+				       		<% } %>
+				      		<% } %>
+							
+							<% if (endPage < totalPage) { %>
+							<li><a href="/admin/exam/list/<%=endPage+1%>/<%=search%>"><i class="fa fa-angle-right"></i></a></li>
+							<li><a href="/admin/exam/list/<%=totalPage%>/<%=search%>"><i class="fa fa-angle-double-right"></i></a></li>
+				      	    <% } %>
+						</ul>
+					</div>
+				<% } %>
 			
 			 	<div><button id="addBtn">추가</button></div> 
   		</div>
