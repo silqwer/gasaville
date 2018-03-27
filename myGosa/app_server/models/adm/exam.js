@@ -7,11 +7,27 @@ var connection = mysql_dbc.init();
 
 var Exam = {
 	
-	list : function(begin, size, callback) {
-	
+	list : function(category, word, begin, size, callback) {
+		
+		let sql = "";
+		
+		if(word !== undefined){
+			switch(category){
+			case "name":
+				sql += " WHERE NAME LIKE '%"+word+"%'";
+				break;
+			case "school":
+				sql += " WHERE SCHOOL LIKE '%"+word+"%'";
+				break;
+			case "addr":
+				sql += " WHERE ADDR LIKE '%"+word+"%'";
+				break;		
+			}
+		}
+		
 		return connection.query("SELECT " +
 				"SEQ, NAME, SCHOOL, ADDR " +
-				"FROM EXAM " +
+				"FROM EXAM " + sql + 
 				"ORDER BY SEQ DESC " +
 				"LIMIT ?, ?", [begin, size], callback);
 	}, 
@@ -41,9 +57,26 @@ var Exam = {
 				"LIMIT ?, ?", [begin, size], callback);
 	}, 
 	
-	count : function (callback) {
-		return connection.query('SELECT COUNT(*) AS CNT FROM EXAM', callback);
-	}, 
+	count : function (category, word, callback) {
+		
+		let sql = "SELECT COUNT(*) AS CNT FROM EXAM";
+		
+		if(word !== undefined){
+			switch(category){
+			case "name":
+				sql += " WHERE NAME LIKE '%"+word+"%'";
+				break;
+			case "school":
+				sql += " WHERE SCHOOL LIKE '%"+word+"%'";
+				break;
+			case "addr":
+				sql += " WHERE ADDR LIKE '%"+word+"%'";
+				break;		
+			}
+		}
+		
+		return connection.query(sql, callback);
+	},  
 	
 	historyCount : function (callback) {
 		return connection.query("SELECT COUNT(*) AS CNT " +
