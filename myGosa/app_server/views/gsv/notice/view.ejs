@@ -14,6 +14,7 @@
 			</div>
 			<div class="list">
 				<ul>
+					<% if(nearRecord.length === 2) {%>
 					<li class="pre">
 						<p><i class="fa fa-caret-up mr10"></i>이전글</p>
 						<a href="/gsv/notice/list/<%=list%>/<%=nearRecord[0].SEQ%>"><%=nearRecord[0].TITLE%></a>
@@ -24,6 +25,13 @@
 						<a href="/gsv/notice/list/<%=list%>/<%=nearRecord[1].SEQ%>"><%=nearRecord[1].TITLE%></a>
 						<span><%=nearRecord[1].DATE%></span>
 					</li>
+					<% } else { %>
+					<li class="pre">
+						<p><i class="fa fa-caret-up mr10"></i>이전글</p>
+						<a href="/gsv/notice/list/<%=list%>/<%=nearRecord[0].SEQ%>"><%=nearRecord[0].TITLE%></a>
+						<span><%=nearRecord[0].DATE%></span>
+					</li>
+					<% } %>
 				</ul>
 				<a class="mbtn whitebtn mt20 fr" href="/gsv/notice/list/<%=list%>">목록</a>
 			</div>

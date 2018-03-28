@@ -1,6 +1,5 @@
-/**
- * http://usejsdoc.org/
- */
+var main =  require('../../models/gsv/main');
+
 module.exports.index = (req, res) => {
 	res.render('gsv/index', { 
 		body : 'login' 
@@ -8,8 +7,16 @@ module.exports.index = (req, res) => {
 };
 
 module.exports.main = (req, res) => {
-	res.render('gsv/index', {
-		body : 'main'
+	main.list(function(err, rows) {
+		if(err) {
+			console.log(err);
+			throw err;
+		}
+
+		res.render('gsv/index', {
+			body : 'main',
+			result: rows
+		});
 	});
 };
 

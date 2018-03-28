@@ -1,5 +1,6 @@
 <div class="main-wrap">
 	<div class="content-wrap">
+		<h2>신청</h2>
 		<div class="content">
 			<div class="photo">
 				<img src="" alt=""/>
@@ -25,38 +26,26 @@
 						</tr>
 					</thead>
 					<tbody>
+						<% for(let resultCount=0; resultCount<result.length; resultCount++) {%>
 						<tr>
-							<td>1</td>
-							<td>강릉</td>
-							<td><a href="#">강릉중학교<i class="fas fa-map-marker-alt icon"></i></a></td>
-							<td>1</td>
-							<td>1</td>
-							<td><input type="button" value="신청하기" class="smallbtn blue" style="width:90px"></td>
+						<td><%=resultCount+1%></td>
+						<td><%=result[resultCount].EXAM_NAME%></td>
+						<td>
+							<a id="showClassInfo" data-target="<%=result[resultCount].EXAM_SEQ%>"><%=result[resultCount].EXAM_SCHOOL%><i class="fas fa-map-marker-alt icon"></i></a>
+						</td>
+						<% if(locals.result[resultCount+1] && result[resultCount].EXAM_SEQ == result[resultCount+1].EXAM_SEQ) { %>
+							<td rowspan="<%=result[resultCount+1].PERIOD_CLASS%>"><%=result[resultCount+1].PERIOD_CLASS%></td>
+						<% } else if(result[resultCount-1].EXAM_SEQ != result[resultCount].EXAM_SEQ) {%>
+							<td><%=result[resultCount].PERIOD_CLASS%></td>
+						<% } %>
+						<td><%=result[resultCount].PERIOD_CLASS%></td>
+						<% if(result[resultCount].USER_CLASS != '' && result[resultCount].USER_CLASS != null) {%>
+						<td><%=result[resultCount].DEPARTMENT_NAME+' '+result[resultCount].NAME%>
+						<% } else { %>
+						<td><input type="button" value="신청하기" class="smallbtn blue"></td>
+						<% } %>
 						</tr>
-						<tr>
-							<td rowspan="3">2</td>
-							<td rowspan="3">광주</td>
-							<td rowspan="3"><a href="#">금호중앙중학교<i class="fas fa-map-marker-alt icon"></i></a></td>
-							<td rowspan="3">3</td>
-							<td>1</td>
-							<td>솔루션사업부 디자인기획팀 최하나님</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td><input type="button" value="신청하기" class="smallbtn blue" style="width:90px"></td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td><input type="button" value="신청하기" class="smallbtn blue" style="width:90px"></td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>구리/남양주</td>
-							<td><a href="#">교문중학교<i class="fas fa-map-marker-alt icon"></i></a></td>
-							<td>1</td>
-							<td>1</td>
-							<td><input type="button" value="신청대기" class="smallbtn blue disabled" disabled style="width:90px"></td>
-						</tr>
+						<% } %>
 						<tr>
 							<td rowspan="2">4</td>
 							<td rowspan="2">대전</td>
