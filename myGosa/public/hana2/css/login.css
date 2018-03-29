@@ -1,0 +1,216 @@
+@charset "utf-8";
+html, body, div, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, acronym, address, big, cite, code,
+del, dfn, img, ins, kbd, q, s, samp,
+small, strike, sub, sup, tt, var,
+a,b, u, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video ,button, textarea,input{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family:'Malgun Gothic','돋움',dotum,Helvetica,'Apple SD Gothic Neo',applegothic,sans-serif;
+	font-size:14px; color:#333;
+	line-height: 170%;
+    letter-spacing: -1px
+}
+ul{list-style:none}
+em{font-style:normal}
+a{text-decoration:none}
+a:hover{text-decoration:underline}
+img,input,select,button,i{vertical-align:middle}
+label{vertical-align:top}
+input[type="button"],button{
+	cursor:pointer; 
+	outline:none
+}
+table{border-collapse:collapse}
+table tr td{word-break:break-word}
+input, textarea, select{
+	box-sizing:border-box; outline:none; resize:none;
+}
+textarea{
+	border:1px solid #ddd;
+	width:100%;
+	padding:4px 8px
+}
+select{border:1px solid #ddd}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+.none{display:none}
+.skip, legend{
+	width:1px; 
+	height:1px; 
+	font-size:0; 
+	line-height:0;
+	overflow:hidden; 
+	visibility:hidden; 
+	position:absolute; 
+	left:-999px;
+}
+
+.bullet-red{
+	background:#c92033; 
+	color:#fff;
+	width:55px; 
+	height:25px;
+	font-size:13px;
+	display:inline-block;
+	text-align:center
+}
+
+.login{
+	width:250px;
+	margin:0 auto;
+	margin-top:15%;
+}
+.login h2{
+	font-size:18px; 
+	font-weight:bold; 
+	color:#1a9bd4; 
+	padding-top:120px;
+	background:url(../image/img.png) no-repeat 30px 0
+}
+.group{
+	position:relative; 
+	margin-top:20px;
+	width:250px
+}
+.group input{
+	border-bottom:1px solid #ccc;
+	padding:6px 3px;
+	width:250px
+}
+.group label{
+	position:absolute; 
+	top:3px; 
+	left:2px; 
+	font-size:14px; 
+	color:#999;
+	transition:0.2s ease all
+}
+.bar{
+	display:block;
+	position:relative;
+}
+.bar:before {
+	left: 50%;
+}
+.bar:after {
+	right: 50%;
+}
+.bar:before,
+.bar:after {
+	content:'';
+	height:2px;
+	width:0;
+	bottom:0;
+	position:absolute;
+	background:#1a9bd4;
+	transition:0.2s ease all;
+	-moz-transition:0.2s ease all;
+	-webkit-transition:0.2s ease all;
+}
+input:focus ~ .bar:before,
+input:focus ~ .bar:after {
+	width:50%;
+}
+.group input:focus ~ label,
+.group input:valid ~ label{
+	top:-16px; 
+	color:#1a9bd4
+}
+.chk{
+	text-align:left; 
+	margin:8px 0 13px 3px
+}
+.chk input{display:none}
+.chk input + label span{
+	display:inline-block; 
+	width:19px; 
+	height:19px; 
+	background:url(../image/check_off.png) no-repeat 0 5px; 
+	cursor:pointer
+}
+.chk input:checked + label span{
+	background:url(../image/check_on.png) no-repeat 0 3px;
+}
+.loginbtn{
+	width:250px;
+	height:40px;
+	background:#1a9bd4;
+	color:#fff
+}
+.login p.joingo{
+	margin-top:5px;
+	text-align:center
+}
+.login p.joingo a{
+	color:#666;
+	font-size:12px
+}
+
+/*join*/
+.join{
+	margin:15% auto 0 auto;
+	width:400px
+}
+.join p.notice{
+	position:relative;
+	font-size:15px; 
+	color:#000;
+	font-weight:bold
+}
+.join .group{width:400px}
+.join .group input,
+.join .group .bar{width:400px}
+.join .group p.no, 
+.join .group p.yes,
+.join .group p.noti{
+	position:absolute;
+	top:5px;
+	right:2px
+}
+.join p.no{
+	display:none;
+	color:#c92033
+}
+.join p.yes{
+	color:#1a9bd4;
+	background:url(../image/yeschk.png) no-repeat 0 6px;
+	padding-left:15px
+}
+.join p.noti{color:#999}
+.department{
+	overflow:hidden;
+	margin:10px 0 20px 0
+}
+.department select{
+	border:1px solid #ccc;
+	height:36px;
+	padding:0 3px;
+	font-size:13px
+}
+.department select.select01{
+	float:left; 
+	width:240px
+}
+.department select.select02{
+	float:left;
+	margin-left:10px;
+	width:150px
+}
+.joinbtn{
+	width:400px;
+	height:50px;
+	background:#1a9bd4;
+	color:#fff
+}
