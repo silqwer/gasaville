@@ -35,21 +35,22 @@ module.exports = function (passport){
 	router.post('/schedule/update', ensureAuthenticated, ctrlSchedule.update);		// 일정 수정 
 	
 	//고사장 관리 
-	router.get('/exam', ensureAuthenticated, ctrlExam.exam);							// 고사장 관리 
-	router.get('/exam/list/:page', ensureAuthenticated, ctrlExam.listPage);				// 고사장 관리 리스트 출력  
-	router.get('/exam/list/:page/:seq', ensureAuthenticated, ctrlExam.readPage);		// 고사장 관리 글 읽기 페이지 호출
-	router.get('/exam/list/:page/:category/:word', ensureAuthenticated, ctrlExam.listPage);    // 고사장 검색 
-	router.get('/exam/update/:page/:seq', ensureAuthenticated, ctrlExam.updatePage);	// 고사장 관리 글 수정 페이지 호출 
-	router.post('/exam/update', ensureAuthenticated, ctrlExam.update);					// 고사장 관리 글 수정   
-	router.post('/exam/delete', ensureAuthenticated, ctrlExam.delete);					// 고사장 관리 글 삭제 
-	router.get('/exam/insert/:page', ensureAuthenticated, ctrlExam.insertPage);			// 고사장 등록 페이지 호출
-	router.post('/exam/insert', ensureAuthenticated, ctrlExam.insert);					// 고사장 등록 
+	router.get('/exam', ensureAuthenticated, ctrlExam.exam);									// 고사장 관리 
+	router.get('/exam/list/:page', ensureAuthenticated, ctrlExam.listPage);						// 고사장 관리 리스트 출력  
+	router.get('/exam/list/:page/:seq', ensureAuthenticated, ctrlExam.readPage);				// 고사장 관리 글 읽기 페이지 호출
+	router.get('/exam/list/:page/:category/:word', ensureAuthenticated, ctrlExam.listPage);   	// 고사장 검색 
+	router.get('/exam/update/:page/:seq', ensureAuthenticated, ctrlExam.updatePage);			// 고사장 관리 글 수정 페이지 호출 
+	router.post('/exam/update', ensureAuthenticated, ctrlExam.update);							// 고사장 관리 글 수정   
+	router.post('/exam/delete', ensureAuthenticated, ctrlExam.delete);							// 고사장 관리 글 삭제 
+	router.get('/exam/insert/:page', ensureAuthenticated, ctrlExam.insertPage);					// 고사장 등록 페이지 호출
+	router.post('/exam/insert', ensureAuthenticated, ctrlExam.insert);							// 고사장 등록 
 	
 	
 	
 	//고사장 참여 이력관리 
-	router.get('/exam/history', ensureAuthenticated, ctrlExam.history);						//고사장 참여 이력관리 			
-	router.get('/exam/history/list/:page', ensureAuthenticated, ctrlExam.historyListPage);	//고사장 참여 이력 리스트 출력  페이지
+	router.get('/exam/history', ensureAuthenticated, ctrlExam.history);								//고사장 참여 이력 관리 			
+	router.get('/exam/history/list/:page', ensureAuthenticated, ctrlExam.historyListPage);			//고사장 참여 이력 리스트 출력  페이지
+	router.get('/exam/history/list/:page/:category/:word', ensureAuthenticated, ctrlExam.historyListPage);  //고사장 참여 이력 검색 
 	
 	//고사장 후기 관리 
 	router.get('/coment', ensureAuthenticated, ctrlComment.comment);						// 고사장 관리 

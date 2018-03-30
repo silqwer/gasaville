@@ -31,15 +31,22 @@ input[type="button"],button{
 	outline:none
 }
 table{border-collapse:collapse}
+table tr td{word-break:break-word}
 input, textarea, select{
-	box-sizing:border-box; outline:none
+	box-sizing:border-box; outline:none; resize:none;
 }
+textarea{
+	border:1px solid #ddd;
+	width:100%;
+	padding:4px 8px
+}
+select{border:1px solid #ddd}
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 .none{display:none}
-.skip{
+.skip, legend{
 	width:1px; 
 	height:1px; 
 	font-size:0; 
@@ -55,8 +62,11 @@ input[type="number"]::-webkit-inner-spin-button {
 .green{background:#5cb85c}
 .red{background:#dd0709}
 
+.fcsky{color:#1a9bd4}
+.fcblue{color:#337ab7}
 .fcgray{color:#999}
 .fcred{color:#dd0709}
+.fcgreen{color:#5cb85c}
 
 .fl{float:left}
 .fr{float:right}
@@ -64,11 +74,11 @@ input[type="number"]::-webkit-inner-spin-button {
 .tac{text-align:center}
 
 /*margin*/
-.mt5{margin-top:5px !important}
+.mt5{margin-top:5px}
 .mt8{margin-top:8px}
 .mt10{margin-top:10px}
 .mt15{margin-top:15px}
-.mt20{margin-top:20px !important}
+.mt20{margin-top:20px}
 .mt25{margin-top:25px}
 .mt30{margin-top:30px}
 .mt40{margin-top:40px}
@@ -81,7 +91,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .ml5{margin-left:5px}
 .ml10{margin-left:10px}
-.ml15{margin-left:15px !important}
+.ml15{margin-left:15px}
 .ml20{margin-left:20px}
 .ml25{margin-left:25px}
 .ml30{margin-left:30px}
@@ -133,10 +143,15 @@ input[type="number"]::-webkit-inner-spin-button {
 a:hover{color:#337ab7}
 
 /*btn*/
+.sbtn{
+	display:inline-block;
+	background:none;
+}
 .mbtn{
 	width:100px;
 	height:36px
 }
+
 .whitebtn{
 	background:#fff;
 	border:1px solid #333;
@@ -153,9 +168,25 @@ a:hover{color:#337ab7}
 	background:#dd0709;
 	color:#fff
 }
+.greenbtn{
+	background:#5cb85c;
+	color:#000
+}
+
 .readonly{
 	opacity:0.6;
 	cursor:default
+}
+
+.btnfr{
+	float:right;
+	margin-top:20px;
+}
+.btnfr button{margin-left:5px;} 
+.plusbtn{
+	width:150px;
+	height:36px;
+	margin-top:10px;
 }
 
 /*clock*/
@@ -280,31 +311,31 @@ a:hover{color:#337ab7}
 	height:100%;
 	border-right:1px solid #ddd;
 	padding-right:35px;
-	position:fixed
+	position:fixed;
+	background:#fff
 }
-.left-menu{}
-.left-menu ul{margin-top:50px}
-.left-menu ul li{
+.left-menu{margin-top:50px}
+.left-menu li{
 	text-align:right;
 	margin-top:20px
 }
-.left-menu ul li:first-child{margin-top:-20px}
-.left-menu ul li a{
+.left-menu li:first-child{margin-top:-20px}
+.left-menu li a{
 	font-size:16px;
 	font-weight:bold;
 	color:#000
 }
-.left-menu ul li.noti a{
+.left-menu li.noti a{
 	color:#dd0709
 }
-.left-menu ul li.noti ul{
+.left-menu li.noti ul{
 	width:200px; 
 	height:90px;
 	overflow:hidden;
 	border:1px solid #ddd; 
 	margin-top:3px
 }
-.left-menu ul li.noti ul li{
+.left-menu li.noti ul li{
 	text-align:left; 
 	margin-top:0;
 	padding:3px 8px;
@@ -312,18 +343,38 @@ a:hover{color:#337ab7}
 	text-overflow:ellipsis; 
 	white-space:nowrap
 }
-.left-menu ul li.noti ul li a{
+.left-menu li.noti ul li a{
 	color:#666; 
 	font-size:14px
 }
-.left-menu ul li.loginout{
+.left-menu li.loginout{
 	position:absolute; 
 	bottom:25px; 
 	right:35px;
 }
-.left-menu ul li.loginout a{
+.left-menu li.loginout a{
 	color:#333;
 	font-size:14px
+}
+@media screen and (max-height:400px){
+	.left-menu ul li.loginout{position:static}
+}
+
+.left-menu .leftsub{
+	display:none;
+	margin-top:0;
+	padding:156px 12px 0 0;
+	position:absolute;
+	top:0px;
+	left:236px;
+	width:160px;
+	background:#1a9bd4;
+	height:100%;
+}
+.left-menu .leftsub li{}
+.left-menu .leftsub li a{
+	color:#fff;
+	font-size:15px
 }
 
 /*content*/
@@ -458,32 +509,110 @@ table{
 }
 
 /*pop*/
-.dimbg{
+.dimlayer{
 	position:absolute;
 	top:0;
 	left:0;
-	width:100%;
-	height:100%;
+}
+.dimbg{
+	display:none;
+	position:absolute;
+	top:0;
+	left:0;
 	background:#000;
-	opacity:0.5;
+	opacity:0.6;
 	z-index:1;
 }
 .popwrap{
-	padding:10px 20px;
-	position:absolute;
+	display:none;
+	padding:20px;
+	position:relative;
 	background:#fff;
 	z-index:2;
-	/*top:50%;
-	margin-top:-px*/
-	left:50%;
-	margin-left:-375px
+}
+.popwrap .close{
+	position:absolute;
+	right:10px;
+	top:5px;
+	display:block
 }
 h4{color:#000}
-.review{
-	width:750px
-}
 .review iframe{
 	width:335px;
 	height:274px
 }
 .review .fl table{width:400px}
+.pop-con2{width:750px}
+.pop-con2 .fl{width:86%}
+.pop-recomment td:nth-child(2),
+.pop-retextarea td:nth-child(2){
+	background:url(../image/recomment.png)no-repeat 20px 11px;
+	padding-left:40px
+}
+.pop-textarea select{
+	width:100%;
+	padding:3px 2px
+}
+.pop-textarea .fl{width:92%}
+.pop-textarea textarea{height:50px}
+
+/*search*/
+.search{
+	overflow:hidden;
+	float:right;
+	margin-bottom:15px
+}
+.search select{
+	float:left;
+	height:33px;
+	width:100px
+}
+.search form{
+	float:left;
+	margin-left:5px
+}
+.search form input[type="text"]{
+	border:1px solid #ddd;
+	width:250px;
+	padding:4px 6px
+}
+.search form input[type="button"]{
+	height:33px;
+	width:80px;
+	color:#fff;
+	background:#1a9bd4
+}
+
+/*write*/
+.write{}
+.write .title input[type="text"]{
+	border:1px solid #ddd;
+	padding:6px 10px;
+	width:100%;
+}
+.write .text{padding-bottom:15px}
+.write .text .img{
+	overflow:hidden;
+	border:1px dotted #ddd;
+	padding:25px 10px
+}
+.write .text .img a{
+	float:left;
+	padding-left:20px;
+	color:#337ab7;
+	font-weight:bold
+}
+.write .text .img p{
+	text-align:center;
+	color:#999
+}
+.write .text .edit{
+	background:#ddd;
+	display:block;
+	text-align:center;
+	padding:4px 0
+}
+.write .text textarea{
+	height:400px;
+	padding:10px 15px
+}

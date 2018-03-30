@@ -92,8 +92,27 @@ module.exports.listPage = (req, res) => {
 //고사장 참여이력 관리 리스트 페이지 
 module.exports.historyListPage = (req, res) => {
 	
-	exam.historyCount(function(err, rows){
-		let page = req.params.page;
+	let page = req.params.page;
+	let category = req.params.category;
+	let word = req.params.word;
+	
+	exam.historyCount(category, word, function(err, rows){
+		
+		if(rows === undefined){
+			//조회 결과 없음 
+			res.render('adm/exam/history/list', { 
+				'title' : '고사장 참여관리',
+				'userInfo' : req.user,
+				'page' : page, 
+				'result' : result
+			});
+		
+			return;
+		
+		}else{
+			result = true;
+		}
+		
 		page = parseInt(page, 10);					// 십진수 만들기 
 		let size = 10; 								// 한 페이지에 보여줄 개수		
 		let begin = (page - 1) * size;				// 시작 번호
@@ -110,11 +129,17 @@ module.exports.historyListPage = (req, res) => {
 		
 		let max = cnt - ((page-1) * size);			// 전체 글이 존재하는 개수
 		
-		exam.historyList(begin, size, function(err, rows){
+		exam.historyList(category, word, begin, size, function(err, rows){
 			
 			if (err) {
 				console.error(err);
 				throw err;
+			}
+			
+			let search = '';
+			
+			if(word !== undefined){
+				search = category + '/' + word;
 			}
 			
 			res.render('adm/exam/history/list', { 
@@ -126,7 +151,11 @@ module.exports.historyListPage = (req, res) => {
 				'startPage' : startPage,
 				'endPage' : endPage,
 				'totalPage' : totalPage,
-				'max' : max
+				'max' : max,
+				'category' : category,
+				'word' : word,
+				'search' : search,
+				'result' : result
 			}); 
 		});
 	});

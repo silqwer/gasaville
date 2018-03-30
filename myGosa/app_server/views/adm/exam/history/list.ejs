@@ -5,22 +5,30 @@
     <% include ../../common/head %>
   </head>
   <body>
-  	<input type="hidden" id="examPage" name="examPage" value="<%=page%>">
+  	<input type="hidden" id="page" name="page" value="<%=page%>">
+  	<input type="hidden" id="category" name="category" value="<%=category%>">
     <div class="main-wrap">
     	<% include ../../common/menu %>
     	<div class="content-wrap"> 
     		<h2><%= title %></h2>
-    		<div>
-		    	<select>
-					  <option value="name" selected="selected">고사장</option>
+    		<div class="search">
+		    	<select id="searchCategory">
+					  <option value="examName">고사장</option>
 					  <option value="school">학교명</option>
 					  <option value="period">기수</option>
 					  <option value="department">소속</option>
 					  <option value="position">직책</option>
 					  <option value="name">이름</option>
 					</select>
+					<form id="searchForm" method="get">
+					<fieldset>
+						<legend>검색</legend>
+						<input type="text" id="searchWord" value="<%=word%>">
+						<input type="button" value="검색" class="sbtn" data-url="/admin/exam/history/list" id="searchBtn">
+					</fieldset>
+					</form>
 		    </div>
-		    <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
+		   
 				<div>
 				<table class="thead-tbl">
 					<colgroup>
@@ -59,28 +67,31 @@
 				</table>
 			</div>
 			
+			<% if(result == true) { %>
 			<div class="pagenum">
 				<ul>
 					<% if(page > pageSize) { %>
-					<li><a href="/admin/exam/history/list/1"><i class="fa fa-angle-double-left"></i></a></li>
-					<li><a href="/admin/exam/history/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+					<li><a href="/admin/exam/history/list/1/<%=search%>"><i class="fa fa-angle-double-left"></i></a></li>
+					<li><a href="/admin/exam/history/list/<%=startPage-1%>/<%=search%>"><i class="fa fa-angle-left"></i></a></li>
 					<% } %>
 					
 					<% for (var i=startPage; i<=endPage; i++) { %>
         	<% if (i== page) {%>
         	<li class="on"><%=i%></li>
         	<% } else { %>
-        	<li><a href="/admin/exam/history/list/<%=i%>"><%=i%></a></li>
+        	<li><a href="/admin/exam/history/list/<%=i%>/<%=search%>"><%=i%></a></li>
        		<% } %>
       		<% } %>
 					
 					<% if (endPage < totalPage) { %>
-					<li><a href="/admin/exam/history/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
-					<li><a href="/admin/exam/history/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+					<li><a href="/admin/exam/history/list/<%=endPage+1%>/<%=search%>"><i class="fa fa-angle-right"></i></a></li>
+					<li><a href="/admin/exam/history/list/<%=totalPage%>/<%=search%>"><i class="fa fa-angle-double-right"></i></a></li>
 		      <% } %>
 				</ul>
 			  </div>
+			  <% } %>
    	  </div>
     </div>
   </body>
+  <script src='/adm/js/exam.js'></script>
 </html>
