@@ -7,11 +7,18 @@ var connection = mysql_dbc.init();
 
 var Periods = {
 	
-	list : function(begin, size, callback) {
-		return connection.query("SELECT " +
+	list : function(word, begin, size, callback) {
+		
+		let sql = "";
+		
+		if(word !== undefined){
+			sql += " WHERE SCHEDULE_NAME LIKE '%"+word+"%' ";
+		}
+		
+		return connection.query("SELECT * FROM (SELECT " +
 				"DISTINCT  (SELECT NAME FROM SCHEDULE WHERE SEQ = P.SCHEDULE_SEQ) AS SCHEDULE_NAME, " +
 				"SCHEDULE_SEQ " +
-				"FROM PERIOD P ORDER BY SCHEDULE_SEQ DESC " +
+				"FROM PERIOD P ORDER BY SCHEDULE_SEQ DESC) S " + sql +
 				"LIMIT ?, ?", [begin, size], callback);
 	},
 	
@@ -53,8 +60,18 @@ var Periods = {
 		return connection.query('SELECT COUNT(*) AS CNT FROM APPLY WHERE SCHEDULE_SEQ = ?',[seq], callback);
 	}, 
 	
-	count : function (callback) {
-		return connection.query('SELECT COUNT(DISTINCT SCHEDULE_SEQ) AS CNT FROM PERIOD', callback);
+	count : function (word, callback) {
+		
+		let sql = "SELECT COUNT(*) AS CNT FROM (SELECT " +
+				"DISTINCT  (SELECT NAME FROM SCHEDULE WHERE SEQ = P.SCHEDULE_SEQ) AS SCHEDULE_NAME, " +
+				"SCHEDULE_SEQ " +
+				"FROM PERIOD P ORDER BY SCHEDULE_SEQ DESC) S";
+		
+		if(word !== undefined){
+			sql += " WHERE SCHEDULE_NAME LIKE '%"+word+"%' ";
+		}
+		
+		return connection.query(sql, callback);
 	},
 	
 	insert : function (params, callback) {

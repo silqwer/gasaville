@@ -124,9 +124,41 @@
 		}
 	});
 	
-	/*
-	<button id="updateBtn">수정</button>
-	<button id="deleteBtn">삭제</button>*/
+	//검색 버튼 클릭 
+	$("#searchBtn").on({
+		click:function(){
+		
+			let word = $('#searchWord').val(); 
+			let page = $('#page').val();
+			let url = $('#searchBtn').data('url');
+			
+			if(!window.gosa.isNull(word)){
+				let action = url +'/'+ page + '/' + word;
+				$('#searchForm').attr('action', action);
+			}
+		}
+	});
+	
+	//검색폼
+	$("#searchForm").on({
+		keydown:function(e){
+			
+			if(e.which === 13){
+				
+				let word = $('#searchWord').val(); 
+				let page = $('#page').val();
+				let url = $('#searchBtn').data('url');
+				
+				if(!window.gosa.isNull(word)){
+					let action = url +'/'+ page + '/' + word;
+					$(this).attr('action', action);
+				}
+			}
+		
+			
+		}
+	});
+
 	
 	
 })();
