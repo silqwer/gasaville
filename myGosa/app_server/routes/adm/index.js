@@ -53,11 +53,12 @@ module.exports = function (passport){
 	router.get('/exam/history/list/:page/:category/:word', ensureAuthenticated, ctrlExam.historyListPage);  //고사장 참여 이력 검색 
 	
 	//고사장 후기 관리 
-	router.get('/coment', ensureAuthenticated, ctrlComment.comment);						// 고사장 관리 
-	router.get('/comment/list/:page', ensureAuthenticated, ctrlComment.listPage);			// 고사장 후기 리스트 출력
-	router.get('/comment/list/:page/:number/:seq', ensureAuthenticated, ctrlComment.updatePage);		// 고사장 후기 수정 페이지 호출 
-	router.post('/comment/delete', ensureAuthenticated, ctrlComment.delete);		// 고사장 후기 수정 페이지 호출 
-
+	router.get('/coment', ensureAuthenticated, ctrlComment.comment);								// 고사장 관리 
+	router.get('/comment/list/:page', ensureAuthenticated, ctrlComment.listPage);					// 고사장 후기 리스트 출력
+	router.get('/comment/list/:page/:category/:word', ensureAuthenticated, ctrlComment.listPage);  	// 고사장 후기 검색 
+	router.get('/comment/list/:page/:number/:seq', ensureAuthenticated, ctrlComment.updatePage);	// 고사장 후기 수정 페이지 호출 
+	router.post('/comment/delete', ensureAuthenticated, ctrlComment.delete);						// 고사장 후기 수정 페이지 호출 
+	
 	
 	//기수관리 
 	router.get('/periods', ensureAuthenticated, ctrlPeriods.periods);						// 기수 관리 

@@ -5,20 +5,28 @@
 		<% include ../common/head %>
   </head>
   <body>
-  	<input type="hidden" id="commentPage" name="commentPage" value="<%=page%>">
+  	<input type="hidden" id="page" name="page" value="<%=page%>">
+  	<input type="hidden" id="category" name="category" value="<%=category%>">
+  	
     <div class="main-wrap">
     	<% include ../common/menu %>
     	<div class="content-wrap">
     		<h2><%= title %></h2>
-    		<div>
-		    	<select>
-					  <option value="contents" selected="selected">내용</option>
+		    
+		    <div class="search">
+					<select id="searchCategory">
 					  <option value="exam">고사장</option>
 					  <option value="school">학교명</option>
 					  <option value="name">이름</option>
 					</select>
-		    </div>
-		    <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
+					<form id="searchForm" method="get">
+					<fieldset>
+						<legend>검색</legend>
+						<input type="text" id="searchWord" value="<%=word%>">
+						<input type="button" value="검색" class="sbtn" data-url="/admin/comment/list" id="searchBtn">
+					</fieldset>
+					</form>
+				</div>
 		    
 		    <div>
 					<table class="thead-tbl">
@@ -43,7 +51,7 @@
 					   		<tr>
 					   			<td><%=max-i%></td>
 					   			<td><a href="/admin/comment/list/<%=page%>/<%=max-i%>/<%=list[i].SEQ%>"><%=list[i].CONTENTS%></a></td>
-					   			<td><%=list[i].EXAM%></td>
+					   			<td><%=list[i].EXAM_NAME%></td>
 					   			<td><%=list[i].SCHOOL%></td>
 					   			<td><%=list[i].NAME%></td>
 					   		</tr>
@@ -52,28 +60,29 @@
 					</table>
 				</div>
 				
+				<% if(result == true) { %>
 				<div class="pagenum">
 					<ul>
 						<% if(page > pageSize) { %>
-						<li><a href="/admin/comment/list/1"><i class="fa fa-angle-double-left"></i></a></li>
-						<li><a href="/admin/comment/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+						<li><a href="/admin/comment/list/1/<%=search%>"><i class="fa fa-angle-double-left"></i></a></li>
+						<li><a href="/admin/comment/list/<%=startPage-1%>/<%=search%>"><i class="fa fa-angle-left"></i></a></li>
 						<% } %>
 						
 						<% for (var i=startPage; i<=endPage; i++) { %>
 			        	<% if (i== page) {%>
 			        	<li class="on"><%=i%></li>
 			        	<% } else { %>
-			        	<li><a href="/admin/comment/list/<%=i%>"><%=i%></a></li>
+			        	<li><a href="/admin/comment/list/<%=i%>/<%=search%>"><%=i%></a></li>
 			       		<% } %>
 			      		<% } %>
 						
 						<% if (endPage < totalPage) { %>
-						<li><a href="/admin/comment/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
-						<li><a href="/admin/comment/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+						<li><a href="/admin/comment/list/<%=endPage+1%>/<%=search%>"><i class="fa fa-angle-right"></i></a></li>
+						<li><a href="/admin/comment/list/<%=totalPage%>/<%=search%>"><i class="fa fa-angle-double-right"></i></a></li>
 			      	    <% } %>
 					</ul>
 				</div>
-				
+				 <% } %>
     	</div>
     </div>
   </body>
