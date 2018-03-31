@@ -1,66 +1,242 @@
 <div class="main-wrap">
-	<div class="content-wrap">
-		<h2>신청</h2>
-		<div class="content">
-			<div class="photo">
-				<img src="" alt=""/>
-			</div>
-			<div class="list">
-				<table class="thead-tbl">
-					<colgroup>
-						<col style="width:6%">
-						<col style="width:10%">
-						<col style="width:25%">
-						<col style="width:10%">
-						<col style="width:8%">
-						<col style="width:*">
-					</colgroup>
-					<thead>
-						<tr>
-							<th>NO</th>
-							<th>고사장</th>
-							<th>학교명</th>
-							<th>강의실</th>
-							<th>분반</th>
-							<th>신청</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% for(let resultCount=0; resultCount<result.length; resultCount++) {%>
-						<tr>
-						<td><%=resultCount+1%></td>
-						<td><%=result[resultCount].EXAM_NAME%></td>
-						<td>
-							<a id="showClassInfo" data-target="<%=result[resultCount].EXAM_SEQ%>"><%=result[resultCount].EXAM_SCHOOL%><i class="fas fa-map-marker-alt icon"></i></a>
-						</td>
-						<% if(locals.result[resultCount+1] && result[resultCount].EXAM_SEQ == result[resultCount+1].EXAM_SEQ) { %>
-							<td rowspan="<%=result[resultCount+1].PERIOD_CLASS%>"><%=result[resultCount+1].PERIOD_CLASS%></td>
-						<% } else if(result[resultCount-1].EXAM_SEQ != result[resultCount].EXAM_SEQ) {%>
-							<td><%=result[resultCount].PERIOD_CLASS%></td>
-						<% } %>
-						<td><%=result[resultCount].PERIOD_CLASS%></td>
-						<% if(result[resultCount].USER_CLASS != '' && result[resultCount].USER_CLASS != null) {%>
-						<td><%=result[resultCount].DEPARTMENT_NAME+' '+result[resultCount].NAME%>
-						<% } else { %>
-						<td><input type="button" value="신청하기" class="smallbtn blue"></td>
-						<% } %>
-						</tr>
-						<% } %>
-						<tr>
-							<td rowspan="2">4</td>
-							<td rowspan="2">대전</td>
-							<td rowspan="2"><a href="#">대전여자중학교<i class="fas fa-map-marker-alt icon"></i></a></td>
-							<td rowspan="2">2</td>
-							<td>1</td>
-							<td><input type="button" value="신청완료" class="smallbtn green" style="width:90px"></td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td><input type="button" value="신청취소" class="smallbtn red" style="width:90px"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
+<div class="content-wrap">
+	<h2>신청리스트</h2>
+	<div>
+		<h3><%=schedule[0].NAME%></h3>
+		<h3>신청일 : <%=schedule[0].APPLY_DATE%></h3>
+		<h3>출석고사일 : <%=schedule[0].ATTENDANCE_DATE%></h3>
+		<table class="thead-tbl">
+			<colgroup>
+				<col style="width:12%">
+				<col style="width:16%">
+				<col style="width:*">
+				<col style="width:14%">
+				<col style="width:14%">
+				<col style="width:18%">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>고사장</th>
+					<th>학교명</th>
+					<th>강의실</th>
+					<th>분반</th>
+					<th>신청</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>가</td>
+					<td>
+						<a href="#" class="popopen">가중학교<i class="fa fa-map-marker-alt fcsky ml5"></i></a>
+						<div class="dimbg"></div>
+						<div class="dimlayer">
+							<div class="popwrap review">
+								<a href="#" class="close"><i class="fa fa-times"></i></a>
+								<div class="pop-con1">
+									<div class="fl">
+										<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12618.240102073709!2d128.9096931!3d37.7534649!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2698c8729e3165a2!2z6rCV66aJ7KSR7ZWZ6rWQ!5e0!3m2!1sko!2skr!4v1519689395320"></iframe>
+									</div>
+									<div class="fl ml15">
+										<h4>신청이력</h4>
+										<table class="thead-tbl">
+											<colgroup>
+												<col style="width:25%">
+												<col style="width:*">
+												<col style="width:20%">
+												<col style="width:20%">
+											</colgroup>
+											<thead>
+												<tr>
+													<th>기수</th>
+													<th>소속</th>
+													<th>이름</th>
+													<th>직위</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>2018-01</td>
+													<td>솔루션사업부</td>
+													<td>가</td>
+													<td>사원</td>
+												</tr>
+												<tr>
+													<td>2018-01</td>
+													<td>솔루션사업부</td>
+													<td>나</td>
+													<td>사원</td>
+												</tr>
+												<tr>
+													<td>2018-01</td>
+													<td>솔루션사업부</td>
+													<td>다</td>
+													<td>사원</td>
+												</tr>
+											</tbody>
+										</table>
+										<div class="pagenum">
+											<ul>
+												<li><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
+												<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+												<li class="on">1</li>
+												<li><a href="#">2</a></li>
+												<li><a href="#">3</a></li>
+												<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+												<li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+								<div class="pop-con2">
+									<h4>후기</h4>
+									<table class="thead-tbl">
+										<colgroup>
+											<col style="width:12%">
+											<col style="width:*">
+											<col style="width:12%">
+										</colgroup>
+										<thead>
+											<tr>	
+												<th>기수</th>	
+												<th>내용</th>	
+												<th>작성자</th>	
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="pop-comment">
+												<td>18-1</td>
+												<td>
+													<p class="fl">강릉 조아요 철판닭갈비 맛나요</p>
+													<p class="fr">
+														<button type="button" class="sbtn fcblue"><i class="fa fa-pencil-alt"></i></button>
+														<button type="button" class="sbtn fcred ml5"><i class="fa fa-trash-alt"></i></button>
+														<button type="button" class="sbtn fcgreen ml5"><i class="fa fa-check"></i></button>
+													</p>
+												</td>
+												<td>가</td>
+											</tr>
+											<tr class="pop-recomment">
+												<td>18-1</td>
+												<td>	
+													<p class="fl">아닌데 철판닭갈비 맛없는데. 님 맛알못인듯. ㅡㅡ아닌데 철판닭갈비 맛없는데. 님 맛알못인듯. ㅡㅡ아닌데 철판닭갈비 맛없는데. 님 맛알못인듯. ㅡㅡ아닌데 철판닭갈비 맛없는데. 님 맛알못인듯. ㅡㅡ아닌데 철판닭갈비 맛없는데. 님 맛알못인듯. ㅡㅡ아닌데 철판닭갈비 맛없는데. 님 맛알못인듯. ㅡㅡ</p>
+													<p class="fr">
+														<button type="button" class="sbtn"><i class="fa fa-pencil-alt"></i></button>
+														<button type="button" class="sbtn ml5"><i class="fa fa-trash-alt"></i></button>
+														<button type="button" class="sbtn ml5"><i class="fa fa-check"></i></button>
+													</p>
+												</td>
+												<td>나</td>
+											</tr>
+											<tr class="pop-textarea pop-retextarea">
+												<td>
+													<select>
+														<option>18-01</option>
+													</select>
+												</td>
+												<td colspan="2">
+													<textarea class="fl"></textarea>
+													<p class="fr">
+														<button type="button" class="sbtn"><i class="fa fa-check fcgreen ml5"></i></button>
+														<button type="button" class="sbtn"><i class="fa fa-times fcred ml5"></i></button>
+													</p>
+												</td>
+											</tr>
+											<tr class="pop-textarea">
+												<td>
+													<select>
+														<option>18-01</option>
+													</select>
+												</td>
+												<td colspan="2">
+													<textarea class="fl"></textarea>
+													<p class="fr">
+														<button type="button" class="sbtn"><i class="fa fa-check fcgreen ml5"></i></button>
+														<button type="button" class="sbtn"><i class="fa fa-times fcred ml5"></i></button>
+													</p>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<div class="tac">
+										<button type="button" class="plusbtn whitebtn">더보기</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</td>
+					<td class="tac">1</td>
+					<td class="tac">1</td>
+					<td class="tac"><button type="button" class="mbtn skybtn readonly" readonly="readonly">신청대기</button></td>
+				</tr>
+				<tr>
+					<td rowspan="2">2</td>
+					<td rowspan="2">나</td>
+					<td rowspan="2"><a href="#">나중학교<i class="fa fa-map-marker-alt fcsky ml5"></i></a></td>
+					<td rowspan="2" class="tac">2</td>
+					<td class="tac">1</td>
+					<td class="tac"><button type="button" class="mbtn skybtn">신청하기</button></td>
+				</tr>
+				<tr>	
+					<td class="tac">2</td>
+					<td class="tac"><button type="button" class="mbtn graybtn readonly" readonly="readonly">신청완료</button></td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>다</td>
+					<td><a href="#">다중학교<i class="fa fa-map-marker-alt fcsky ml5"></i></a></td>
+					<td class="tac">1</td>
+					<td class="tac">1</td>
+					<td class="tac"><button type="button" class="mbtn redbtn">신청취소</button></td>
+				</tr>
+				<% for(let resultCount=0; resultCount<result.length; resultCount++) {%>
+				<tr>
+				<td><%=resultCount+1%></td>
+				<td><%=result[resultCount].EXAM_NAME%></td>
+				<td>
+					<a id="showClassInfo" data-target="<%=result[resultCount].EXAM_SEQ%>"><%=result[resultCount].EXAM_SCHOOL%><i class="fas fa-map-marker-alt icon"></i></a>
+				</td>
+				<% if(locals.result[resultCount+1] && result[resultCount].EXAM_SEQ == result[resultCount+1].EXAM_SEQ) { %>
+					<td class="
+					tac" rowspan="<%=result[resultCount+1].PERIOD_CLASS%>"><%=result[resultCount+1].PERIOD_CLASS%></td>
+				<% } else if(result[resultCount-1].EXAM_SEQ != result[resultCount].EXAM_SEQ) {%>
+					<td class="tac"><%=result[resultCount].PERIOD_CLASS%></td>
+				<% } %>
+				<td class="tac"><%=result[resultCount].PERIOD_CLASS%></td>
+				<% if(result[resultCount].USER_CLASS != '' && result[resultCount].USER_CLASS != null) {%>
+				<td class="tac">
+				<% if(result[resultCount].USER_STATUS == 0) { %>
+				<%=result[resultCount].DEPARTMENT_NAME+' '+result[resultCount].NAME%>
+				<% } else { %>
+				<button type="button" class="mbtn redbtn cancelBtn"
+						data-period="<%=result[resultCount].SEQ%>"
+						data-schedule="<%=schedule[0].SEQ%>"
+						data-class="<%=result[resultCount].PERIOD_CLASS%>"
+				>신청취소</button>
+				<% } %>
+				</td>
+				<% } else { %>
+				<td class="tac">
+					<button type="button" class="mbtn skybtn applyBtn" 
+							data-period="<%=result[resultCount].SEQ%>"
+							data-schedule="<%=schedule[0].SEQ%>"
+							data-class="<%=result[resultCount].PERIOD_CLASS%>"
+					>신청하기</button>
+				</td>
+				<% } %>
+				</tr>
+				<% } %>
+			</tbody>
+		</table>
 	</div>
 </div>
+</div>
+<div class="top">
+	<a href="#">
+		<span>TOP</span>
+	</a>
+</div>
+
+<script type="text/javascript" src="/gsv/js/main.js"></script>
