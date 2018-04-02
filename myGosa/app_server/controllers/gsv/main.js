@@ -7,18 +7,105 @@ module.exports.index = (req, res) => {
 };
 
 module.exports.main = (req, res) => {
-	main.list(function(err, rows) {
+	let schedule = null;
+	let listParams = null;
+
+	main.scheduleInfo(function (err, rows) {
+		schedule = rows;
+
+		listParams = {
+			schedule: schedule[0].SEQ,
+			user: req.user.SEQ
+		};
+
+		main.list(listParams, function(err, rows) {
+			if(err) {
+				console.log(err);
+				throw err;
+			}
+
+			res.render('gsv/index', {
+				body : 'main',
+				schedule : schedule,
+				result: rows
+			});
+		});
+	});
+};
+
+module.exports.insertApply = (req, res) => {
+	let userIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	let params = {
+		'user' 	: req.user.SEQ,
+		'seq'	: req.body.period
+	};
+
+	main.possibleInsert(params, function(err, rows) {
+
 		if(err) {
 			console.log(err);
 			throw err;
 		}
 
-		res.render('gsv/index', {
-			body : 'main',
-			result: rows
-		});
+		if(!Array.isArray(rows.STATUS, [1, 2])) {
+			let insertParam = {
+				period: req.body.period,
+				schedule: req.body.schedule,
+				user: req.user.SEQ,
+				class: req.body.class,
+				ip: userIp
+			};
+
+			main.insertApply(insertParam, function(err, rows) {
+
+				if(err) {
+					console.log(err);
+					throw err;
+				}
+
+				res.send({
+					result : true
+				});
+			});
+
+		} else {
+			res.send({
+				result : false
+			});
+		}
 	});
 };
+
+module.exports.deleteApply = (req, res) => {
+	const user = req.user.SEQ;
+	let params  = {
+		period: req.body.period,
+		schedule: req.body.schedule,
+		class: req.body.class
+	};
+
+	main.isCorrectUserData(params, function(err, rows) {
+		if(rows.length === 0 || rows[0].USER_SEQ !== user) {
+			res.send({
+				result : false
+			});
+		}
+
+		params.user = user;
+
+		main.deleteApply(params, function(err, rows) {
+			if(err) {
+				console.log(err);
+				throw err;
+			}
+
+			res.send({
+				result : true
+			});
+
+		});
+	});
+}
 
 module.exports.logout = (req, res) => {						
 	req.logout();

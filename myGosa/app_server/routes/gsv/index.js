@@ -17,8 +17,8 @@ module.exports = function (passport){
 
 	};
 	
-	router.get('/', ctrlMain.index);												// 사용자 로그인  
-	router.get('/main', ensureAuthenticated, ctrlMain.main);						// 사용자 메인화면
+	router.get('/', ctrlMain.index);												// 사용자 로그인 
+	router.get('/main', ensureAuthenticated, ctrlMain.main);						// 출석고사 페이지 
 	router.get('/logout', ensureAuthenticated, ctrlMain.logout);					// 사용자 로그아웃
 
 	router.get('/join/main', ctrlJoin.main);										// 사용자 회원가입
@@ -28,6 +28,8 @@ module.exports = function (passport){
 	router.get('/notice/list/:page/:view', ensureAuthenticated, ctrlNotice.viewPage);// 공지사항 특정 페이지
 
 	router.post('/join/insert', ctrlJoin.insert);									// 회원가입 insert
+	router.post('/main/insertApply', ensureAuthenticated, ctrlMain.insertApply);	// 출석고사 신청정보 insert
+	router.post('/main/deleteApply', ensureAuthenticated, ctrlMain.deleteApply);	// 출석고사 신청정보 delete
 
 	router.post('/', passport.authenticate('local-login', {
 		successRedirect : '/gsv/main',
