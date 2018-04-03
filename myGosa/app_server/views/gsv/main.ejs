@@ -191,43 +191,79 @@
 					<td class="tac">1</td>
 					<td class="tac"><button type="button" class="mbtn redbtn">신청취소</button></td>
 				</tr>
-				<% for(let resultCount=0; resultCount<result.length; resultCount++) {%>
+
+				<% let row_span_flag = true; %>
+				<% let rowsp = 0; %>
+				<% let temp = 0; %>
+				<% let switch_flag = true; %>
+				<% let index_key = 0; %>
+
+				<% result.forEach(function(el, index) { %>
+				<% if(locals.result[index+1] && el['EXAM_SEQ'] === result[index+1]['EXAM_SEQ'] && rowsp === 0) { %>
+				<% switch_flag = false; %>
+				<% row_span_flag = false; %>
+				<% temp = index; %>
+				<% 	while(true) { %>
+				<% 		if(el['EXAM_SEQ'] === result[temp]['EXAM_SEQ']) { %>
+				<%			temp = temp+1; %>
+				<%			rowsp = rowsp+1; %>
+				<%		} else { %>
+				<%			break;%>
+				<%		} %>
+				<%  } %>
+				<% } else { %>
+				<% 		if(switch_flag === false) { %>
+				<%			rowsp = rowsp-1; %>
+				<%			if(rowsp === 0) { %>
+				<%				switch_flag = true; %>
+				<% 			} %>
+				<% 		} %>
+				<%		row_span_flag = true; %>
+				<% } %> 
 				<tr>
-				<td><%=resultCount+1%></td>
-				<td><%=result[resultCount].EXAM_NAME%></td>
-				<td>
-					<a id="showClassInfo" data-target="<%=result[resultCount].EXAM_SEQ%>"><%=result[resultCount].EXAM_SCHOOL%><i class="fas fa-map-marker-alt icon"></i></a>
-				</td>
-				<% if(locals.result[resultCount+1] && result[resultCount].EXAM_SEQ == result[resultCount+1].EXAM_SEQ) { %>
-					<td class="
-					tac" rowspan="<%=result[resultCount+1].PERIOD_CLASS%>"><%=result[resultCount+1].PERIOD_CLASS%></td>
-				<% } else if(result[resultCount-1].EXAM_SEQ != result[resultCount].EXAM_SEQ) {%>
-					<td class="tac"><%=result[resultCount].PERIOD_CLASS%></td>
-				<% } %>
-				<td class="tac"><%=result[resultCount].PERIOD_CLASS%></td>
-				<% if(result[resultCount].USER_CLASS != '' && result[resultCount].USER_CLASS != null) {%>
-				<td class="tac">
-				<% if(result[resultCount].USER_STATUS == 0) { %>
-				<%=result[resultCount].DEPARTMENT_NAME+' '+result[resultCount].NAME%>
+				<%	if(row_span_flag === true) { %>
+				<%		if(switch_flag === true) { %>
+						<td class="tac"><%=index_key%></td>
+						<% index_key++; %>
+						<td class="tac"><%=el['EXAM_SCHOOL'];%></td>
+						<td class="tac"><%=el['EXAM_NAME'];%></td>
+						<td class="tac"><%=el['PERIOD_CLASS'];%></td>
+				<% 		} %>
 				<% } else { %>
-				<button type="button" class="mbtn redbtn cancelBtn"
-						data-period="<%=result[resultCount].SEQ%>"
+						<td rowspan="<%=rowsp%>" class="tac"><%=index_key;%></td>
+						<% index_key++; %>
+						<td rowspan="<%=rowsp%>" class="tac"><%=el['EXAM_SCHOOL'];%></td>
+						<td rowspan="<%=rowsp%>" class="tac"><%=el['EXAM_NAME'];%></td>
+						<td rowspan="<%=rowsp%>" class="tac"><%=rowsp;%></td>
+				<% } %>
+				<td class="tac"><%=el['PERIOD_CLASS'];%></td>
+				<td class="tac">
+				<% if(applyStatus === 0) { %>
+				<button type="button" class="mbtn skybtn readonly" readonly="readonly">신청대기</button>
+				<% } else { %>
+				<% switch(el['USER_STATE']) {
+					case 0: %>
+				<button type="button" class="mbtn skybtn applyBtn" 
+						data-period="<%=el.SEQ%>"
 						data-schedule="<%=schedule[0].SEQ%>"
-						data-class="<%=result[resultCount].PERIOD_CLASS%>"
+						data-class="<%=el.PERIOD_CLASS%>"
+				>신청하기</button>
+				<% break;
+					case 1: %>
+				<button type="button" class="mbtn redbtn cancelBtn"
+						data-period="<%=el.SEQ%>"
+						data-schedule="<%=schedule[0].SEQ%>"
+						data-class="<%=el.PERIOD_CLASS%>"
 				>신청취소</button>
-				<% } %>
+				<% break;
+					case 2: %>
+				<%=el['DEPARTMENT_NAME']+" "+el['NAME'];%>
+				<% break; 
+					} %>
+				<%} %>
 				</td>
-				<% } else { %>
-				<td class="tac">
-					<button type="button" class="mbtn skybtn applyBtn" 
-							data-period="<%=result[resultCount].SEQ%>"
-							data-schedule="<%=schedule[0].SEQ%>"
-							data-class="<%=result[resultCount].PERIOD_CLASS%>"
-					>신청하기</button>
-				</td>
-				<% } %>
 				</tr>
-				<% } %>
+				<% });%>
 			</tbody>
 		</table>
 	</div>

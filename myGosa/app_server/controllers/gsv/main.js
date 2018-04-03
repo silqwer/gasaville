@@ -24,10 +24,17 @@ module.exports.main = (req, res) => {
 				throw err;
 			}
 
+			let nowDate 	= new Date();
+			let applyDate 	= new Date(schedule[0].APPLY_DATE);
+			let applyStatus = null;
+
+			applyStatus = nowDate >= applyDate ? 1 : 0;
+
 			res.render('gsv/index', {
 				body : 'main',
 				schedule : schedule,
-				result: rows
+				result: rows,
+				applyStatus : applyStatus
 			});
 		});
 	});
