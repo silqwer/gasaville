@@ -18,9 +18,6 @@ module.exports.listPage = (req, res) => {
 	let category = req.params.category;
 	let word = req.params.word;
 	
-	console.log('=====>');
-	console.log(scheduleSeq);
-	
 	apply.count(scheduleSeq, category, word, function(err, rows){
 		
 		let result = false;
@@ -45,7 +42,6 @@ module.exports.listPage = (req, res) => {
 		let cnt = rows[0].CNT;						// 전체 글 개수 
 		let totalPage = Math.ceil(cnt / size);		// 전체 페이지 수 
 		let pageSize = 10;							// 페이지 링크 갯수 
-		console.log('카운터:'+cnt);
 		let startPage = Math.floor((page-1) / pageSize) * pageSize + 1;
 		let endPage = startPage + (pageSize - 1);
 		
@@ -81,8 +77,6 @@ module.exports.listPage = (req, res) => {
 				if(scheduleSeq === undefined){
 					scheduleSeq = rows[0].SEQ;
 				}
-				
-				console.log('=====>scheduleSeq:'+scheduleSeq);
 				
 				res.render('adm/apply/list', { 
 					'title' : '신청 관리',

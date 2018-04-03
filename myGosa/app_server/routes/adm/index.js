@@ -92,8 +92,9 @@ module.exports = function (passport){
 	
 	
 	//회원 관리 
-	router.get('/users', ensureAuthenticated, ctrlUsers.users);							// 회원 관리 
-	router.get('/users/list/:page', ensureAuthenticated, ctrlUsers.listPage);			// 회원 관리 리스트 출력 
+	router.get('/users', ensureAuthenticated, ctrlUsers.users);									// 회원 관리 
+	router.get('/users/list/:page', ensureAuthenticated, ctrlUsers.listPage);					// 회원 관리 리스트 출력 
+	router.get('/users/list/:page/:category/:word', ensureAuthenticated, ctrlUsers.listPage);   // 회원 검색 
 	router.get('/users/update/:page/:seq', ensureAuthenticated, ctrlUsers.updatePage);	// 회원 수정 페이지 호출
 	router.post('/users/update', ensureAuthenticated, ctrlUsers.update);				// 회원 수정
 	router.post('/users/delete', ensureAuthenticated, ctrlUsers.delete);				// 회원 삭제 

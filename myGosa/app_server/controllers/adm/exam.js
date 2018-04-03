@@ -42,7 +42,6 @@ module.exports.listPage = (req, res) => {
 		page = parseInt(page, 10);					// 십진수 만들기 
 		let size = 10; 								// 한 페이지에 보여줄 개수		
 		let begin = (page - 1) * size;				// 시작 번호
-		console.log('=====================begin=>'+begin);
 		let cnt = rows[0].CNT;						// 전체 글 개수 
 		let totalPage = Math.ceil(cnt / size);		// 전체 페이지 수 
 		let pageSize = 10;							// 페이지 링크 갯수 
