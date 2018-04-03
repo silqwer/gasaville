@@ -67,21 +67,21 @@
 				<div class="pagenum">
 					<ul>
 						<% if(page > pageSize) { %>
-						<li><a href="/admin/users/list/1"><i class="fa fa-angle-double-left"></i></a></li>
-						<li><a href="/admin/users/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+						<li><a href="/admin/users/list/1/<%=search%>"><i class="fa fa-angle-double-left"></i></a></li>
+						<li><a href="/admin/users/list/<%=startPage-1%>/<%=search%>"><i class="fa fa-angle-left"></i></a></li>
 						<% } %>
 						
 						<% for (var i=startPage; i<=endPage; i++) { %>
 			        	<% if (i== page) {%>
 			        	<li class="on"><%=i%></li>
 			        	<% } else { %>
-			        	<li><a href="/admin/users/list/<%=i%>"><%=i%></a></li>
+			        	<li><a href="/admin/users/list/<%=i%>/<%=search%>"><%=i%></a></li>
 			       		<% } %>
 			      		<% } %>
 						
 						<% if (endPage < totalPage) { %>
-						<li><a href="/admin/users/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
-						<li><a href="/admin/users/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+						<li><a href="/admin/users/list/<%=endPage+1%>/<%=search%>"><i class="fa fa-angle-right"></i></a></li>
+						<li><a href="/admin/users/list/<%=totalPage%>/<%=search%>"><i class="fa fa-angle-double-right"></i></a></li>
 			      	    <% } %>
 					</ul>
 				</div>
