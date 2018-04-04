@@ -171,69 +171,52 @@
 					<td class="tac">1</td>
 					<td class="tac"><button type="button" class="mbtn skybtn readonly" readonly="readonly">신청대기</button></td>
 				</tr>
-				<tr>
-					<td rowspan="2">2</td>
-					<td rowspan="2">나</td>
-					<td rowspan="2"><a href="#">나중학교<i class="fa fa-map-marker-alt fcsky ml5"></i></a></td>
-					<td rowspan="2" class="tac">2</td>
-					<td class="tac">1</td>
-					<td class="tac"><button type="button" class="mbtn skybtn">신청하기</button></td>
-				</tr>
-				<tr>	
-					<td class="tac">2</td>
-					<td class="tac"><button type="button" class="mbtn graybtn readonly" readonly="readonly">신청완료</button></td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>다</td>
-					<td><a href="#">다중학교<i class="fa fa-map-marker-alt fcsky ml5"></i></a></td>
-					<td class="tac">1</td>
-					<td class="tac">1</td>
-					<td class="tac"><button type="button" class="mbtn redbtn">신청취소</button></td>
-				</tr>
-
 				<% let row_span_flag = true; %>
 				<% let rowsp = 0; %>
 				<% let temp = 0; %>
 				<% let switch_flag = true; %>
 				<% let index_key = 0; %>
 
-				<% result.forEach(function(el, index) { %>
-				<% if(locals.result[index+1] && el['EXAM_SEQ'] === result[index+1]['EXAM_SEQ'] && rowsp === 0) { %>
-				<% switch_flag = false; %>
-				<% row_span_flag = false; %>
-				<% temp = index; %>
-				<% 	while(true) { %>
-				<% 		if(el['EXAM_SEQ'] === result[temp]['EXAM_SEQ']) { %>
-				<%			temp = temp+1; %>
-				<%			rowsp = rowsp+1; %>
-				<%		} else { %>
-				<%			break;%>
-				<%		} %>
-				<%  } %>
-				<% } else { %>
-				<% 		if(switch_flag === false) { %>
-				<%			rowsp = rowsp-1; %>
-				<%			if(rowsp === 0) { %>
-				<%				switch_flag = true; %>
-				<% 			} %>
-				<% 		} %>
-				<%		row_span_flag = true; %>
-				<% } %> 
+				<% 
+				result.forEach(function(el, index) { 
+					if(locals.result[index+1] && el['EXAM_SEQ'] === result[index+1]['EXAM_SEQ'] && rowsp === 0) { 
+						switch_flag = false; 
+						row_span_flag = false; 
+						temp = index; 
+
+						while(true) { 
+							if(el['EXAM_SEQ'] === result[temp]['EXAM_SEQ']) { 
+								temp = temp+1; 
+								rowsp = rowsp+1; 
+							} else { 
+								break;
+							} 
+				 		} 
+					} else { 
+						if(switch_flag === false) { 
+							rowsp = rowsp-1; 
+						if(rowsp === 0) { 
+							switch_flag = true; 
+							} 
+						} 
+						
+						row_span_flag = true; 
+					} 
+				%> 
 				<tr>
 				<%	if(row_span_flag === true) { %>
 				<%		if(switch_flag === true) { %>
-						<td class="tac"><%=index_key%></td>
+						<td class="tac"><%=(index_key+1)%></td>
 						<% index_key++; %>
-						<td class="tac"><%=el['EXAM_SCHOOL'];%></td>
-						<td class="tac"><%=el['EXAM_NAME'];%></td>
+						<td><%=el['EXAM_NAME'];%></td>
+						<td><%=el['EXAM_SCHOOL'];%><i class="fa fa-map-marker-alt fcsky ml5"></i></td>
 						<td class="tac"><%=el['PERIOD_CLASS'];%></td>
 				<% 		} %>
 				<% } else { %>
-						<td rowspan="<%=rowsp%>" class="tac"><%=index_key;%></td>
+						<td rowspan="<%=rowsp%>" class="tac"><%=(index_key+1);%></td>
 						<% index_key++; %>
-						<td rowspan="<%=rowsp%>" class="tac"><%=el['EXAM_SCHOOL'];%></td>
-						<td rowspan="<%=rowsp%>" class="tac"><%=el['EXAM_NAME'];%></td>
+						<td rowspan="<%=rowsp%>"><%=el['EXAM_NAME'];%></td>
+						<td rowspan="<%=rowsp%>"><%=el['EXAM_SCHOOL'];%><i class="fa fa-map-marker-alt fcsky ml5"></i></td>
 						<td rowspan="<%=rowsp%>" class="tac"><%=rowsp;%></td>
 				<% } %>
 				<td class="tac"><%=el['PERIOD_CLASS'];%></td>
