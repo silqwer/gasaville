@@ -11,8 +11,27 @@ module.exports.periods = (req, res) =>{
 };
 
 module.exports.listPage = (req, res) => {
-	periods.count(function(err, rows){
-		let page = req.params.page;
+	
+	let page = req.params.page;
+	let word = req.params.word;
+	
+	periods.count(word, function(err, rows){
+		
+		if(rows === undefined){
+			//조회 결과 없음 
+			res.render('adm/periods/list', { 
+				'title' : '기수 관리',
+				'userInfo' : req.user,
+				'page' : page, 
+				'result' : result
+			});
+		
+			return;
+		
+		}else{
+			result = true;
+		}
+		
 		page = parseInt(page, 10);					// 십진수 만들기 
 		let size = 10; 								// 한 페이지에 보여줄 개수		
 		let begin = (page - 1) * size;				// 시작 번호
@@ -28,7 +47,21 @@ module.exports.listPage = (req, res) => {
 		}
 		
 		let max = cnt - ((page-1) * size);			// 전체 글이 존재하는 개수
-		periods.list(begin, size, function(err, rows){
+		
+		periods.list(word, begin, size, function(err, rows){
+			
+			if (err) {
+				console.error(err);
+				throw err;
+			}
+			
+			let search = '';
+			
+			if(word !== undefined){
+				search = '/' + word;
+			}
+			
+			
 			res.render('adm/periods/list', { 
 				'title' : '기수 관리',
 				'userInfo' : req.user,
@@ -38,7 +71,10 @@ module.exports.listPage = (req, res) => {
 				'startPage' : startPage,
 				'endPage' : endPage,
 				'totalPage' : totalPage,
-				'max' : max
+				'max' : max,
+				'word' : word,
+				'search' : search,
+				'result' : result
 			}); 
 		});
 	});

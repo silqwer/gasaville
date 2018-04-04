@@ -8,10 +8,13 @@
   	<input type="hidden" id="noticePage" name="noticePage" value="<%=page%>">
   	<input type="hidden" id="noticeSeq" name="noticeSeq" value="<%=notice.SEQ%>">
     <form id="commonForm" name="commonForm"></form>
+   	
    	<div class="main-wrap">
    		<% include ../common/menu %>
-   		<div class="content-wrap">
+   	
+   		<div class="content-wrap write">
    			<h2><%= title %></h2>
+   			
    			<div class="view">
    				<div class="title">
 					<p><%=notice.TITLE%></p>
@@ -21,11 +24,13 @@
 						<li><span class="mr10">등록일</span><input type="date" id="Date" value="<%=notice.DATE%>"></li>
 					</ul>
 				</div>
+				
 				<div class="text">
 					<textarea rows="" cols="" id="contents" >
 					<%=notice.CONTENTS%>
 					</textarea>
 				</div>
+				
 				<div class="list">
 					<ul>
 						<% if (next != null) { %>
@@ -45,9 +50,13 @@
 						<% } %>
 						
 					</ul>
-					<button type="button" id="updateBtn" class="mbtn whitebtn mt20 fr">수정</button>
-					<button type="button" id="updateBtn" class="mbtn whitebtn mt20 fr">삭제</button>
-					<button type="button" id="cancelBtn" class="mbtn whitebtn mt20 fr">목록</button>
+					
+					<div class="btnfr">
+						<button type="button" id="updateBtn" class="mbtn skybtn">수정</button>
+						<button type="button" id="deleteBtn" class="mbtn redbtn">삭제</button>
+						<button type="button" id="cancelBtn"  class="mbtn whitebtn">목록</button>
+					</div>
+					
 				</div>
    			</div>
    		</div>

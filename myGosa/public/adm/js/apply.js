@@ -5,29 +5,19 @@
 		let category = $('#category').val();
 		
 		if(window.gosa.isNull(category)){
-			$('#searchCategory option[value=name]').attr('selected', 'selected');
+			$('#searchCategory option[value=examName]').attr('selected', 'selected');
 		}else{
 			$('#searchCategory option[value='+category+']').attr('selected', 'selected');
 		}
 		
 	});
 	
-	$("#deleteBtn").on({
-		click:function(){
-			let comSubmitForm = window.gosa.createSubmitForm('commonForm');
-			comSubmitForm.setUrl('/admin/comment/delete');
-			comSubmitForm.addParam("PAGE", $('#commentPage').val());
-			comSubmitForm.addParam("SEQ", $('#commentSeq').val());
-			comSubmitForm.submit();
+	//스케줄 카테고리 
+	$("#scheduleCategory").on({
+		change:function(e){
+			let schedule = this.value;
+			location.href = '/admin/apply/list/1/'+schedule;
 		}
-	});
-	
-	$("#cancelBtn").on({
-		click:function(){
-			let page = $('#examPage').val();
-			location.href = '/admin/comment/list/'+page;
-		}
-
 	});
 	
 	//검색 버튼 클릭 
@@ -37,9 +27,10 @@
 			let word = $('#searchWord').val(); 
 			let page = $('#page').val();
 			let url = $('#searchBtn').data('url');
+			let schedule = $('#scheduleCategory').val();
 			
 			if(!window.gosa.isNull(word)){
-				let action = url +'/'+ page + '/' + category + '/' + word;
+				let action = url +'/'+ page + '/' + schedule + '/' + category + '/' + word;
 				$('#searchForm').attr('action', action);
 			}
 		}
@@ -54,9 +45,10 @@
 				let word = $('#searchWord').val(); 
 				let page = $('#page').val();
 				let url = $('#searchBtn').data('url');
+				let schedule = $('#scheduleCategory').val();
 				
 				if(!window.gosa.isNull(word)){
-					let action = url +'/'+ page + '/' + category + '/' + word;
+					let action = url +'/'+ page + '/' + schedule + '/' + category + '/' + word;
 					$(this).attr('action', action);
 				}
 			}
@@ -64,5 +56,7 @@
 			
 		}
 	});
+	
+	
 	
 })();

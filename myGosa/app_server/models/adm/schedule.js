@@ -13,7 +13,7 @@ var Schedule = {
 				"NAME, " +
 				"DATE_FORMAT(APPLY_DATE, '%Y-%m-%d') AS APPLY_DATE, " +
 				"DATE_FORMAT(ATTENDANCE_DATE, '%Y-%m-%d') AS ATTENDANCE_DATE " +
-				"FROM SCHEDULE", callback);
+				"FROM SCHEDULE ORDER BY APPLY_DATE DESC", callback);
 	}, 
 	
 	dateList : function(callback) {

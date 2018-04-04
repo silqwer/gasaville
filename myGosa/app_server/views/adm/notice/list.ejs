@@ -5,18 +5,28 @@
     <% include ../common/head %>
   </head>
   <body>
-  	<input type="hidden" id="noticePage" name="noticePage" value="<%=page%>">
+  	<input type="hidden" id="page" name="page" value="<%=page%>">
+  	<input type="hidden" id="category" name="category" value="<%=category%>">
+  	
     <div class="main-wrap">
     	<% include ../common/menu %>
     	<div class="content-wrap">
     		<h2><%= title %></h2>
-    		 <div>
-		    	<select>
-				  <option value="name" selected="selected">제목</option>
-				  <option value="contents">내용</option>
-				</select>
-		    </div>
-		    <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
+    		
+    		<div class="search">
+					<select id="searchCategory">
+					  <option value="title">제목</option>
+				 		<option value="contents">내용</option>
+					</select>
+					<form id="searchForm" method="get">
+					<fieldset>
+						<legend>검색</legend>
+						<input type="text" id="searchWord" value="<%=word%>">
+						<input type="button" value="검색" class="sbtn" data-url="/admin/notice/list" id="searchBtn">
+					</fieldset>
+					</form>
+				</div>
+    		
     		<div>
 				<table class="thead-tbl">
 					<colgroup>
@@ -48,72 +58,32 @@
 			<div class="pagenum">
 				<ul>
 					<% if(page > pageSize) { %>
-					<li><a href="/admin/notice/list/1"><i class="fa fa-angle-double-left"></i></a></li>
-					<li><a href="/admin/notice/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+					<li><a href="/admin/notice/list/1/<%=search%>"><i class="fa fa-angle-double-left"></i></a></li>
+					<li><a href="/admin/notice/list/<%=startPage-1%>/<%=search%>"><i class="fa fa-angle-left"></i></a></li>
 					<% } %>
 					
 					<% for (var i=startPage; i<=endPage; i++) { %>
 		        	<% if (i== page) {%>
 		        	<li class="on"><%=i%></li>
 		        	<% } else { %>
-		        	<li><a href="/admin/notice/list/<%=i%>"><%=i%></a></li>
+		        	<li><a href="/admin/notice/list/<%=i%>/<%=search%>"><%=i%></a></li>
 		       		<% } %>
 		      		<% } %>
 					
 					<% if (endPage < totalPage) { %>
-					<li><a href="/admin/notice/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
-					<li><a href="/admin/notice/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+					<li><a href="/admin/notice/list/<%=endPage+1%>/<%=search%>"><i class="fa fa-angle-right"></i></a></li>
+					<li><a href="/admin/notice/list/<%=totalPage%>/<%=search%>"><i class="fa fa-angle-double-right"></i></a></li>
 		      	    <% } %>
 				</ul>
 			</div>
-			<div><button id="addBtn">등록</button></div>
+			
+    		<div class="btnfr">
+					<button type="button" id="addBtn" class="mbtn skybtn">등록</button>
+				</div>
+				
     	</div>
     </div>
     
-    
-    
-    
-    <!-- <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
-   	<table>
-   		<tr>
-   			<th>번호</th>
-   			<th>제목</th>
-   			<th>시작일</th>
-   			<th>종료일</th>		
-   		</tr>
-   		<% for(let i=0; i<list.length; ++i){ %>
-   		<tr>
-   			<td><%=max-i%></td>
-   			<td><a href="/admin/notice/update/<%=page%>/<%=list[i].SEQ%>"><%=list[i].TITLE%></a></td>
-   			<td><%=list[i].START_DATE%></td>
-   			<td><%=list[i].END_DATE%></td>
-   		</tr>
-   		<% } %>
-   	</table>
-   	<div>
-      <% if(page > pageSize) { %>
-        [ <a href="/admin/notice/list/1" style="text-decoration: none;">◀◀</a> ]
-        [ <a href="/admin/notice/list/<%=startPage-1%>" style="text-decoration: none;">◀</a> ]
-      <% } %>
-     
-      &nbsp;&nbsp;
-      <% for (var i=startPage; i<=endPage; i++) { %>
-        <% if (i== page) {%>
-          [ <%=i%> ]
-        <% } else { %>
-          [ <a href="/admin/notice/list/<%=i%>" style="text-decoration: none;"><%=i%></a> ]
-        <% } %>
-      <% } %>
-      &nbsp;&nbsp;
-      <% if (endPage < totalPage) { %>
-        [ <a href="/admin/notice/list/<%=endPage+1%>" style="text-decoration: none;">▶</a> ]
-        [ <a href="/admin/notice/list/<%=totalPage%>" style="text-decoration: none;">▶▶</a> ]
-      <% } %>
-      
-    </div>
-    <div>
-    <button id="addBtn">등록</button>
-    </div> -->
   </body>
   <script src='/adm/js/notice.js'></script>
 </html>

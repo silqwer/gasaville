@@ -12,15 +12,36 @@ module.exports.notice = (req, res) =>{
 //공지사항 관리 리스트 페이지 
 module.exports.listPage = (req, res) => {
 	
-	notice.count(function(err, rows){
-		let page = req.params.page;
+	let page = req.params.page;
+	let category = req.params.category;
+	let word = req.params.word;
+	
+	notice.count(category, word, function(err, rows){
+		
+		let result = false;
+		
+		if(rows === undefined){
+			//조회 결과 없음 
+			res.render('adm/notice/list', { 
+				'title' : '공지사항 관리',
+				'userInfo' : req.user,
+				'page' : page, 
+				'result' : result
+			});
+		
+			return;
+		
+		}else{
+			result = true;
+		}
+		
 		page = parseInt(page, 10);					// 십진수 만들기 
 		let size = 10; 								// 한 페이지에 보여줄 개수		
 		let begin = (page - 1) * size;				// 시작 번호
 		let cnt = rows[0].CNT;						// 전체 글 개수 
 		let totalPage = Math.ceil(cnt / size);		// 전체 페이지 수 
 		let pageSize = 10;							// 페이지 링크 갯수 
-		
+		console.log('=======>cnt:'+cnt);
 		let startPage = Math.floor((page-1) / pageSize) * pageSize + 1;
 		let endPage = startPage + (pageSize - 1);
 		
@@ -30,11 +51,17 @@ module.exports.listPage = (req, res) => {
 		
 		let max = cnt - ((page-1) * size);			// 전체 글이 존재하는 개수
 		
-		notice.list(begin, size, function(err, rows){
+		notice.list(category, word, begin, size, function(err, rows){
 			
 			if (err) {
 				console.error(err);
 				throw err;
+			}
+			
+			let search = '';
+			
+			if(word !== undefined){
+				search = category + '/' + word;
 			}
 			
 			res.render('adm/notice/list', { 
@@ -46,7 +73,11 @@ module.exports.listPage = (req, res) => {
 				'startPage' : startPage,
 				'endPage' : endPage,
 				'totalPage' : totalPage,
-				'max' : max
+				'max' : max,
+				'category' : category,
+				'word' : word,
+				'search' : search,
+				'result' : result
 			}); 
 		});
 	});

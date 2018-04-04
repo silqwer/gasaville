@@ -7,20 +7,57 @@ var connection = mysql_dbc.init();
 
 var Comment = {
 	
-	list : function(begin, size, callback) {
+	list : function(category, word, begin, size, callback) {
 	
-		return connection.query("SELECT " +
+		let sql = "";
+		
+		if(word !== undefined){
+			switch(category){
+			case "name":
+				sql += " WHERE NAME LIKE '%"+word+"%' ";
+				break;
+			case "school":
+				sql += " WHERE SCHOOL LIKE '%"+word+"%' ";
+				break;
+			case "exam":
+				sql += " WHERE EXAM_NAME LIKE '%"+word+"%' ";
+				break;		
+			}
+		}
+		
+		return connection.query("SELECT * FROM (SELECT " +
 				"SEQ, CONTENTS, " +
-				"(SELECT NAME FROM EXAM WHERE SEQ = EXAM_SEQ) AS EXAM," +
+				"(SELECT NAME FROM EXAM WHERE SEQ = EXAM_SEQ) AS EXAM_NAME, " +
 				"(SELECT SCHOOL FROM EXAM WHERE SEQ = EXAM_SEQ) AS SCHOOL, " +
 				"(SELECT NAME FROM USER WHERE SEQ = USER_SEQ) AS NAME " +
 				"FROM COMMENT " +
-				"ORDER BY SEQ DESC " +
+				"ORDER BY SEQ DESC) C " + sql +
 				"LIMIT ?, ?", [begin, size], callback);
 	}, 
 	
-	count : function (callback) {
-		return connection.query('SELECT COUNT(*) AS CNT FROM COMMENT', callback);
+	count : function (category, word, callback) {
+		
+		let sql = "SELECT COUNT(*) AS CNT FROM (SELECT SEQ, CONTENTS, " +
+				"(SELECT NAME FROM EXAM WHERE SEQ = EXAM_SEQ) AS EXAM_NAME, " +
+				"(SELECT SCHOOL FROM EXAM WHERE SEQ = EXAM_SEQ) AS SCHOOL, " +
+				"(SELECT NAME FROM USER WHERE SEQ = USER_SEQ) AS NAME " +
+				"FROM COMMENT) C";
+	
+		if(word !== undefined){
+			switch(category){
+			case "name":
+				sql += " WHERE NAME LIKE '%"+word+"%'";
+				break;
+			case "school":
+				sql += " WHERE SCHOOL LIKE '%"+word+"%'";
+				break;
+			case "name":
+				sql += " WHERE ADDR LIKE '%"+word+"%'";
+				break;		
+			}
+		}
+		
+		return connection.query(sql, callback);
 	}, 
 	
 	read : function (seq, callback) {
