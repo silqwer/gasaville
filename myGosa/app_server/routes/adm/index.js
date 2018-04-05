@@ -3,7 +3,6 @@ var router = express.Router();
 var ctrlMain = require('../../controllers/adm/main');
 var ctrlExam = require('../../controllers/adm/exam');
 var ctrlComment = require('../../controllers/adm/comment');
-
 var ctrlSchedule = require('../../controllers/adm/schedule');
 var ctrlPeriods = require('../../controllers/adm/periods');
 var ctrlApply = require('../../controllers/adm/apply');
@@ -116,6 +115,9 @@ module.exports = function (passport){
 	router.post('/notice/update', ensureAuthenticated, ctrlNotice.update);					// 공지사항 수정
 	router.post('/notice/delete', ensureAuthenticated, ctrlNotice.delete);					// 공지사항 삭제
 
+	
+	//npm 으로 설치한 라이브러리 접근
+	router.post('/modules', ensureAuthenticated, ctrlNotice.delete);	
 	
 	//로그인 
 	router.post('/login', passport.authenticate('local-login', {

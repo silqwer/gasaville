@@ -34,7 +34,7 @@ module.exports.listPage = (req, res) => {
 		}else{
 			result = true;
 		}
-		
+		console.log('page:'+page);
 		page = parseInt(page, 10);					// 십진수 만들기 
 		let size = 10; 								// 한 페이지에 보여줄 개수		
 		let begin = (page - 1) * size;				// 시작 번호
@@ -50,7 +50,7 @@ module.exports.listPage = (req, res) => {
 		}
 		
 		let max = cnt - ((page-1) * size);			// 전체 글이 존재하는 개수
-		
+		console.log('begin:'+begin);
 		notice.list(category, word, begin, size, function(err, rows){
 			
 			if (err) {
@@ -183,7 +183,6 @@ module.exports.delete = (req, res) => {
 			console.error(err);
 			throw err;
 		}
-		
 		
 		res.redirect('/admin/notice/list/'+page);
 	});

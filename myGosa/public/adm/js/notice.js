@@ -9,7 +9,6 @@
 		}else{
 			$('#searchCategory option[value='+category+']').attr('selected', 'selected');
 		}
-		
 	});
 	
 	$("#cancelBtn").on({
@@ -52,7 +51,7 @@
 	
 	$("#addBtn").on({
 		click:function(){
-			let page = $('#noticePage').val();
+			let page = $('#page').val();
 			location.href = '/admin/notice/insert/'+page;
 		}
 	});
