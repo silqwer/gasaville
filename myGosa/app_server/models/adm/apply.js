@@ -92,9 +92,6 @@ var Apply = {
 			}
 		}
 		
-		console.log('where:'+where);
-		console.log('begin:'+begin);
-		console.log('size:'+size);
 		return connection.query("SELECT * FROM (SELECT P.SCHEDULE_SEQ AS SCHEDULE, " +
 				"(SELECT NAME FROM EXAM WHERE SEQ = P.EXAM_SEQ) AS EXAM_NAME, " +
 				"(SELECT SCHOOL FROM EXAM WHERE SEQ = P.EXAM_SEQ) AS EXAM_SCHOOL, " +

@@ -14,7 +14,7 @@ module.exports.listPage = (req, res) => {
 	let page = req.params.page;
 	let category = req.params.category;
 	let word = req.params.word;
-	console.log('1');
+	
 	comment.count(category, word, function(err, rows){
 		
 		let result = false;
@@ -93,7 +93,7 @@ module.exports.updatePage = (req, res) => {
 		}
 		
 		res.render('adm/comment/update', { 
-			'title' : '고사장 관리',
+			'title' : '고사장 후기 관리',
 			'userInfo' : req.user,
 			'comment' : rows[0],
 			'number' : number, 
