@@ -20,8 +20,6 @@ var Notice = {
 				break;
 			}
 		}
-		console.log('category:'+category);
-		console.log('word:'+word);
 		
 		return connection.query(sql, callback);
 	}, 
