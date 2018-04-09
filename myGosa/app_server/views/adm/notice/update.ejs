@@ -2,11 +2,26 @@
 <html>
   <head>
     <title><%= title %></title>
-  	<% include ../common/head %>
+  	<script src='/common/js/jquery/jquery.min.js'></script>
+    <script src="/common/js/tui-editor/tui-code-snippet.min.js"></script>
+    <script src="/common/js/tui-editor/markdown-it.min.js"></script>
+    <script src="/common/js/tui-editor/toMark.min.js"></script>
+    <script src="/common/js/tui-editor/codemirror.js"></script>
+    <script src="/common/js/tui-editor/highlight.pack.min.js"></script>
+    <script src="/common/js/tui-editor/squire.js"></script>
+    <script src="/common/js/tui-editor/tui-editor-Editor-all.min.js"></script>
+    
+    <script src='/adm/js/gosa.js'></script>
+    <link rel='stylesheet' href='/adm/css/style.css' />
+    <link rel="stylesheet" href="/common/css/tui-editor/codemirror.css">
+    <link rel="stylesheet" href="/common/css/tui-editor/github.css">
+    <link rel="stylesheet" href="/common/css/tui-editor/tui-editor.min.css">
+    <link rel="stylesheet" href="/common/css/tui-editor/tui-editor-contents.min.css">
   </head>
   <body>
   	<input type="hidden" id="noticePage" name="noticePage" value="<%=page%>">
   	<input type="hidden" id="noticeSeq" name="noticeSeq" value="<%=notice.SEQ%>">
+  	<input type="hidden" id="noticeCtns" name="noticeCtns" value="<%=notice.CONTENTS%>">
     <form id="commonForm" name="commonForm"></form>
    	
    	<div class="main-wrap">
@@ -17,7 +32,12 @@
    			
    			<div class="view">
    				<div class="title">
-					<p><%=notice.TITLE%></p>
+					<form action="#" method="post">
+						<fieldset>
+							<legend>제목</legend>
+							<input type="text" id="title" placeholder="제목을 입력해 주세요." value="<%=notice.TITLE%>">
+						</fieldset>
+					</form>
 					<ul>
 						<li><span class="mr10">시작일</span><input type="date" id="startDate" value="<%=notice.START_DATE%>"></li>
 						<li><span class="mr10">종료일</span><input type="date" id="endDate" value="<%=notice.END_DATE%>"></li>
@@ -26,9 +46,22 @@
 				</div>
 				
 				<div class="text">
-					<textarea rows="" cols="" id="contents" >
-					<%=notice.CONTENTS%>
-					</textarea>
+					<form action="#" method="post" class="mt15">
+						<fieldset>
+							<legend>내용</legend>
+							<div id="contents"></div>
+							<script>
+							    $('#contents').tuiEditor({
+							        initialEditType: 'markdown',
+							        previewStyle: 'vertical',
+							        height: 300
+							    });
+							 
+							    $('#contents').tuiEditor('setValue', $('#noticeCtns').val());
+							    
+							</script>
+						</fieldset>
+					</form>
 				</div>
 				
 				<div class="list">
