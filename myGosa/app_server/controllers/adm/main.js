@@ -12,6 +12,12 @@ module.exports.index = (req, res) => {
 	res.render('adm/index', { title : '관리자 로그인' } ); 	//그릴 페이지, 보낼 객체 
 };
 
+//로그아웃
+module.exports.logout = (req, res) => {
+	req.logout();
+	res.redirect('/admin');
+};
+
 //관리자 홈
 module.exports.main = (req, res) => {
 	res.render('adm/main/index', { 
