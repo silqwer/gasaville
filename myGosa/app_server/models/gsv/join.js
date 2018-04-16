@@ -26,6 +26,10 @@ var Join = {
 
 	positionList : function (callback) {
 		return connection.query("SELECT * FROM POSITION", callback);
+	},
+
+	availableId : function (params, callback) {
+		return connection.query("SELECT IFNULL(MAX(SEQ), 0) AS SEQ FROM USER WHERE ID=?", params.id, callback);
 	}
 };
 

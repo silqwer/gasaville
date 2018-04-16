@@ -28,6 +28,8 @@ module.exports = function (passport){
 	router.get('/notice/list/:page/:view', ensureAuthenticated, ctrlNotice.viewPage);// 공지사항 특정 페이지
 
 	router.post('/join/insert', ctrlJoin.insert);									// 회원가입 insert
+	router.post('/join/availableId', ctrlJoin.availableId);							// 아이디 사용 유무
+	
 	router.post('/main/insertApply', ensureAuthenticated, ctrlMain.insertApply);	// 출석고사 신청정보 insert
 	router.post('/main/deleteApply', ensureAuthenticated, ctrlMain.deleteApply);	// 출석고사 신청정보 delete
 

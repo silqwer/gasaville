@@ -184,6 +184,7 @@ input:focus ~ .bar:after {
 	color:#c92033
 }
 .join p.yes{
+	display: none;
 	color:#1a9bd4;
 	background:url(../image/yeschk.png) no-repeat 0 6px;
 	padding-left:15px

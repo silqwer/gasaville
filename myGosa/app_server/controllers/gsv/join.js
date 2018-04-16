@@ -40,8 +40,6 @@ module.exports.main = (req, res) => {
  
 		department = rows;
 
-		console.log(rows);
-
 		join.positionList(function(err, rows) {
 			if(err) {
 				console.log(err);
@@ -53,6 +51,30 @@ module.exports.main = (req, res) => {
 				department : department,
 				position: rows
 			});
+		});
+	});
+};
+
+module.exports.availableId = (req, res) => {
+	let result = null;
+	let param = {
+		id: req.body.inputId
+	};
+
+	join.availableId(param, function(err, rows) {
+		if(err) {
+			console.log(err);
+			throw err;
+		}
+
+		if(rows[0].SEQ===0) {
+			result = true;
+		} else {
+			result = false;
+		}
+
+		res.send({
+			'result': result
 		});
 	});
 };
