@@ -3,7 +3,6 @@
  */
 
 var users =  require('../../models/adm/users');
-var bcrypt = require('bcrypt-nodejs');
 var schedule =  require('../../models/adm/schedule');
 var periods =  require('../../models/adm/periods');
 

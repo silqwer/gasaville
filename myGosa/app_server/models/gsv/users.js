@@ -14,9 +14,9 @@ var Users = {
 		return connection.query('SELECT * FROM USER WHERE SEQ = ?',[seq], callback);
 	},
 	
-	insert : function (Users, callback) {
-		return connection.query('INSERT INTO USER VALUES(?,?)', Users.id, Users.name, callback);
-	}
+	findById : function (id, callback) {
+		return connection.query('SELECT * FROM USER WHERE ID = ?', [id], callback);
+	}, 
 };
 
 module.exports = Users; 
