@@ -27,15 +27,23 @@ module.exports = function (passport){
 	router.get('/notice/list/:page', ensureAuthenticated, ctrlNotice.listPage);		// 공지사항 특정 목록
 	router.get('/notice/list/:page/:view', ensureAuthenticated, ctrlNotice.viewPage);// 공지사항 특정 페이지
 
-	router.post('/join/insert', ctrlJoin.insert);									// 회원가입 insert
+	//router.post('/join/insert', ctrlJoin.insert);									// 회원가입 insert
 	router.post('/join/availableId', ctrlJoin.availableId);							// 아이디 사용 유무
 	
 	router.post('/main/insertApply', ensureAuthenticated, ctrlMain.insertApply);	// 출석고사 신청정보 insert
 	router.post('/main/deleteApply', ensureAuthenticated, ctrlMain.deleteApply);	// 출석고사 신청정보 delete
 
+	//로그인 
 	router.post('/', passport.authenticate('local-login', {
 		successRedirect : '/gsv/main',
 		failureRedirect : '/',
+		failureFlash : true
+	}));
+	
+	//회원가입  
+	router.post('/join/insert', passport.authenticate('local-signup', {
+		successRedirect : '/',
+		failureRedirect : '/gsv/join/main',
 		failureFlash : true
 	}));
 	

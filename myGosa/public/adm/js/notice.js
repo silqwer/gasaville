@@ -22,13 +22,13 @@
 	$("#insertBtn").on({
 		click:function(){
 			//벨리데이션 체크 
-			
+			let contents = $('#contents').tuiEditor('getValue');
 			let comSubmitForm = window.gosa.createSubmitForm('commonForm');
 			comSubmitForm.setUrl('/admin/notice/insert');
 			comSubmitForm.addParam("START_DATE", $('#startDate').val());
 			comSubmitForm.addParam("END_DATE", $('#endDate').val());
 			comSubmitForm.addParam("TITLE", $('#title').val());
-			comSubmitForm.addParam("CONTENTS", $('#contents').val());
+			comSubmitForm.addParam("CONTENTS", contents);
 			comSubmitForm.submit();
 		}
 	});
@@ -36,13 +36,13 @@
 	$("#updateBtn").on({
 		click:function(){
 			//벨리데이션 체크 
-		 
+			let contents = $('#contents').tuiEditor('getValue');
 			let comSubmitForm = window.gosa.createSubmitForm('commonForm');
 			comSubmitForm.setUrl('/admin/notice/update');
 			comSubmitForm.addParam("START_DATE", $('#startDate').val());
 			comSubmitForm.addParam("END_DATE", $('#endDate').val());
 			comSubmitForm.addParam("TITLE", $('#title').val());
-			comSubmitForm.addParam("CONTENTS", $('#contents').val());
+			comSubmitForm.addParam("CONTENTS",contents);
 			comSubmitForm.addParam("SEQ", $('#noticeSeq').val());
 			comSubmitForm.addParam("PAGE", $('#noticePage').val());
 			comSubmitForm.submit();

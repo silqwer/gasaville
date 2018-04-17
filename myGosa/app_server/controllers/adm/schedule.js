@@ -3,7 +3,6 @@
  */
 
 var schedule =  require('../../models/adm/schedule');
-var bcrypt = require('bcrypt-nodejs');
 
 module.exports.insert = (req, res) => {
 	

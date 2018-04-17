@@ -3,13 +3,18 @@
  */
 
 var users =  require('../../models/adm/users');
-var bcrypt = require('bcrypt-nodejs');
 var schedule =  require('../../models/adm/schedule');
 var periods =  require('../../models/adm/periods');
 
 //메인 
 module.exports.index = (req, res) => {
 	res.render('adm/index', { title : '관리자 로그인' } ); 	//그릴 페이지, 보낼 객체 
+};
+
+//로그아웃
+module.exports.logout = (req, res) => {
+	req.logout();
+	res.redirect('/admin');
 };
 
 //관리자 홈

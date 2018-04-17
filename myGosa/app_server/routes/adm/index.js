@@ -26,6 +26,8 @@ module.exports = function (passport){
 	router.get('/', ctrlMain.index);												// 관리자 메인 
 	router.get('/main', ensureAuthenticated, ctrlMain.main);						// 관리자 홈 
 	router.get('/login', ctrlMain.index);											// 관리자 로그인 
+	router.get('/logout', ctrlMain.logout);											// 관리자 로그아웃
+	
 	
 	//스케줄 관리
 	router.get('/schedule', ensureAuthenticated, ctrlMain.schedule);				// 일정 관리 
@@ -115,10 +117,6 @@ module.exports = function (passport){
 	router.post('/notice/update', ensureAuthenticated, ctrlNotice.update);					// 공지사항 수정
 	router.post('/notice/delete', ensureAuthenticated, ctrlNotice.delete);					// 공지사항 삭제
 
-	
-	//npm 으로 설치한 라이브러리 접근
-	router.post('/modules', ensureAuthenticated, ctrlNotice.delete);	
-	
 	//로그인 
 	router.post('/login', passport.authenticate('local-login', {
 		successRedirect : '/admin/main',

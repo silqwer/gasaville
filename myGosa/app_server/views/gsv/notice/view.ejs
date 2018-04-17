@@ -1,3 +1,10 @@
+<script src="/common/js/tui-editor/markdown-it.min.js"></script>
+<script src="/common/js/tui-editor/tui-code-snippet.min.js"></script>
+<script src="/common/js/tui-editor/highlight.pack.min.js"></script>
+<script src="/common/js/tui-editor/tui-editor-Viewer.min.js"></script>
+<link rel="stylesheet" href="/common/css/tui-editor/github.css">
+<link rel="stylesheet" href="/common/css/tui-editor/tui-editor-contents.min.css">
+
 <div class="main-wrap">
 	<div class="content-wrap">
 		<h2>공지사항</h2>
@@ -10,7 +17,19 @@
 				</ul>
 			</div>
 			<div class="text">
-				<%=content[0].CONTENTS%>
+				<div id="contents"></div>
+				<input type="hidden" id="contentCnts" name="contentCnts" value="<%=content[0].CONTENTS%>">
+				<script type="text/javascript">
+					$('#contents').tuiEditor({
+			    	initialEditType: 'markdown',
+			      previewStyle: 'vertical',
+			      height: 300, 
+			      viewOnly:true
+			    });
+					
+					 $('#contents').tuiEditor('setValue', $('#contentCnts').val());
+				</script>
+				
 			</div>
 			<div class="list">
 				<ul>

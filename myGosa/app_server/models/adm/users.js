@@ -14,16 +14,8 @@ var Users = {
 		return connection.query('SELECT * FROM USER WHERE SEQ = ?',[seq], callback);
 	},
 	
-	insert : function (Users, callback) {
-		return connection.query('INSERT INTO USER (ID, PASSWORD) VALUES(?,?)', [Users.ID, Users.PASSWORD], callback);
-	}, 
-	
 	login : function (Users, callback) {
 		return connection.query('SELECT * FROM USER WHERE ID = ? AND PASSWORD =? ', [Users.id, Users.password], callback);
-	}, 
-	
-	findById : function (id, callback) {
-		return connection.query('SELECT * FROM USER WHERE ID = ?', [id], callback);
 	}, 
 	
 	count : function (category, word, callback) {

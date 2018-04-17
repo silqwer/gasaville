@@ -5,7 +5,9 @@
  */
 
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('../models/adm/users');
+var User = require('../models/gsv/users');
+var Join = require('../models/gsv/join');
+var bcrypt = require('bcrypt-nodejs');
 
 module.exports = function(passport){
 	
@@ -28,7 +30,9 @@ module.exports = function(passport){
 		passReqToCallback: true
 	}, 
 	
+	
 	function(req, userId, userPw, done){
+		
 		User.findById(userId, function(err, rows){
 		
 			if(err){
@@ -36,21 +40,31 @@ module.exports = function(passport){
 			}
 			
 			if(rows.length){
-				return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+				return done(null, false, {message:'Your email is already used'});
+			}else{
+				//암호화 
+				bcrypt.hash(userPw, null, null, function(err, hash){
+					
+					//유저 생성
+					let newUser = {
+							id : userId, 
+							password : hash, //암호화된 패스워드 (60 characters long)
+							name : req.body.userName, 
+							cellphone : req.body.phoneNumber, 
+							department_seq : req.body.department, 
+							position_seq : req.body.position
+					};
+					
+					Join.insert(newUser, function(err, rows){
+					
+						if(err)
+							throw err; 
+						
+						return done(null, newUser);
+					});
+				});
 			}
 		});
-		
-		//유저 생성
-		var newUser = {
-				ID : userId, 
-				PASSWORD : userPw //암호화 과정 추가해야함 
-		};
-		
-		User.insert(newUser, function(err, rows){
-			newUser.SEQ = rows.insertId; 
-			return done(null, newUser);
-		});
-		
 	}));
 	
 	// 로그인
@@ -69,13 +83,16 @@ module.exports = function(passport){
 			
 			if(!rows.length){
 				return done(null, false, req.flash('loginMessage', 'No user found.'));
+			}else{
+				bcrypt.compare(userPw, rows[0].PASSWORD, function(err, res){
+					
+					if(res){
+						return done(null, rows[0]);
+					}else{
+						return done(null, false, {'message' : 'Your password is incorrect'});
+					}
+				});
 			}
-			
-			if(rows[0].PASSWORD !== userPw){
-				return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
-			}
-			
-			return done(null, rows[0]);
 		});
 	}));
 };

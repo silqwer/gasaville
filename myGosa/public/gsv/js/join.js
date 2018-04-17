@@ -11,7 +11,8 @@
 			phoneNumber : $('#phoneNumber'),
 			department: $('#department'),
 			position: $('#position'),
-			joinBtn : $('#joinBtn')
+			joinBtn : $('#joinBtn'), 
+			joinForm : $('#joinForm')[0], 
 		},
 
 		statusId : {
@@ -122,8 +123,12 @@
 						alert("비밀번호가 일치하지 않습니다.");
 						return false;
 					}
-
-					$.ajax({
+					
+					//joinForm 
+					const frm = $(Join.triggers.joinForm);
+					frm.submit();
+				
+					/*$.ajax({
 						url : '/gsv/join/insert',
 						type: 'post',
 						async: true,
@@ -141,7 +146,7 @@
 								window.location = '/gsv/';
 							}
 						}
-					});
+					});*/
 				}
 			}
 		},
