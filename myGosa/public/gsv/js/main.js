@@ -6,7 +6,9 @@
 		triggers: {
 			apply : $('.applyBtn'),
 			cancel : $('.cancelBtn'),
-			examName : $('.examName')
+			examName : $('.examName'), 
+			close : $('.close'), 
+			dimbg : $('.dimbg')
 		},
 
 		listeners: {
@@ -28,8 +30,9 @@
 					location.reload();
 				}
 			},
+			
 			cancel: {
-				click: function() {
+				click : function() {
 					let self = $(this)[0];
 					let agree = confirm('Are you sure want to delete this data?');
 
@@ -50,44 +53,43 @@
 					}
 				}
 			}, 
-			dimLayerPopUp : {
-				click: function(){
+			
+			popWrap : {
+				click : function(e){
+					Main.fn.preventDefault(e);
+					
 					let self = $(this)[0];
 					let exam = $(self).data('exam');
 					
-					let $el = $('#commentLayer');        //레이어의 id를 $el 변수에 저장
-					let isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
-					
-					isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+					var dimHeight = $(document).height();
+					var dimWidth = $(window).width();
 
-			        let $elWidth = ~~($el.outerWidth()),
-			            $elHeight = ~~($el.outerHeight()),
-			            docWidth = $(document).width(),
-			            docHeight = $(document).height();
+					$('.dimbg').css({'width':dimWidth,'height':dimHeight});
+					$('.dimbg').fadeIn(150);
 
-			        // 화면의 중앙에 레이어를 띄운다.
-			        if ($elHeight < docHeight || $elWidth < docWidth) {
-			            $el.css({
-			                marginTop: -$elHeight /2,
-			                marginLeft: -$elWidth/2
-			            })
-			        } else {
-			            $el.css({top: 0, left: 0});
-			        }
+					var left = ($(window).scrollLeft() + ($(window).width() - $('.popwrap').width()) / 2);
+					var top = ($(window).scrollTop() + ($(window).height() - $('.popwrap').height()) / 2);
 
-			        $el.find('a.btn-layerClose').click(function(){
-			            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-			            return false;
-			        });
-
-			        $('.layer .dimBg').click(function(){
-			            $('.dim-layer').fadeOut();
-			            return false;
-			        });
-					
-					
+					$('.popwrap').css({'left':left, 'top':top, 'position':'absolute'});
+					$('.popwrap').show();
 				}
-			}
+			},
+			
+			dimbgEvent: {
+				click : function (){
+					let self = $(this)[0];
+					Main.fn.thisHide(self);
+					Main.fn.selectHide('.popwrap');
+				}
+			},
+			
+			closeWrap : {
+				click : function(e){
+					Main.fn.preventDefault(e);
+					Main.fn.selectHide('.dimbg, .popwrap');
+				}
+			},
+		
 			
 		},
 
@@ -109,13 +111,29 @@
 						return false;
 					}
 				});
-			}
+			}, 
+			
+			thisHide : function (self) {
+				$(self).hide();
+			}, 
+			
+			selectHide : function (selector) {
+				$(selector).hide();
+			}, 
+			
+			preventDefault : function (event) {
+				event.preventDefault();	// 기본적인 서브밋 행동을 취소합니다
+			}, 
+			
+			
 		},
 
 		binding: () => {
 			Main.triggers.apply.on(Main.listeners.apply);
 			Main.triggers.cancel.on(Main.listeners.cancel);
-			Main.triggers.examName.on(Main.listeners.dimLayerPopUp);
+			Main.triggers.examName.on(Main.listeners.popWrap);
+			Main.triggers.close.on(Main.listeners.closeWrap);
+			Main.triggers.dimbg.on(Main.listeners.dimbgEvent);
 		}
 	};
 
