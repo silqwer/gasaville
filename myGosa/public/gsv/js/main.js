@@ -60,18 +60,14 @@
 					
 					let self = $(this)[0];
 					let exam = $(self).data('exam');
+					console.log(exam);
+					$('#examIframe').attr('src', '/gsv/main/exam/history/list/'+exam);
+					                          
 					
-					var dimHeight = $(document).height();
-					var dimWidth = $(window).width();
-
-					$('.dimbg').css({'width':dimWidth,'height':dimHeight});
-					$('.dimbg').fadeIn(150);
-
-					var left = ($(window).scrollLeft() + ($(window).width() - $('.popwrap').width()) / 2);
-					var top = ($(window).scrollTop() + ($(window).height() - $('.popwrap').height()) / 2);
-
-					$('.popwrap').css({'left':left, 'top':top, 'position':'absolute'});
-					$('.popwrap').show();
+					
+					
+					Main.fn.popUp('.dimbg', '.popwrap');
+					
 				}
 			},
 			
@@ -125,6 +121,19 @@
 				event.preventDefault();	// 기본적인 서브밋 행동을 취소합니다
 			}, 
 			
+			popUp : function (dimBg, popWrap){
+				var dimHeight = $(document).height();
+				var dimWidth = $(window).width();
+
+				$(dimBg).css({'width':dimWidth,'height':dimHeight});
+				$(dimBg).fadeIn(150);
+
+				var left = ($(window).scrollLeft() + ($(window).width() - $('.popwrap').width()) / 2);
+				var top = ($(window).scrollTop() + ($(window).height() - $('.popwrap').height()) / 2);
+
+				$(popWrap).css({'left':left, 'top':top, 'position':'absolute'});
+				$(popWrap).show();
+			}
 			
 		},
 

@@ -73,7 +73,7 @@
 						<td class="tac"><%=(index_key+1)%></td>
 						<% index_key++; %>
 						<td><%=el['EXAM_NAME'];%></td>
-						<td><%=el['EXAM_SCHOOL'];%><i class="fa fa-map-marker-alt fcsky ml5"></i></td>
+						<td><a href="#" class="examName" data-exam="<%=el['EXAM_SEQ'];%>"><%=el['EXAM_SCHOOL'];%><i class="fa fa-map-marker-alt fcsky ml5"></i></a></td>
 						<td class="tac"><%=el['PERIOD_CLASS'];%></td>
 				<% 		} %>
 				<% } else { %>
@@ -126,54 +126,7 @@
 				<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12618.240102073709!2d128.9096931!3d37.7534649!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2698c8729e3165a2!2z6rCV66aJ7KSR7ZWZ6rWQ!5e0!3m2!1sko!2skr!4v1519689395320"></iframe>
 			</div>
 			<div class="fl ml15">
-				<h4>신청이력</h4>
-				<table class="thead-tbl">
-					<colgroup>
-						<col style="width:25%">
-						<col style="width:*">
-						<col style="width:20%">
-						<col style="width:20%">
-					</colgroup>
-					<thead>
-						<tr>
-							<th>기수</th>
-							<th>소속</th>
-							<th>이름</th>
-							<th>직위</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>2018-01</td>
-							<td>솔루션사업부</td>
-							<td>가</td>
-							<td>사원</td>
-						</tr>
-						<tr>
-							<td>2018-01</td>
-							<td>솔루션사업부</td>
-							<td>나</td>
-							<td>사원</td>
-						</tr>
-						<tr>
-							<td>2018-01</td>
-							<td>솔루션사업부</td>
-							<td>다</td>
-							<td>사원</td>
-						</tr>
-					</tbody>
-				</table>
-				<div class="pagenum">
-					<ul>
-						<li><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-						<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-						<li class="on">1</li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-						<li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-					</ul>
-				</div>
+				<iframe id="examIframe"></iframe>
 			</div>
 		</div>
 

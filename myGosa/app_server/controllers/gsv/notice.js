@@ -8,24 +8,16 @@ module.exports.listPage = (req, res) => {
 	notice.count(function(err, rows) {
 		let noticeSate 		= false;
 		let noticePage		= req.params.page;							//현재 페이지 
-		//console.log('noticePage: '+noticePage);
 		let noticeCount		= rows[0].COUNT;							//전체 글 개수
-		//console.log('noticeCount: '+noticeCount);
 		let noticeLimit 	= 10;										//보여줄 글 최대 개수 
 		let noticeAllPage	= Math.ceil(noticeCount/noticeLimit);		//전체 페이지 개수
-		//console.log('noticeAllPage: '+noticeAllPage);
 		let noticePageLimit	= 2;										//보여줄 페이지 최대 개수
 		let noticeSection	 	= Math.ceil(noticePage / noticePageLimit);	//현재 페이지 섹션
-		//console.log('noticeSection: '+noticeSection);
 		let noticeAllSection = Math.ceil(noticeCount / noticePageLimit);//전체 페이지 섹션
-		console.log('noticeAllSection: '+noticeAllSection);
 		let noticeFirstSection = (noticeSection * noticePageLimit) - (noticePageLimit - 1); 	//현재 페이지 섹션의 첫 페이지
-		console.log('noticeFirstSection: '+noticeFirstSection);
 		let noticeLastSection = null;
 		let noticePrevPage	= (noticeSection - 1) * noticePageLimit;	//이전 페이지 섹션
-		//console.log('noticePrevPage: '+noticePrevPage);
 		let noticeNextPage	= ((noticeSection + 1) * noticePageLimit) - (noticePageLimit - 1);	//다음 페이지 섹션
-		//console.log('noticeNextPage: '+noticeNextPage);
 
 		if(noticeSection === noticeAllSection) {
 			noticeLastSection = noticeAllSection;						// 현제 페이지 섹션이 마지막 섹션일 경우 
