@@ -60,10 +60,12 @@
 					
 					let self = $(this)[0];
 					let exam = $(self).data('exam');
-					console.log(exam);
+					
+					//참여 이력 
 					$('#examIframe').attr('src', '/gsv/main/exam/history/list/'+exam);
 					                          
-					
+					//후기 리스트
+					$('#commentIframe').attr('src', '/gsv/main/exam/comment/list/'+exam);
 					
 					
 					Main.fn.popUp('.dimbg', '.popwrap');

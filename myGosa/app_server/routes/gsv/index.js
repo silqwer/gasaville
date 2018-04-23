@@ -33,8 +33,11 @@ module.exports = function (passport){
 	router.post('/main/insertApply', ensureAuthenticated, ctrlMain.insertApply);	// 출석고사 신청정보 insert
 	router.post('/main/deleteApply', ensureAuthenticated, ctrlMain.deleteApply);	// 출석고사 신청정보 delete
 
-	router.get('/main/exam/history/list/:exam', ensureAuthenticated, ctrlExam.hstList);				// 출석고사 고사장 후기 목록
-	router.get('/main/exam/history/list/:exam/:page', ensureAuthenticated, ctrlExam.hstListPage);	// 출석고사 고사장 후기 목록
+	router.get('/main/exam/history/list/:exam', ensureAuthenticated, ctrlExam.hstList);				// 출석고사 고사장 참여이력 목록
+	router.get('/main/exam/history/list/:exam/:page', ensureAuthenticated, ctrlExam.hstListPage);	// 출석고사 고사장 참여읽 목록
+
+	router.get('/main/exam/comment/list/:exam', ensureAuthenticated, ctrlExam.cmtList);				// 출석고사 고사장 후기 목록
+	router.get('/main/exam/comment/list/:exam/:page', ensureAuthenticated, ctrlExam.cmtListPage);				// 출석고사 고사장 후기 목록
 	
 	
 	//로그인 
