@@ -3,6 +3,7 @@ var router = express.Router();
 var ctrlMain = require('../../controllers/gsv/main');
 var ctrlJoin = require('../../controllers/gsv/join');
 var ctrlNotice = require('../../controllers/gsv/notice');
+var ctrlExam = require('../../controllers/gsv/exam');
 
 module.exports = function (passport){
 	var ensureAuthenticated = function (req, res, next){
@@ -27,12 +28,18 @@ module.exports = function (passport){
 	router.get('/notice/list/:page', ensureAuthenticated, ctrlNotice.listPage);		// 공지사항 특정 목록
 	router.get('/notice/list/:page/:view', ensureAuthenticated, ctrlNotice.viewPage);// 공지사항 특정 페이지
 
-	//router.post('/join/insert', ctrlJoin.insert);									// 회원가입 insert
 	router.post('/join/availableId', ctrlJoin.availableId);							// 아이디 사용 유무
 	
 	router.post('/main/insertApply', ensureAuthenticated, ctrlMain.insertApply);	// 출석고사 신청정보 insert
 	router.post('/main/deleteApply', ensureAuthenticated, ctrlMain.deleteApply);	// 출석고사 신청정보 delete
 
+	router.get('/main/exam/history/list/:exam', ensureAuthenticated, ctrlExam.hstList);				// 출석고사 고사장 참여이력 목록
+	router.get('/main/exam/history/list/:exam/:page', ensureAuthenticated, ctrlExam.hstListPage);	// 출석고사 고사장 참여읽 목록
+
+	router.get('/main/exam/comment/list/:exam', ensureAuthenticated, ctrlExam.cmtList);				// 출석고사 고사장 후기 목록
+	router.get('/main/exam/comment/list/:exam/:page', ensureAuthenticated, ctrlExam.cmtListPage);				// 출석고사 고사장 후기 목록
+	
+	
 	//로그인 
 	router.post('/', passport.authenticate('local-login', {
 		successRedirect : '/gsv/main',

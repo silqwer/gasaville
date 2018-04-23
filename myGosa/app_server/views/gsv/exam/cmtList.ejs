@@ -1,0 +1,50 @@
+<link rel="stylesheet" type="text/css" href="/hana2/css/css.css">
+
+<input type="hidden" id="page" name="page" value="<%=page%>">
+
+<% if(result == true && list.length > 0) { %>
+<table class="thead-tbl">
+	<colgroup>
+		<col style="width:12%">
+		<col style="width:*">
+		<col style="width:12%">
+	</colgroup>
+	<thead>
+		<tr>	
+			<th>기수</th>	
+			<th>내용</th>	
+			<th>작성자</th>	
+		</tr>
+	</thead>
+	<tbody>
+		<% for(let i=0; i<list.length; ++i){ %>
+		<tr class="pop-comment">
+			<td><%=list[i].SCHEDULE_NAME%></td>
+			<td>
+				<p class="fl"><%=list[i].SCHEDULE_CONTENTS%></p>
+				<!-- 사용자 비교 로직 추가  -->
+				<p class="fr">
+					<button type="button" id="wrtBtn" data-comment="<%=list[i].COMMENT_SEQ%>" class="sbtn fcblue"><i class="fa fa-pencil-alt"></i></button>
+					<button type="button" id="dltBtn" data-comment="<%=list[i].COMMENT_SEQ%>" class="sbtn fcred ml5"><i class="fa fa-trash-alt"></i></button>
+					<button type="button" id="entBtn" data-comment="<%=list[i].COMMENT_SEQ%>" class="sbtn fcgreen ml5"><i class="fa fa-check"></i></button>
+				</p>
+			</td>
+			<td><%=list[i].USER_NAME%></td>
+		</tr>
+		<% } %>
+	</tbody>
+</table>
+<div class="tac">
+	<button type="button" class="plusbtn whitebtn">더보기</button>
+</div>
+<% }else{ %>
+<div>게시물이 없습니다.</div>
+<% } %>
+
+
+
+
+
+
+			 	
+			 

@@ -13,10 +13,9 @@
   		<div>
 					<table class="thead-tbl">
 						<colgroup>
-							<col style="width:12%">
-							<col style="width:20%">
-							<col style="width:*%">
-							<col style="width:20%">
+							<col>
+							<col style="width:8%">
+							<col style="width:8%">
 						</colgroup>
 						<thead>
 							<tr>
@@ -28,9 +27,9 @@
 						<tbody>
 							<% for(let i=0; i<list.length; ++i){ %>
 				   		<tr>
-				   			<td><input type="text" id="name_<%=list[i].SEQ%>" value="<%=list[i].NAME%>"></td>
-				   			<td><button id="update_<%=list[i].SEQ%>" class="update">수정</button></td>
-				   			<td><button id="delete_<%=list[i].SEQ%>" class="delete">삭제</button></td>
+				   			<td><input type="text" id="name_<%=list[i].SEQ%>" class="listmodi" value="<%=list[i].NAME%>"></td>
+				   			<td><button id="update_<%=list[i].SEQ%>" class="update listbtn skybtn">수정</button></td>
+				   			<td><button id="delete_<%=list[i].SEQ%>" class="delete listbtn ml5 redbtn">삭제</button></td>
 				   		</tr>
 				   		<% } %>
 						</tbody>
@@ -38,15 +37,23 @@
 				</div>
 				
 				<div>
-					<table>
-			   		<tr>
-			   			<th>부서명</th>
-			   			<th>등록</th>
-			   		</tr>
-			   		<tr>
-			   			<td><input type="text" id="name" value=""></td>
-			   			<td><button id="addBtn">등록</button></td>
-			   		</tr>
+					<table class="thead-tbl">
+			   		<colgroup>
+							<col>
+							<col style="width:8%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th>부서명</th>
+								<th>등록</th>
+							</tr>
+						</thead>
+			   		<tbody>
+				   		<tr>
+				   			<td><input type="text" id="name" class="listmodi" value="등록하실 부서명을 입력하세요."></td>
+				   			<td><button id="addBtn" class="listbtn ml5 whitebtn">등록</button></td>
+				   		</tr>
+			   		</tbody>
 			   	</table>  
 				</div>
   		

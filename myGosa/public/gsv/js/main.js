@@ -5,7 +5,10 @@
 
 		triggers: {
 			apply : $('.applyBtn'),
-			cancel : $('.cancelBtn')
+			cancel : $('.cancelBtn'),
+			examName : $('.examName'), 
+			close : $('.close'), 
+			dimbg : $('.dimbg')
 		},
 
 		listeners: {
@@ -27,8 +30,9 @@
 					location.reload();
 				}
 			},
+			
 			cancel: {
-				click: function() {
+				click : function() {
 					let self = $(this)[0];
 					let agree = confirm('Are you sure want to delete this data?');
 
@@ -48,7 +52,43 @@
 						location.reload();
 					}
 				}
-			}
+			}, 
+			
+			popWrap : {
+				click : function(e){
+					Main.fn.preventDefault(e);
+					
+					let self = $(this)[0];
+					let exam = $(self).data('exam');
+					
+					//참여 이력 
+					$('#examIframe').attr('src', '/gsv/main/exam/history/list/'+exam);
+					                          
+					//후기 리스트
+					$('#commentIframe').attr('src', '/gsv/main/exam/comment/list/'+exam);
+					
+					
+					Main.fn.popUp('.dimbg', '.popwrap');
+					
+				}
+			},
+			
+			dimbgEvent: {
+				click : function (){
+					let self = $(this)[0];
+					Main.fn.thisHide(self);
+					Main.fn.selectHide('.popwrap');
+				}
+			},
+			
+			closeWrap : {
+				click : function(e){
+					Main.fn.preventDefault(e);
+					Main.fn.selectHide('.dimbg, .popwrap');
+				}
+			},
+		
+			
 		},
 
 		fn : {
@@ -69,12 +109,42 @@
 						return false;
 					}
 				});
+			}, 
+			
+			thisHide : function (self) {
+				$(self).hide();
+			}, 
+			
+			selectHide : function (selector) {
+				$(selector).hide();
+			}, 
+			
+			preventDefault : function (event) {
+				event.preventDefault();	// 기본적인 서브밋 행동을 취소합니다
+			}, 
+			
+			popUp : function (dimBg, popWrap){
+				var dimHeight = $(document).height();
+				var dimWidth = $(window).width();
+
+				$(dimBg).css({'width':dimWidth,'height':dimHeight});
+				$(dimBg).fadeIn(150);
+
+				var left = ($(window).scrollLeft() + ($(window).width() - $('.popwrap').width()) / 2);
+				var top = ($(window).scrollTop() + ($(window).height() - $('.popwrap').height()) / 2);
+
+				$(popWrap).css({'left':left, 'top':top, 'position':'absolute'});
+				$(popWrap).show();
 			}
+			
 		},
 
 		binding: () => {
 			Main.triggers.apply.on(Main.listeners.apply);
 			Main.triggers.cancel.on(Main.listeners.cancel);
+			Main.triggers.examName.on(Main.listeners.popWrap);
+			Main.triggers.close.on(Main.listeners.closeWrap);
+			Main.triggers.dimbg.on(Main.listeners.dimbgEvent);
 		}
 	};
 
