@@ -8,7 +8,8 @@
 			cancel : $('.cancelBtn'),
 			examName : $('.examName'), 
 			close : $('.close'), 
-			dimbg : $('.dimbg')
+			dimbg : $('.dimbg'), 
+			more : $('#cmtMoreBtn')
 		},
 
 		listeners: {
@@ -60,6 +61,11 @@
 					
 					let self = $(this)[0];
 					let exam = $(self).data('exam');
+					let addr = $(self).data('addr');
+					
+					
+					//구글맵 
+					Main.fn.googleMapInit('examMap', addr ); 
 					
 					//참여 이력 
 					$('#examIframe').attr('src', '/gsv/main/exam/history/list/'+exam);
@@ -72,6 +78,37 @@
 					
 				}
 			},
+			
+			more : {
+				click : function(){
+					let self = $(this)[0];
+					let exam = $(self).data('exam');
+					let page = Number($(self).data('page')) + 5;
+					
+					let params = {
+						'page': page, 
+						'exam': exam
+					}; 
+					
+					let callback = (data) => {
+						
+						if(!data.result){
+							console.log('comment more error'); 
+							return;
+						}
+						
+						if(data.list.length <= 0){
+							alert('더 이상 가져올 데이터가 없습니다.');
+							return;
+						}
+						
+						//동적 데이터 넣기 
+						alert('1111');
+					}
+					
+					let isSuccess = Main.fn.getDataAjax('/main/exam/comment/list/more', 'post', 'false', params, callback);
+				}
+			}, 
 			
 			dimbgEvent: {
 				click : function (){
@@ -111,6 +148,29 @@
 				});
 			}, 
 			
+			getDataAjax : function(url, type, isSync, params, cb) {
+				let isSuccess = null;
+				if(!url || !type || !isSync || !params) {
+					return false;
+				}
+				return $.ajax({
+					url : url,
+					type: type,
+					async: isSync,
+					data: params,
+					success : function (data, status) {
+						if(typeof(cb) === 'function'){
+							cb(data);
+						}else{
+							eval(cb);
+						}
+					},
+					error: function(error) {
+						return false;
+					}
+				});
+			},
+			
 			thisHide : function (self) {
 				$(self).hide();
 			}, 
@@ -135,7 +195,41 @@
 
 				$(popWrap).css({'left':left, 'top':top, 'position':'absolute'});
 				$(popWrap).show();
+			}, 
+			
+			googleMapInit : function (divId, addr){
+				function initMap(){
+					let map = new google.maps.Map(document.getElementById(divId), {
+						center: {lat: -33.8688, lng: 151.2195},
+				        zoom: 17
+				    });
+					
+					let geoCoder = new google.maps.Geocoder();
+					let address = addr;
+					
+					geoCoder.geocode({'address': address}, function(results, status) {
+						if (status === 'OK') {
+							map.setCenter(results[0].geometry.location);
+							var marker = new google.maps.Marker({
+								map: map,
+								position: results[0].geometry.location
+			            });
+			          } else {
+			            alert('Geocode was not successful for the following reason: ' + status);
+			          }
+			        });
+				}
+				
+				window.initMap = initMap ;
+				
+				$.getScript( "https://maps.googleapis.com/maps/api/js?key=AIzaSyAGDgTLCkAaRkakuNcCw5ORYiST0Y5I1pU&callback=initMap", function( data, textStatus, jqxhr ) {
+					console.log( data ); // Data returned
+					console.log( textStatus ); // Success
+					console.log( jqxhr.status ); // 200
+					console.log( "Load was performed." );
+				});
 			}
+			
 			
 		},
 
@@ -145,6 +239,7 @@
 			Main.triggers.examName.on(Main.listeners.popWrap);
 			Main.triggers.close.on(Main.listeners.closeWrap);
 			Main.triggers.dimbg.on(Main.listeners.dimbgEvent);
+			Main.triggers.more.on(Main.listeners.more);
 		}
 	};
 

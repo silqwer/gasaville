@@ -73,7 +73,7 @@
 						<td class="tac"><%=(index_key+1)%></td>
 						<% index_key++; %>
 						<td><%=el['EXAM_NAME'];%></td>
-						<td><a href="#" class="examName" data-exam="<%=el['EXAM_SEQ'];%>"><%=el['EXAM_SCHOOL'];%><i class="fa fa-map-marker-alt fcsky ml5"></i></a></td>
+						<td><a href="#" class="examName" data-exam="<%=el['EXAM_SEQ'];%>" data-addr="<%=el['EXAM_ADDR'];%>"><%=el['EXAM_SCHOOL'];%><i class="fa fa-map-marker-alt fcsky ml5"></i></a></td>
 						<td class="tac"><%=el['PERIOD_CLASS'];%></td>
 				<% 		} %>
 				<% } else { %>
@@ -122,8 +122,8 @@
 	<div class="popwrap review">
 		<a href="#" class="close"><i class="fa fa-times"></i></a>
 		<div class="pop-con1">
-			<div class="fl">
-				<iframe id="mapIframe" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12618.240102073709!2d128.9096931!3d37.7534649!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2698c8729e3165a2!2z6rCV66aJ7KSR7ZWZ6rWQ!5e0!3m2!1sko!2skr!4v1519689395320"></iframe>
+			<div id="examMap" class="fl">
+			
 			</div>
 			<div class="fl ml15">
 				<iframe id="examIframe"></iframe>
@@ -144,3 +144,4 @@
 </div>
 
 <script type="text/javascript" src="/gsv/js/main.js"></script>
+
