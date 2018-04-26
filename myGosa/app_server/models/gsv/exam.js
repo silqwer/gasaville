@@ -16,11 +16,14 @@ var Exam = {
 	}, 
 	
 	cmtList : function(examSeq, begin, size, callback) {
+		console.log('cmtList begin:'+begin);
+		console.log('cmtList size:'+size);
 		
 		return connection.query("SELECT * FROM (SELECT C.SEQ AS COMMENT_SEQ, " +
 				"(SELECT NAME FROM SCHEDULE WHERE SEQ = A.SCHEDULE_SEQ) AS SCHEDULE_NAME, " +
 				"C.CONTENTS AS CONTENTS," +
-				"(SELECT NAME FROM USER WHERE SEQ = C.USER_SEQ) AS USER_NAME " +
+				"(SELECT NAME FROM USER WHERE SEQ = C.USER_SEQ) AS USER_NAME,  " +
+				"C.USER_SEQ AS USER_SEQ " +
 				"FROM COMMENT C INNER JOIN APPLY A " +
 				"ON C.APPLY_SEQ = A.SEQ " +
 				"WHERE C.EXAM_SEQ = "+examSeq+") M " + 
@@ -44,7 +47,8 @@ var Exam = {
 		return connection.query("SELECT COUNT(*) AS CNT FROM (SELECT * FROM (SELECT C.SEQ AS COMMENT_SEQ, " +
 				"(SELECT NAME FROM SCHEDULE WHERE SEQ = A.SCHEDULE_SEQ) AS SCHEDULE_NAME, " +
 				"C.CONTENTS AS CONTENTS," +
-				"(SELECT NAME FROM USER WHERE SEQ = C.USER_SEQ) AS USER_NAME " +
+				"(SELECT NAME FROM USER WHERE SEQ = C.USER_SEQ) AS USER_NAME, " +
+				"C.USER_SEQ AS USER_SEQ " +
 				"FROM COMMENT C INNER JOIN APPLY A " +
 				"ON C.APPLY_SEQ = A.SEQ " +
 				"WHERE C.EXAM_SEQ = "+examSeq+")M)C", callback);
