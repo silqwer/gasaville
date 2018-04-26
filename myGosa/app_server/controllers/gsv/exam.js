@@ -74,18 +74,17 @@ module.exports.hstListPage = (req, res) => {
 //출석고사 고사장 후기 목록
 module.exports.cmtList = (req, res) => {
 	let examSeq = req.params.exam;
-	res.redirect('/gsv/main/exam/comment/list/'+examSeq+'/1');
+	res.redirect('/gsv/main/exam/comment/list/'+examSeq+'/5');
 };
 
 
 //고사장 후기 리스트 페이지 
 module.exports.cmtListPage = (req, res) => {
 	
-	let page = req.params.page;
+	let size = Number(req.params.size);			// 한 페이지에 보여줄 개수		
 	let examSeq = req.params.exam;
 	
-	console.log('page:'+page);
-	console.log('examSeq:'+examSeq);
+	console.log('size:'+ typeof size);
 	
 	exam.cmtCount(examSeq, function(err, rows){
 		
@@ -107,28 +106,20 @@ module.exports.cmtListPage = (req, res) => {
 			result = true;
 		}
 	
-		page = parseInt(page, 10);					// 십진수 만들기 
-		let size = 5; 								// 한 페이지에 보여줄 개수		
-		let begin = (page - 1) * size;				// 시작 번호
-		
-		console.log('size');
-		console.log(size);
-		
+		let begin = 0;				// 시작 번호
+	
 		exam.cmtList(examSeq, begin, size, function(err, rows){
 			
 			if (err) {
 				console.error(err);
 				throw err;
 			}
-			console.log('user');
-			console.log(req.user);
-			
 			
 			res.render('gsv/exam/cmtList', { 
 				'title' : '고사장 참여이력',
 				'userInfo' : req.user,
 				'list' : rows, 
-				'page' : page, 
+				'size' : size, 
 				'exam' : examSeq,
 				'result' : result
 			}); 
@@ -179,7 +170,8 @@ module.exports.cmtListMore = (req, res) => {
 			
 			res.send({
 				'result': true, 
-				'list' : rows, 
+				'list' : rows,
+				'userInfo' : req.user,
 				'page' : page, 
 				'exam' : examSeq,
 			});

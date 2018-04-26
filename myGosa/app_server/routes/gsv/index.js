@@ -37,7 +37,7 @@ module.exports = function (passport){
 	router.get('/main/exam/history/list/:exam/:page', ensureAuthenticated, ctrlExam.hstListPage);	// 출석고사 고사장 참여읽 목록
 
 	router.get('/main/exam/comment/list/:exam', ensureAuthenticated, ctrlExam.cmtList);				// 출석고사 고사장 후기 목록
-	router.get('/main/exam/comment/list/:exam/:page', ensureAuthenticated, ctrlExam.cmtListPage);	// 출석고사 고사장 후기 목록
+	router.get('/main/exam/comment/list/:exam/:size', ensureAuthenticated, ctrlExam.cmtListPage);	// 출석고사 고사장 후기 목록
 	router.post('/main/exam/comment/list/more', ensureAuthenticated, ctrlExam.cmtListMore);			// 출석고사 고사장 후기 목록 더가져오기
 	
 	

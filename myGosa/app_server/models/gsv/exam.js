@@ -16,8 +16,8 @@ var Exam = {
 	}, 
 	
 	cmtList : function(examSeq, begin, size, callback) {
-		console.log('begin:'+begin);
-		console.log('size:'+size);
+		console.log('cmtList begin:'+begin);
+		console.log('cmtList size:'+size);
 		
 		return connection.query("SELECT * FROM (SELECT C.SEQ AS COMMENT_SEQ, " +
 				"(SELECT NAME FROM SCHEDULE WHERE SEQ = A.SCHEDULE_SEQ) AS SCHEDULE_NAME, " +
