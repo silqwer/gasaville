@@ -6,12 +6,24 @@
  *
  */
 var join =  require('../../models/gsv/join');
+//var bcrypt = require('bcrypt-nodejs');
 
 module.exports.insert = (req, res) => {
+	let passwd = null;
+	bcrypt.hash(req.body.password, null, null, function(err, hash) {
+		console.log('bcrypt');
+		if(err) {
+			console.log(err);
+			throw err;
+		}
+
+		passwd = hash;
+	});
+
 	let param = {
 		id 			: req.body.id,
 		name 		: req.body.name,
-		password 	: req.body.password,
+		password 	: passwd,
 		cellphone 	: req.body.cellphone,
 		department_seq : req.body.department_seq,
 		position_seq : req.body.position_seq

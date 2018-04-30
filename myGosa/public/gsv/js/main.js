@@ -149,8 +149,61 @@
 					let self = $(this)[0];
 					let exam = $(self).data('exam');
 					let size = Number($(self).data('size')) + 5;
+
+					let params = {
+						'page': size, 
+						'exam': exam
+					}; 
+
+					let callback = (data) => {
+						if(!data.result){
+							console.log('comment more error'); 
+							return;
+						}
+						
+						let listLength = data.list.length;
+						
+						if(listLength <= 0){
+							alert('더 이상 가져올 데이터가 없습니다.');
+							return;
+						}
+						
+						let list = data.list; 
+						let userSeq = data.userInfo.SEQ;
+				
+						//동적 데이터 넣기 
+						for(let i=0; i<listLength; ++i){
+							let str = '<tr class="pop-comment">';
+							str += '<td>'+list[i].SCHEDULE_NAME+'</td>'; 
+							str += '<td>';
+							str += '<p class="fl">'+list[i].CONTENTS+'</p>';
+							
+							//사용자 비교
+							if(userSeq === list[i].USER_SEQ){
+								str += '<p class="fr">'; 
+								str += '<button type="button" data-comment="'+list[i].COMMENT_SEQ+'" class="sbtn fcblue wrtBtn"><i class="fa fa-pencil-alt"></i></button> ';
+								str += '<button type="button" data-comment="'+list[i].COMMENT_SEQ+'" class="sbtn fcred ml5 dltBtn"><i class="fa fa-trash-alt"></i></button> ';
+								str += '<button type="button" data-comment="'+list[i].COMMENT_SEQ+'" class="sbtn fcgreen ml5 entBtn"><i class="fa fa-check"></i></button> ';
+								str += '</p>'; 
+							}
+							
+							str += '</td>';
+							str += '<td>'+list[i].USER_NAME+'</td>';
+							str += '</tr>';
+							
+							$('#cmtList tbody').append(str);
+							$('#cmtList tbody .wrtBtn[data-comment="'+list[i].COMMENT_SEQ+'"]').on(Main.listeners.write);
+							$('#cmtList tbody .dltBtn[data-comment="'+list[i].COMMENT_SEQ+'"]').on(Main.listeners.delete);
+							$('#cmtList tbody .entBtn[data-comment="'+list[i].COMMENT_SEQ+'"]').on(Main.listeners.enter);
+							
+						}
+						
+						$(self).data('page', size);	//data-page 증가된 값으로 설정 
+					}
+
+					let moreComment = Main.fn.getDataAjax('/main/exam/comment/list/more', 'post', 'false', params, callback);
 					
-					location.href = '/gsv/main/exam/comment/list/'+exam+'/'+size;
+					//location.href = '/gsv/main/exam/comment/list/'+exam+'/'+size;
 				}
 			}, 
 			
@@ -159,6 +212,7 @@
 					let self = $(this)[0];
 					let exam = $(self).data('exam');
 					console.log('update:'+exam);
+					console.log('comment:'+$(self).data('comment'));
 					alert('update');
 				}
 			},
@@ -325,7 +379,7 @@
 	    $(document).on("click",".wrtBtn",function(event){
 	    	alert('?'); 
 	    });
-	});*/*/
+	});*/
 
 	
 })();
