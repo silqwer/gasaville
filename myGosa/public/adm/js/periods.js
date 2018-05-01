@@ -158,7 +158,16 @@
 			
 		}
 	});
-
+	
+	//sendBtn
+	$('#sendBtn').on({
+		click:function(){
+			let comSubmitForm = window.gosa.createSubmitForm('commonForm');
+			comSubmitForm.setUrl('/periods/excel/uplad');
+			comSubmitForm.addParam('EXCEL_FILE', excelFile);
+			comSubmitForm.submit();
+		}
+	});
 	
 	
 })();
