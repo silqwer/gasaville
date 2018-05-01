@@ -13,21 +13,21 @@
     	<h2><%= title %></h2>
     	
     	<div class="search">
-					<select id="searchCategory">
-					  <option value="id">아이디</option>
-					  <option value="name">이름</option>
-					  <option value="department">소속</option>
-					  <option value="position">직책</option>
-					  <option value="cellphone">연락처</option>
-					</select>
-					<form id="searchForm" method="get">
-					<fieldset>
-						<legend>검색</legend>
-						<input type="text" id="searchWord" value="<%=word%>">
-						<input type="button" value="검색" class="sbtn" data-url="/admin/users/list" id="searchBtn">
-					</fieldset>
-					</form>
-				</div>
+				<select id="searchCategory">
+				  <option value="id">아이디</option>
+				  <option value="name">이름</option>
+				  <option value="department">소속</option>
+				  <option value="position">직책</option>
+				  <option value="cellphone">연락처</option>
+				</select>
+				<form id="searchForm" method="get">
+				<fieldset>
+					<legend>검색</legend>
+					<input type="text" id="searchWord" value="<%=word%>">
+					<input type="button" value="검색" class="sbtn" data-url="/admin/users/list" id="searchBtn">
+				</fieldset>
+				</form>
+			</div>
     	
     	<div>
 					<table class="thead-tbl">
@@ -47,7 +47,7 @@
 				   			<th>소속</th>
 								<th>직급</th>
 				   			<th>연락처</th>
-				   		</tr>
+				   		</tr>onst
 						</thead>
 						<tbody>
 							<% for(let i=0; i<list.length; ++i){ %>

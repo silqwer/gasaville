@@ -2,8 +2,9 @@
  * http://usejsdoc.org/
  */
 
-var periods =  require('../../models/adm/periods');
-var apply =  require('../../models/adm/apply');
+const periods =  require('../../models/adm/periods');
+const apply =  require('../../models/adm/apply');
+const multer = require('multer');
 
 //기수 관리  
 module.exports.periods = (req, res) =>{
@@ -235,7 +236,25 @@ module.exports.delete = (req, res) => {
 	});
 };
 
+//기수 엑셀 등록 페이지 uploadPage
+module.exports.uploadPage = (req, res) => {
+	res.render('adm/periods/excel', { 
+		title : '기수 엑셀 등록',
+		userInfo : req.user				//세션 정보
+	}); 	
+};
 
-
+//기수 엑셀 등록 페이지 uploadPage
+module.exports.upload = (req, res) => {
+	
+	const upload = multer({
+		dest : 'uploads/'
+	});
+	
+	res.render('adm/periods/excel', { 
+		title : '기수 엑셀 등록',
+		userInfo : req.user				//세션 정보
+	}); 	
+};
 
 

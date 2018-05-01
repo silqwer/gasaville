@@ -9,14 +9,17 @@
   		<% include ../common/menu %>
   		<div class="content-wrap">
   			<h2><%= title %></h2>
-  			<div>
-  				<button id="clossBtn">신청마감 통계</button>
-			  	<button id="visitBtn">각 고사장 누적 방문 통계</button>
-					<button id="accrueBtn">누적 / 연간 출석고사 참여 통계</button>
-					<button id="userBtn">누적 / 연간 출석고사 참여 통계</button>
-  			</div>
+  
+  			<div class="topmenu">
+					<ul>
+						<li class="on"><a id="clossBtn">신청마감 통계</a></li>
+						<li><a id="visitBtn">각 고사장 누적 방문 통계</a></li>
+						<li><a id="accrueBtn">누적 / 연간 출석고사 참여 통계</a></li>
+						<li><a id="userBtn">누적 / 연간 출석고사 참여 통계</a></li>
+					</ul>
+				</div>
   			
-  				<iframe id="statsIframe" src="/admin/apply/stats/closs" style="width: 130%; height: 100%; min-height: 1000px;"></iframe>
+  			<iframe id="statsIframe" src="/admin/apply/stats/closs" style="width: 130%; height: 100%; min-height: 1000px;"></iframe>
   			 
   		</div>
   	</div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <title><%= title %></title>
+   	<% include ../common/head %>
+  </head>
+  <body>
+   	<form id="commonForm" name="commonForm" enctype="multipart/form-data"></form>
+    <div class="main-wrap">
+    	<% include ../common/menu %>
+    	<div class="content-wrap">
+    		<h2><%= title %></h2>
+    	
+    		<input type="file" id="excelFile" name="excel">
+
+				<div class="btnfr">
+					<button type="button" id="sendBtn" class="mbtn skybtn">등록</button>
+				</div>
+    	</div>
+    </div>
+ 
+  </body>
+  <script src='/adm/js/periods.js'></script>
+</html>
