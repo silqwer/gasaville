@@ -16,11 +16,11 @@ module.exports = (function(){
 		
 		//운영 디비 
 		real: {
-			host: 'localhost',
-			port: '3306',
-			user: 'root',
-			password: '',
-			database: ''
+			host: '0.0.0.0',
+			port: '3307',
+			user: 'user_swprodg',
+			password: 'xpzmqlf',
+			database: 'gosa'
 		},
 		
 		//개발 디비
