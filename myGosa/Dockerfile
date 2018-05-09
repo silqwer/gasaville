@@ -12,4 +12,4 @@ COPY . /home/tekville/dkapps/gosa
 
 CMD npm start app.js
 
-EXPOSE 9080
+EXPOSE 8080
