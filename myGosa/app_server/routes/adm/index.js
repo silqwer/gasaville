@@ -9,6 +9,8 @@ var ctrlApply = require('../../controllers/adm/apply');
 var ctrlUsers = require('../../controllers/adm/users');
 var ctrlDepart = require('../../controllers/adm/department');
 var ctrlNotice = require('../../controllers/adm/notice');
+var multer = require('multer');
+var upload = multer({dest:'adm/excel/'});
 
 module.exports = function (passport){
 	var ensureAuthenticated = function (req, res, next){
@@ -74,8 +76,7 @@ module.exports = function (passport){
 	router.post('/periods/delete', ensureAuthenticated, ctrlPeriods.delete);				// 기수 정보 삭제 
 	
 	router.get('/periods/excel', ensureAuthenticated, ctrlPeriods.uploadPage);				// 기수 엑셀 등록 페이지
-	router.post('/periods/excel/upload', ensureAuthenticated, ctrlPeriods.upload);				// 기수 엑셀 등록 페이지
-	
+	router.post('/periods/excel/upload', upload.single('excel'), ctrlPeriods.upload);			// 기수 엑셀 등록 페이지
 	
 	//신청관리 
 	router.get('/apply', ensureAuthenticated, ctrlApply.apply);											// 신청 관리  

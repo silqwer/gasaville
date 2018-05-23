@@ -179,10 +179,7 @@
 				return ;
 			}
 			
-			let comSubmitForm = window.gosa.createSubmitForm('commonForm');
-			comSubmitForm.setUrl('/periods/excel/upload');
-			comSubmitForm.addParam('EXCEL_FILE', excelFile);
-			comSubmitForm.submit();
+			$('#commonForm').submit();
 		}
 	});
 	

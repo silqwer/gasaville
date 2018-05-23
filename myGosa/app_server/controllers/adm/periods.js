@@ -255,14 +255,16 @@ module.exports.uploadPage = (req, res) => {
 //기수 엑셀 등록 페이지 uploadPage
 module.exports.upload = (req, res) => {
 	
-	const upload = multer({
+	/*const upload = multer({
 		dest : 'uploads/'
-	});
+	});*/
 	
-	res.render('adm/periods/excel', { 
+	/*res.render('adm/periods/excel', { 
 		'title' : '기수 엑셀 등록',
 		'userInfo' : req.user				//세션 정보
-	}); 	
+	}); 	*/
+	
+	console.log(req.file); 
 };
 
 
