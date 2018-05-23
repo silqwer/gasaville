@@ -16,8 +16,8 @@ module.exports = (function(){
 		
 		//운영 디비 
 		real: {
-			host: '0.0.0.0',
-			port: '3307',
+			host: 'localhost',
+			port: '3306',
 			user: 'user_swprodg',
 			password: 'xpzmqlf',
 			database: 'gosa'

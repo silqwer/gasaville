@@ -3,7 +3,7 @@
  */
 
 var mysql = require('mysql');
-var config = require('./db_info.js').real; // ./ 같은 폴더에 있음을 의미 
+var config = require('./db_info.js').dev; // ./ 같은 폴더에 있음을 의미 
 
 module.exports = function (){
 	return {

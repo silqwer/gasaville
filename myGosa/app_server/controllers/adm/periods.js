@@ -238,10 +238,18 @@ module.exports.delete = (req, res) => {
 
 //기수 엑셀 등록 페이지 uploadPage
 module.exports.uploadPage = (req, res) => {
-	res.render('adm/periods/excel', { 
-		title : '기수 엑셀 등록',
-		userInfo : req.user				//세션 정보
-	}); 	
+	
+	periods.schedule(function(err, rows){
+		let schedule = rows;
+		
+		res.render('adm/periods/excel', { 
+			'title' : '기수 엑셀 등록',
+			'userInfo' : req.user, 
+			'schedule' : schedule
+		}); 
+	});
+	
+		
 };
 
 //기수 엑셀 등록 페이지 uploadPage
@@ -252,8 +260,8 @@ module.exports.upload = (req, res) => {
 	});
 	
 	res.render('adm/periods/excel', { 
-		title : '기수 엑셀 등록',
-		userInfo : req.user				//세션 정보
+		'title' : '기수 엑셀 등록',
+		'userInfo' : req.user				//세션 정보
 	}); 	
 };
 

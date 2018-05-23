@@ -74,7 +74,7 @@ module.exports = function (passport){
 	router.post('/periods/delete', ensureAuthenticated, ctrlPeriods.delete);				// 기수 정보 삭제 
 	
 	router.get('/periods/excel', ensureAuthenticated, ctrlPeriods.uploadPage);				// 기수 엑셀 등록 페이지
-	router.post('/periods/excel/uplad', ensureAuthenticated, ctrlPeriods.upload);				// 기수 엑셀 등록 페이지
+	router.post('/periods/excel/upload', ensureAuthenticated, ctrlPeriods.upload);				// 기수 엑셀 등록 페이지
 	
 	
 	//신청관리 
