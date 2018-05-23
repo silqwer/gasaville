@@ -713,4 +713,9 @@ h4{color:#000}
 	text-decoration: none;
 	cursor: pointer;
 }
-
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+    
+    -webkit-appearance: "Always Show Up/Down Arrows";
+    
+}

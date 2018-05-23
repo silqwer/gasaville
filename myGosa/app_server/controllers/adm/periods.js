@@ -164,6 +164,7 @@ module.exports.updatePage = (req, res) => {
 					'selected_schedul_name' : period.SCHEDULE_NAME,
 					'exam' : rows
 				});
+				
 			});
 		});
 	});
