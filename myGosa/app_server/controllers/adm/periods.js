@@ -15,8 +15,6 @@ const storage = multer.diskStorage({		//업로드 파일 경로 설정
 	}
 });
 
-const parseExcel = require('excel');
-
 //기수 관리  
 module.exports.periods = (req, res) =>{
 	res.redirect('/admin/periods/list/1');
@@ -279,7 +277,7 @@ module.exports.upload = (req, res) => {
 	
 	var excelToJson = null;
 	
-	/*upload(req, res, function(err){
+	upload(req, res, function(err){
 		if(err){
 			res.json({error_code:1, err_desc:err, err_msg:'오류입니다.'});
 			return;
@@ -294,10 +292,8 @@ module.exports.upload = (req, res) => {
 		if(req.file.originalname.split('.')[req.file.originalname.split('.').length-1] === 'xlsx'){
 			//파일 확장자를 통해서 구분 
 			excelToJson = require('xlsx-to-json-lc'); 
-			console.log('xlsx-to-json-lc');
 		}else{
 			excelToJson = require('xls-to-json-lc'); 
-			console.log('xls-to-json-lc');
 		}
 		
 		try{
@@ -320,14 +316,6 @@ module.exports.upload = (req, res) => {
 			res.json({error_code:1, err_desc:'Corupted excel file', err_msg:e});
 		}
 		
-	});*/
-	
-	parseExcel(req.file.path, function (err, data){
-		if(err){
-			res.json({error_code:1, err_desc:err, data: null});
-		}else{
-			res.json({error_code:1, err_desc:err, data: data});
-		}
 	});
 };
 
