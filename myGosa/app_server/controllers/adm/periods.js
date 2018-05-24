@@ -4,7 +4,18 @@
 
 const periods =  require('../../models/adm/periods');
 const apply =  require('../../models/adm/apply');
-const multer = require('multer');
+const multer = require('multer');			//파일업로드 프레임워크? 
+const storage = multer.diskStorage({		//업로드 파일 경로 설정 
+	destination: function (req, file, cb) {
+		cb(null, 'public/adm/excel/');	//콜백함수를 통해 전송된 파일을 저장할 디렉토리 설정 
+	}, 
+	
+	filename: function(req, file, cb) {
+		cb(null, file.originalname);	//콜백함수를 통해 전송된 파일 이름을 설정 
+	}
+});
+
+const parseExcel = require('excel');
 
 //기수 관리  
 module.exports.periods = (req, res) =>{
@@ -256,16 +267,68 @@ module.exports.uploadPage = (req, res) => {
 //기수 엑셀 등록 페이지 uploadPage
 module.exports.upload = (req, res) => {
 	
-	/*const upload = multer({
-		dest : 'uploads/'
+	var upload = multer({
+		storage:storage, 				//저장경로
+		fileFilter : function(req, file, callback){		//파일필터
+			if(['xls', 'xlsx'].indexOf(file.originalname.split('.')[file.originalname.split('.').length-1]) === -1){
+				return callback(new Error('Wrong extension type'));
+			}
+			callback(null, true);
+		}
+	}).single('excel');
+	
+	var excelToJson = null;
+	
+	/*upload(req, res, function(err){
+		if(err){
+			res.json({error_code:1, err_desc:err, err_msg:'오류입니다.'});
+			return;
+		}
+		
+		if(!req.file){
+			res.json({error_code:1, err_desc:'No file passed'});
+			return;
+		}
+		
+		//엑셀 파일 컨버팅 시작, 엑셀 > Json
+		if(req.file.originalname.split('.')[req.file.originalname.split('.').length-1] === 'xlsx'){
+			//파일 확장자를 통해서 구분 
+			excelToJson = require('xlsx-to-json-lc'); 
+			console.log('xlsx-to-json-lc');
+		}else{
+			excelToJson = require('xls-to-json-lc'); 
+			console.log('xls-to-json-lc');
+		}
+		
+		try{
+			excelToJson({
+				input: req.file.path, 			//엑셀 파일이 업로드 된 경로 
+				output: null,					//Json 파일이 저장될 경로 
+				lowerCaseHeaders: true
+			}, function(err, result){
+				if(err){
+					res.json({error_code:1, err_desc:err, data: null});
+				}
+				
+				//result로 json 데이터가 넘어 온다.
+				res.json({error_code:0, err_desc:null, data: result});
+			});
+		} catch (e) {
+			
+			console.log('req.file.path:'+req.file.path); 
+			console.log('err:'+e); 
+			res.json({error_code:1, err_desc:'Corupted excel file', err_msg:e});
+		}
+		
 	});*/
 	
-	/*res.render('adm/periods/excel', { 
-		'title' : '기수 엑셀 등록',
-		'userInfo' : req.user				//세션 정보
-	}); 	*/
-	
-	console.log(req.file); 
+	parseExcel(req.file.path, function (err, data){
+		if(err){
+			res.json({error_code:1, err_desc:err, data: null});
+		}else{
+			res.json({error_code:1, err_desc:err, data: data});
+		}
+	});
 };
 
 
