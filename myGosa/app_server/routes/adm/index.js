@@ -89,6 +89,8 @@ module.exports = function (passport){
 	router.get('/periods/excel', ensureAuthenticated, ctrlPeriods.uploadPage);				// 기수 엑셀 등록 페이지
 	router.post('/periods/excel/upload', ensureAuthenticated, ctrlPeriods.upload);			// 기수 엑셀 등록 페이지
 	
+	
+	
 	//신청관리 
 	router.get('/apply', ensureAuthenticated, ctrlApply.apply);											// 신청 관리  
 	router.get('/apply/list/:page', ensureAuthenticated, ctrlApply.listPage);							// 신청 관리 리스트 출력 
