@@ -397,6 +397,14 @@ module.exports.upload = (req, res) => {
 						return; 
 					}
 					
+					if(exam.classNum <= 0){
+						msg = '엑셀파일에 입력된 고사장의 반수 정보가 없습니다. 엑셀파일의 데이터를 확인 후 다시 시도해주세요.';
+						
+						//결과 페이지로 
+						resRender(req, res, msg, false); 
+						return; 
+					}
+					
 					//시험장 읽어오기
 					periods.readSeq(exam, function(err, rows){
 						

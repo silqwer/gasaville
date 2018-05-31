@@ -30,19 +30,31 @@
 		</div>
 	</div>
 
-	<div class="left-menu">
-		<ul>
-			<li class="on"><a href="/admin/schedule">일정관리</a></li>
-			<li><a href="/admin/exam">고사장관리</a></li>
-			<li><a href="/admin/exam/list/1">고사장관리 - 고사장 리스트</a></li>
-			<li><a href="/admin/exam/history">고사장관리 - 참여이력 리스트</a></li>
-			<li><a href="/admin/comment/list/1">고사장관리 - 후기 리스트</a></li>
-			<li><a href="/admin/periods">기수관리</a></li>
-			<li><a href="/admin/periods">기수관리 - 등록</a></li>
-			<li><a href="/admin/periods/excel">기수관리 - 엑셀등록</a></li>		
-			<li><a href="/admin/apply">신청관리</a></li>
-			<li><a href="/admin/apply/list/1">신청관리 - 신청리스트</a></li>
-			<li><a href="/admin/apply/stats">신청관리 - 통계리스트</a></li>
+	<div>
+		<ul class="left-menu">
+			<li><a href="/admin/schedule">일정관리</a></li>
+			<li>
+				<a href="#">고사장관리</a>
+				<ul class="leftsub">
+					<li><a href="/admin/exam/list/1">고사장 리스트</a></li>
+					<li><a href="/admin/exam/history">참여이력 리스트</a></li>
+					<li><a href="/admin/comment/list/1">후기 리스트</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">기수관리</a>
+				<ul class="leftsub">
+					<li><a href="/admin/periods">등록</a></li>
+					<li><a href="/admin/periods/excel">엑셀등록</a></li>		
+				</ul>
+			</li>
+			<li>
+				<a href="#">신청관리</a>
+				<ul class="leftsub">
+					<li><a href="/admin/apply/list/1">신청리스트</a></li>
+					<li><a href="/admin/apply/stats">통계리스트</a></li>
+				</ul>
+			</li>
 			<li><a href="/admin/users">회원관리</a></li>
 			<li><a href="/admin/department">부서관리</a></li>
 			<li><a href="/admin/notice">공지사항관리</a></li>
@@ -231,6 +243,11 @@ $(function(){
 	}
 
 	setClock.periodical(1000);
+	
+	$('.left-menu > li > a').click(function(){
+		$(this).next("ul").animate({width:'toggle'},350);
+	});
+	
 });
 
 </script>

@@ -39,6 +39,16 @@
 		}
 	});
 	
+	$('.monthlist li').on({
+		click:function(){ 
+			$('.monthlist li').removeClass('chk');
+			$('.monthlist li .schName').attr('checked', false);
+			
+			$(this).addClass('chk');
+			$(this).children('.schName').attr('checked', true);
+		}
+	});
+	
 	//삭제, 수정
 	$('#updateBtn').on({
 		click:function(){
