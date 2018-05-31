@@ -86,6 +86,14 @@ var Periods = {
 				"WHERE SEQ = ?", [seq], callback);
 	}, 
 	
+	readSeq : function (params, callback) {
+		return connection.query("SELECT " +
+				"SEQ, NAME, SCHOOL, ADDR " +
+				"FROM EXAM " +
+				"WHERE NAME = ? " +
+				"AND SCHOOL = ? ", [params.regionName, params.schoolName], callback);
+	}, 
+	
 	delete : function (seq, callback ) {
 		return connection.query("DELETE FROM PERIOD WHERE SCHEDULE_SEQ = ?", [seq], callback);
 	},

@@ -10,6 +10,19 @@ var ctrlUsers = require('../../controllers/adm/users');
 var ctrlDepart = require('../../controllers/adm/department');
 var ctrlNotice = require('../../controllers/adm/notice');
 
+var multer = require('multer');			//파일업로드 프레임워크? 
+var storage = multer.diskStorage({		//업로드 파일 경로 설정 
+	destination: function (req, file, cb) {
+		cb(null, 'public/adm/excel/');	//콜백함수를 통해 전송된 파일을 저장할 디렉토리 설정 
+	}, 
+	
+	filename: function(req, file, cb) {
+		cb(null, file.originalname);	//콜백함수를 통해 전송된 파일 이름을 설정 
+	}
+});
+var upload = multer({storage:storage}); //업로드 객체 생성 
+
+
 module.exports = function (passport){
 	var ensureAuthenticated = function (req, res, next){
 		// 로그인이 되어 있으면, 다음 파이프라인으로 진행
@@ -74,7 +87,8 @@ module.exports = function (passport){
 	router.post('/periods/delete', ensureAuthenticated, ctrlPeriods.delete);				// 기수 정보 삭제 
 	
 	router.get('/periods/excel', ensureAuthenticated, ctrlPeriods.uploadPage);				// 기수 엑셀 등록 페이지
-	router.post('/periods/excel/uplad', ensureAuthenticated, ctrlPeriods.upload);				// 기수 엑셀 등록 페이지
+	router.post('/periods/excel/upload', ensureAuthenticated, ctrlPeriods.upload);			// 기수 엑셀 등록 페이지
+	
 	
 	
 	//신청관리 
