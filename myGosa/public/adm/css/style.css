@@ -317,7 +317,7 @@ a:hover{color:#337ab7}
 	padding-right:35px;
 	position:fixed;
 	background:#fff;
-	z-index: 9999;
+	z-index: 2;
 }
 .left-menu{margin-top:50px}
 .left-menu li{
