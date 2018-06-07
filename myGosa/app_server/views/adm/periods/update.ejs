@@ -16,20 +16,10 @@
     		
     		<div class="tablist">
 					<ul class="monthlist">
-						<% for(let i=0; i<schedule.length; ++i){ %>
-			  			<% if(schedule[i].CHECKED === "checked"){ %>
-			  				<li class="chk">
-				  				<input type="radio" name="schName" class="schName" id="radio<%=i%>" value="<%=schedule[i].SEQ%>" checked="<%=schedule[i].CHECKED%>">
-				  				<label for="radio<%=i%>"><%=schedule[i].NAME%></label>
-			  				</li>
-	
-			  			<% } else { %>
-			  				<li>
-			  					<input type="radio" name="schName" class="schName" id="radio<%=i%>" value="<%=schedule[i].SEQ%>">
-			  					<label for="radio<%=i%>"><%=schedule[i].NAME%></label>
-			  				</li>
-			  			<% } %>
-			  		<% } %>
+			  		<li class="chk">
+		  				<input type="radio" name="schName" class="schName" id="schName" value="<%=schedule.SCHEDULE_SEQ%>" checked="checked">
+		  				<label for="schName"><%=schedule.SCHEDULE_NAME%></label>
+	  				</li>
 					</ul>
 					
 					<form id="tab1">
@@ -41,6 +31,7 @@
 											<span>
 												<input type="checkbox" name="examName" id="examName<%=i%>" class="examName" value="<%=exam[i].SEQ%>" checked="<%=exam[i].CHECKED%>">
 												<label for="examName<%=i%>"><%=exam[i].NAME%></label>
+												<label for="schoolName<%=i%>"><%=exam[i].SCHOOL%></label>
 											</span>
 											<input type="number" id="examClass_<%=exam[i].SEQ%>" class="examClass"  min="1" max="5" value="<%=exam[i].CLASS%>"><br>
 										</li>
@@ -49,6 +40,7 @@
 											<span>
 												<input type="checkbox" name="examName" id="examName<%=i%>" class="examName" value="<%=exam[i].SEQ%>">
 												<label for="examName<%=i%>"><%=exam[i].NAME%></label>
+												<label for="schoolName<%=i%>"><%=exam[i].SCHOOL%></label>
 											</span>
 											<input type="number" id="examClass_<%=exam[i].SEQ%>" class="examClass"  min="1" max="5" value="<%=exam[i].CLASS%>"><br>
 										</li> 			

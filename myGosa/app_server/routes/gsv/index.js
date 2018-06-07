@@ -4,6 +4,7 @@ var ctrlMain = require('../../controllers/gsv/main');
 var ctrlJoin = require('../../controllers/gsv/join');
 var ctrlNotice = require('../../controllers/gsv/notice');
 var ctrlExam = require('../../controllers/gsv/exam');
+var ctrlApply = require('../../controllers/gsv/apply');
 
 module.exports = function (passport){
 	var ensureAuthenticated = function (req, res, next){
@@ -19,7 +20,12 @@ module.exports = function (passport){
 	};
 	
 	router.get('/', ctrlMain.index);												// 사용자 로그인 
+	router.get('/fail', ctrlMain.fail);										// 사용자 로그인 실패 
 	router.get('/main', ensureAuthenticated, ctrlMain.main);						// 출석고사 페이지 
+	
+	router.get('/apply/list', ensureAuthenticated, ctrlApply.apply);				// 신청관리 페이지
+	router.get('/apply/list/:page', ensureAuthenticated, ctrlApply.listPage);		// 신청관리 특정 목록
+	
 	router.get('/logout', ensureAuthenticated, ctrlMain.logout);					// 사용자 로그아웃
 
 	router.get('/join/main', ctrlJoin.main);										// 사용자 회원가입
@@ -44,7 +50,7 @@ module.exports = function (passport){
 	//로그인 
 	router.post('/', passport.authenticate('local-login', {
 		successRedirect : '/gsv/main',
-		failureRedirect : '/',
+		failureRedirect : '/gsv/fail',
 		failureFlash : true
 	}));
 	

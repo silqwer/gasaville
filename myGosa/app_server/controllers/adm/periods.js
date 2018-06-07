@@ -157,24 +157,20 @@ module.exports.updatePage = (req, res) => {
 	let seq = req.params.seq; 
 	
 	periods.selected_periods(seq, function(err, rows){
-		let period = rows[0];
+		let schedule = rows[0];
 	
-		periods.selected_schedule(seq, function(err, rows){
-			let schedule = rows;
+		periods.selected_exam(seq, function(err, rows){
 			
-			periods.selected_exam(seq, function(err, rows){
-		
-				res.render('adm/periods/update', { 
-					'title' : '기수 수정',
-					'userInfo' : req.user, 
-					'page' : page, 
-					'schedule' : schedule,
-					'selected_schedule_seq' : seq, 
-					'selected_schedul_name' : period.SCHEDULE_NAME,
-					'exam' : rows
-				});
-				
+			res.render('adm/periods/update', { 
+				'title' : '기수 수정',
+				'userInfo' : req.user, 
+				'page' : page, 
+				'schedule' : schedule,
+				'selected_schedule_seq' : seq, 
+				'selected_schedul_name' : schedule.SCHEDULE_NAME,
+				'exam' : rows
 			});
+			
 		});
 	});
 };

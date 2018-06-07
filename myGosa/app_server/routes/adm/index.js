@@ -39,6 +39,8 @@ module.exports = function (passport){
 	router.get('/', ctrlMain.index);												// 관리자 메인 
 	router.get('/main', ensureAuthenticated, ctrlMain.main);						// 관리자 홈 
 	router.get('/login', ctrlMain.index);											// 관리자 로그인 
+	router.get('/login/fail', ctrlMain.loginFail);											// 관리자 로그인 
+	
 	router.get('/logout', ctrlMain.logout);											// 관리자 로그아웃
 	
 	
@@ -137,7 +139,7 @@ module.exports = function (passport){
 	//로그인 
 	router.post('/login', passport.authenticate('local-login', {
 		successRedirect : '/admin/main',
-		failureRedirect : '/admin/login',
+		failureRedirect : '/admin/login/fail',
 		failureFlash : true
 	}));
 	
