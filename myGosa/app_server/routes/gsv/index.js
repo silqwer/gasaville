@@ -20,6 +20,7 @@ module.exports = function (passport){
 	};
 	
 	router.get('/', ctrlMain.index);												// 사용자 로그인 
+	router.get('/fail', ctrlMain.fail);										// 사용자 로그인 실패 
 	router.get('/main', ensureAuthenticated, ctrlMain.main);						// 출석고사 페이지 
 	
 	router.get('/apply/list', ensureAuthenticated, ctrlApply.apply);				// 신청관리 페이지
@@ -49,7 +50,7 @@ module.exports = function (passport){
 	//로그인 
 	router.post('/', passport.authenticate('local-login', {
 		successRedirect : '/gsv/main',
-		failureRedirect : '/',
+		failureRedirect : '/gsv/fail',
 		failureFlash : true
 	}));
 	
