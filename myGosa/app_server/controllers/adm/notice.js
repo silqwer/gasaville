@@ -65,7 +65,7 @@ module.exports.listPage = (req, res) => {
 			}
 			
 			res.render('adm/notice/list', { 
-				'title' : '고사장 관리',
+				'title' : '공지사항 관리',
 				'userInfo' : req.user,
 				'list' : rows, 
 				'page' : page, 
