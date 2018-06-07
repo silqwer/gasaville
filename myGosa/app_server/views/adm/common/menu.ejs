@@ -245,6 +245,7 @@ $(function(){
 	setClock.periodical(1000);
 	
 	$('.left-menu > li > a').click(function(){
+		$('.leftsub').hide();
 		$(this).next("ul").animate({width:'toggle'},350);
 	});
 	
