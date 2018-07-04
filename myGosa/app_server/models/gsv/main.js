@@ -44,11 +44,10 @@ var Main = {
 		return connection.query(
 			"SELECT "+
 			"	CASE"+
-			"	WHEN SEQ > 0 AND USER_SEQ = ? THEN 1"+
-			"	WHEN SEQ > 0 AND USER_SEQ != ? THEN 2"+
-			"	WHEN IFNULL(MAX(SEQ), 0) = 0 THEN 0"+
+			"	WHEN USER_SEQ = ? THEN 1"+
+			"	WHEN USER_SEQ != ? THEN 0"+
 			"	END AS STATUS "+
-			"FROM APPLY WHERE PERIOD_SEQ=?"
+			"FROM APPLY WHERE SCHEDULE_SEQ=?"
 		, [params.user, params.user, params.seq], callback);
 	},
 	isCorrectUserData : function(params, callback) {
@@ -66,7 +65,22 @@ var Main = {
 		return connection.query(
 			"DELETE FROM APPLY WHERE PERIOD_SEQ=? AND SCHEDULE_SEQ=? AND USER_SEQ=? AND CLASS=?"
 		,[params.period, params.schedule, params.user, params.class], callback);
-	}
+	},
+	list2 : function (params, callback) {
+		return connection.query(
+			"SELECT  DISTINCT P.SEQ AS PERIOD_SEQ, " +
+			"(SELECT SEQ FROM EXAM WHERE SEQ = P.EXAM_SEQ) AS EXAM_SEQ, " +
+			"(SELECT NAME FROM EXAM WHERE SEQ = P.EXAM_SEQ) AS EXAM_NAME, " +
+			"(SELECT SCHOOL FROM EXAM WHERE SEQ = P.EXAM_SEQ) AS EXAM_SCHOOL, " +
+			"P.CLASS AS EXAM_CLASS, " +
+			"P.CLASS_NUM AS EXAM_CLASS_NUM, " +
+			"(CASE WHEN A.USER_SEQ = ? THEN 1 WHEN A.USER_SEQ > 0 THEN 2 ELSE 0 END) AS USER_STATE " +
+			"FROM PERIOD P LEFT OUTER JOIN APPLY A " +
+			"ON P.SEQ = A.PERIOD_SEQ " +
+			"WHERE P.SCHEDULE_SEQ = ? " +
+			"ORDER BY EXAM_NAME ASC, EXAM_CLASS_NUM ASC"
+			,[params.user, params.schedule], callback);
+	},
 };
 
 module.exports = Main; 

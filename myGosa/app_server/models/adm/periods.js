@@ -75,9 +75,9 @@ var Periods = {
 		return connection.query(sql, callback);
 	},
 	
-	insert : function (params, callback) {
-		return connection.query("INSERT INTO PERIOD (SCHEDULE_SEQ, EXAM_SEQ, CLASS)" +
-				"VALUES (?, ?, ?)", [params.schSeq, params.examSeq, params.examClass], callback);
+	insert : function (params, callback) {                                
+		return connection.query("INSERT INTO PERIOD (SCHEDULE_SEQ, EXAM_SEQ, CLASS_NUM, CLASS)" +
+				"VALUES (?, ?, ?, ?)", [params.schSeq, params.examSeq, params.examNum, params.examClass], callback);
 	}, 
 	
 	insertExam : function (params, callback) {

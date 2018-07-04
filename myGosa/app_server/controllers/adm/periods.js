@@ -426,34 +426,44 @@ module.exports.upload = (req, res) => {
 							
 							periods.readSeq(exam, function(err, rows){
 								//일정 등록하기
-								let period = {
-									'schSeq':Number(scheduleSeq), 
-									'examSeq':rows[0].SEQ, 
-									'examClass':Number(exam.classNum)
-								}; 
+								let examNum = Number(exam.classNum);
+								for(let i=0; i<examNum; ++i){
+									let period = {
+										'schSeq': Number(scheduleSeq), 
+										'examSeq': rows[0].SEQ, 
+										'examNum': Number(exam.classNum),
+										'examClass': i+1
+									}; 
+									
+									console.log('1period:'+period); 
+									
+									periods.insert(period, function(err, rows){
+										if (err) {
+											console.error(err);
+											throw err;
+										}
+									});
+								}
+							});
 							
+						}else{
+							//일정 등록하기
+							let examNum = Number(exam.classNum);
+							for(let i=0; i<examNum; ++i){
+								let period = {
+									'schSeq': Number(scheduleSeq), 
+									'examSeq': rows[0].SEQ, 
+									'examNum': Number(exam.classNum),
+									'examClass': i+1
+								}; 
+								
 								periods.insert(period, function(err, rows){
 									if (err) {
 										console.error(err);
 										throw err;
 									}
 								});
-							});
-							
-						}else{
-							//일정 등록하기
-							let period = {
-								'schSeq':Number(scheduleSeq), 
-								'examSeq':rows[0].SEQ, 
-								'examClass':Number(exam.classNum)
-							}; 
-						
-							periods.insert(period, function(err, rows){
-								if (err) {
-									console.error(err);
-									throw err;
-								}
-							});
+							}
 						}
 					});
 				}
