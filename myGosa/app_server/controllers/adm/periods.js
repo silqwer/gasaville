@@ -405,28 +405,70 @@ module.exports.upload = (req, res) => {
 					periods.readSeq(exam, function(err, rows){
 						
 						if(rows[0] === undefined){
-							msg = '엑셀파일에 입력된 고사장 정보가 시스템에 없습니다. 해당 고사장 정보를 시스템에 입력 후 다시 시도해주세요.';
+							//msg = '엑셀파일에 입력된 고사장 정보가 시스템에 없습니다. 해당 고사장 정보를 시스템에 입력 후 다시 시도해주세요.';
 							
 							//결과 페이지로 
-							resRender(req, res, msg, false); 
+							//resRender(req, res, msg, false); 
 							
-						}else{
-							//일정 등록하기
-							let period = {
-								'schSeq':Number(scheduleSeq), 
-								'examSeq':rows[0].SEQ, 
-								'examClass':Number(exam.classNum)
-							}; 
-						
-							periods.insert(period, function(err, rows){
+							//여기서 바로 고사장 정보를 입력하고 일정도 등록한다. 
+							let params = {
+									'name':exam.regionName,
+									'school':exam.schoolName,
+									'addr':''
+							};
+							
+							periods.insertExam(params ,function(err, rows){
 								if (err) {
 									console.error(err);
 									throw err;
 								}
+							})
+							
+							periods.readSeq(exam, function(err, rows){
+								//일정 등록하기
+								let examNum = Number(exam.classNum);
+								for(let i=0; i<examNum; ++i){
+									let period = {
+										'schSeq': Number(scheduleSeq), 
+										'examSeq': rows[0].SEQ, 
+										'examNum': Number(exam.classNum),
+										'examClass': i+1
+									}; 
+									
+									console.log('1period:'+period); 
+									
+									periods.insert(period, function(err, rows){
+										if (err) {
+											console.error(err);
+											throw err;
+										}
+									});
+								}
 							});
+							
+						}else{
+							//일정 등록하기
+							let examNum = Number(exam.classNum);
+							for(let i=0; i<examNum; ++i){
+								let period = {
+									'schSeq': Number(scheduleSeq), 
+									'examSeq': rows[0].SEQ, 
+									'examNum': Number(exam.classNum),
+									'examClass': i+1
+								}; 
+								
+								periods.insert(period, function(err, rows){
+									if (err) {
+										console.error(err);
+										throw err;
+									}
+								});
+							}
 						}
 					});
 				}
+				
+				resRender(req, res, msg, true); 
 			});
 			
 		} catch (e) {
@@ -437,6 +479,8 @@ module.exports.upload = (req, res) => {
 			return; 
 		}
 	});
+	
+	
 };
 
 

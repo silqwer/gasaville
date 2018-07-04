@@ -52,7 +52,7 @@ module.exports.insertApply = (req, res) => {
 	let userIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 	let params = {
 		'user' 	: req.user.SEQ,
-		'seq'	: req.body.period
+		'seq'	: req.body.schedule
 	};
 
 	main.possibleInsert(params, function(err, rows) {
@@ -61,8 +61,12 @@ module.exports.insertApply = (req, res) => {
 			console.log(err);
 			throw err;
 		}
-
-		if(!Array.isArray(rows.STATUS, [1, 2])) {
+		console.log('user:'+params.user);
+		console.log('seq:'+params.seq);
+		console.log('rows[0].STATUS:'+rows[0].STATUS);
+		console.log('result:'+Array.isArray(rows[0].STATUS, [1, 2]));
+		
+		if(rows[0].STATUS === 0) {
 			let insertParam = {
 				period: req.body.period,
 				schedule: req.body.schedule,
@@ -84,6 +88,7 @@ module.exports.insertApply = (req, res) => {
 			});
 
 		} else {
+		
 			res.send({
 				result : false
 			});

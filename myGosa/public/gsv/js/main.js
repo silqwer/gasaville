@@ -20,18 +20,23 @@
 		listeners: {
 			apply: {
 				click : function() {
+					
+					let callback = (data) => {
+						if(data.result){
+							alert('신청을 완료했습니다.');
+						}else{
+							alert('이미 신청을 했습니다.');
+						}
+					}
+					
 					let self = $(this)[0];
 					let isSuccess = Main.fn.connectAjax('/gsv/main/insertApply', 'post', 'false', {
 						period: $(self).data('period'),
 						schedule: $(self).data('schedule'),
 						class: $(self).data('class')
-					});
+					}, callback);
 
-					if(isSuccess) {
-						alert("성공적으로 등록하였습니다.");
-					} else {
-						alert("등록에 실패하였습니다.");
-					}
+					
 
 					location.reload();
 				}
@@ -40,7 +45,7 @@
 			cancel: {
 				click : function() {
 					let self = $(this)[0];
-					let agree = confirm('Are you sure want to delete this data?');
+					let agree = confirm('신청을 취소하겠습니까?');
 
 					if(agree) {
 						let success = Main.fn.connectAjax('/gsv/main/deleteApply', 'post', 'false', {
@@ -50,9 +55,9 @@
 						});
 
 						if(success) {
-							alert("삭제하였습니다.");
+							alert("취소하였습니다.");
 						} else {
-							alert("처리를 실패하였습니다.");
+							alert("취소를 실패하였습니다.");
 						}
 
 						location.reload();
@@ -254,7 +259,7 @@
 		},
 
 		fn : {
-			connectAjax : function(url, type, isSync, params) {
+			connectAjax : function(url, type, isSync, params, cb) {
 				let isSuccess = null;
 				if(!url || !type || !isSync || !params) {
 					return false;
@@ -264,8 +269,12 @@
 					type: type,
 					async: isSync,
 					data: params,
-					success : function(response) {
-						return true;
+					success : function(data, status) {
+						if(typeof(cb) === 'function'){
+							cb(data);
+						}else{
+							eval(cb);
+						}
 					},
 					error: function(error) {
 						return false;

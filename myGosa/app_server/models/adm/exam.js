@@ -166,7 +166,6 @@ var Exam = {
 		return connection.query("INSERT INTO EXAM (NAME, SCHOOL, ADDR)" +
 				"VALUES (?, ?, ?)", [params.name, params.school, params.addr], callback);
 	}, 
-	
 };
 
 module.exports = Exam; 

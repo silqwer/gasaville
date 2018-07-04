@@ -30,10 +30,9 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 410px;
+  width: 500px;
   height: auto;
   background-color: #fff;
-  border: 5px solid #3571B5;
   z-index: 10;
 }
 
@@ -93,15 +92,22 @@ a.btn-layerClose {
   display: inline-block;
   height: 25px;
   padding: 0 14px 0;
-  border: 1px solid #304a8a;
-  background-color: #3f5a9d;
+  background-color: #1a9bd4;
   font-size: 13px;
   color: #fff;
   line-height: 25px;
+  float: right;
 }
 
 a.btn-layerClose:hover {
-  border: 1px solid #091940;
-  background-color: #1f326a;
+  background-color: #2ebfff;
   color: #fff;
+}
+
+.pop-conts div>p{
+	margin-left: auto;
+  margin-right: auto;
+  display: table;
+  font-size: 20px;
+  font-weight: 600;
 }
