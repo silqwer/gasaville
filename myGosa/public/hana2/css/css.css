@@ -187,6 +187,7 @@ a:hover{color:#337ab7}
 	width:150px;
 	height:36px;
 	margin-top:10px;
+	margin-bottom: 10px;
 }
 
 /*clock*/
@@ -549,7 +550,9 @@ h4{color:#000}
 
 .review #commentIframe{
 	width:100%;
-	height:274px
+	height:274px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid #ddd;
 }
 
 .review .fl table{width:400px}
@@ -626,4 +629,11 @@ h4{color:#000}
 .write .text textarea{
 	height:400px;
 	padding:10px 15px
+}
+
+#cmtContents{
+	border: 1px solid #ddd;
+  width: 94%;
+  float: left;
+  margin-right: 2%;
 }
