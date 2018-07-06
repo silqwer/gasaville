@@ -435,8 +435,6 @@ module.exports.upload = (req, res) => {
 										'examClass': i+1
 									}; 
 									
-									console.log('1period:'+period); 
-									
 									periods.insert(period, function(err, rows){
 										if (err) {
 											console.error(err);

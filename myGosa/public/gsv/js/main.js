@@ -13,7 +13,8 @@
 			write : $('.wrtBtn'),
 			delete : $('.dltBtn'),
 			enter : $('.entBtn'),
-			table : $('#cmtList')
+			table : $('#cmtList'), 
+			cmtInst : $('#cmtIstBtn'),
 		},
 
 		
@@ -31,12 +32,10 @@
 					
 					let self = $(this)[0];
 					let isSuccess = Main.fn.connectAjax('/gsv/main/insertApply', 'post', 'false', {
-						period: $(self).data('period'),
-						schedule: $(self).data('schedule'),
-						class: $(self).data('class')
+						'period': $(self).data('period'),
+						'schedule': $(self).data('schedule'),
+						'class': $(self).data('class')
 					}, callback);
-
-					
 
 					location.reload();
 				}
@@ -49,9 +48,9 @@
 
 					if(agree) {
 						let success = Main.fn.connectAjax('/gsv/main/deleteApply', 'post', 'false', {
-							period: $(self).data('period'),
-							schedule: $(self).data('schedule'),
-							class: $(self).data('class')
+							'period': $(self).data('period'),
+							'schedule': $(self).data('schedule'),
+							'class': $(self).data('class')
 						});
 
 						if(success) {
@@ -83,11 +82,58 @@
 					//후기 리스트
 					$('#commentIframe').attr('src', '/gsv/main/exam/comment/list/'+exam);
 					
+					//참여이력 유무 가져오기 
+					let callback = (data) => {
+						if(data.applySeq > 0){
+							//동적 Append 시작  cmtInpForm
+							$('#cmtInpForm').empty();
+							let str = '<input id="cmtContents" type="text">';
+							str += '<p class="fr" style="float: left;">';
+							str += '<button id="cmtIstBtn" type="button" data-apply="'+data.applySeq+'" data-exam="'+exam+'" class="sbtn"><i class="fa fa-check fcgreen ml5"></i></button>';
+							str += '</p>';
+							$('#cmtInpForm').append(str);
+							//동적으로 이벤트 붙이기 
+							$('#cmtIstBtn').on(Main.listeners.cmtInst);
+						}
+					}
+					
+					let isSuccess = Main.fn.connectAjax('/gsv/main/exam/apply/history', 'post', 'false', {
+						'examSeq' : exam
+					}, callback);
+
+
 					
 					Main.fn.popUp('.dimbg', '.popwrap');
 					
 				}
 			},
+			
+			cmtInst: {
+				click : function(){
+		
+					let self = $(this)[0];
+					let exam = $(self).data('exam');
+					let apply = $(self).data('apply');
+					let contents = $('#cmtContents').val();
+					
+					let callback = (data) => {
+						if(data.result){
+							$('#commentIframe').attr('src', '/gsv/main/exam/comment/list/'+exam);
+						}
+					}
+					console.log('exam:'+exam);
+					console.log('contents:'+contents);
+					console.log('apply:'+apply);
+					
+					let isSuccess = Main.fn.connectAjax('/gsv/main/exam/comment/insert', 'post', 'false', {
+						'applySeq': apply,
+						'examSeq': exam,
+						'contents' : contents
+					}, callback);
+					
+				}
+			
+			}, 
 			
 			more : {
 				click : function(){
@@ -265,18 +311,18 @@
 					return false;
 				}
 				return $.ajax({
-					url : url,
-					type: type,
-					async: isSync,
-					data: params,
-					success : function(data, status) {
+					'url' : url,
+					'type': type,
+					'async': isSync,
+					'data': params,
+					'success' : function(data, status) {
 						if(typeof(cb) === 'function'){
 							cb(data);
 						}else{
 							eval(cb);
 						}
 					},
-					error: function(error) {
+					'error': function(error) {
 						return false;
 					}
 				});
@@ -288,18 +334,18 @@
 					return false;
 				}
 				return $.ajax({
-					url : url,
-					type: type,
-					async: isSync,
-					data: params,
-					success : function (data, status) {
+					'url' : url,
+					'type': type,
+					'async': isSync,
+					'data': params,
+					'success' : function (data, status) {
 						if(typeof(cb) === 'function'){
 							cb(data);
 						}else{
 							eval(cb);
 						}
 					},
-					error: function(error) {
+					'error': function(error) {
 						return false;
 					}
 				});
@@ -334,8 +380,8 @@
 			googleMapInit : function (divId, addr){
 				function initMap(){
 					let map = new google.maps.Map(document.getElementById(divId), {
-						center: {lat: -33.8688, lng: 151.2195},
-				        zoom: 17
+						'center': {lat: -33.8688, lng: 151.2195},
+						'zoom': 17
 				    });
 					
 					let geoCoder = new google.maps.Geocoder();
@@ -368,6 +414,7 @@
 		},
 
 		binding: () => {
+			//등록한 트리거.on(함수)
 			Main.triggers.apply.on(Main.listeners.apply);
 			Main.triggers.cancel.on(Main.listeners.cancel);
 			Main.triggers.examName.on(Main.listeners.popWrap);
@@ -377,6 +424,7 @@
 			Main.triggers.write.on(Main.listeners.write);
 			Main.triggers.delete.on(Main.listeners.delete);
 			Main.triggers.enter.on(Main.listeners.enter);
+			Main.triggers.cmtInst.on(Main.listeners.cmtInst);
 			//Main.triggers.table.on('click', '.wrtBtn', Main.listeners.write);
 			
 		}

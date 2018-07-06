@@ -11,7 +11,6 @@ var join =  require('../../models/gsv/join');
 module.exports.insert = (req, res) => {
 	let passwd = null;
 	bcrypt.hash(req.body.password, null, null, function(err, hash) {
-		console.log('bcrypt');
 		if(err) {
 			console.log(err);
 			throw err;

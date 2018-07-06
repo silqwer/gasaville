@@ -70,6 +70,54 @@ module.exports.hstListPage = (req, res) => {
 	});
 };
 
+//참여이력
+module.exports.selectApply = (req, res) => {
+	
+	let examSeq = req.body.examSeq;
+	let userSeq = req.user.SEQ;
+	
+	exam.selectApply(examSeq, userSeq, function(err, rows){
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
+		res.send({
+			applySeq : rows[0].APPLY_SEQ
+		});
+		
+	});
+};
+
+//출석고사 고사장 후기 등록
+module.exports.InsertComment = (req, res) => {
+	
+	let examSeq = req.body.examSeq;
+	let applySeq = req.body.applySeq;
+	let contents = req.body.contents;
+	let userSeq = req.user.SEQ;
+	let params = {
+		'examSeq':examSeq,
+		'applySeq':applySeq,
+		'contents':contents,
+		'userSeq':userSeq,
+	};
+	
+	exam.InsertComment(params, function(err, rows){
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
+		res.send({
+			result : true
+		});
+		
+	});
+};
+
+
 
 //출석고사 고사장 후기 목록
 module.exports.cmtList = (req, res) => {
@@ -83,8 +131,6 @@ module.exports.cmtListPage = (req, res) => {
 	
 	let size = Number(req.params.size);			// 한 페이지에 보여줄 개수		
 	let examSeq = req.params.exam;
-	
-	console.log('size:'+ typeof size);
 	
 	exam.cmtCount(examSeq, function(err, rows){
 		
@@ -163,10 +209,6 @@ module.exports.cmtListMore = (req, res) => {
 				console.error(err);
 				throw err;
 			}
-			
-			console.log('rows');
-			console.log(rows);
-			
 			
 			res.send({
 				'result': true, 

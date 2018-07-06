@@ -16,18 +16,19 @@ var Exam = {
 	}, 
 	
 	cmtList : function(examSeq, begin, size, callback) {
-		console.log('cmtList begin:'+begin);
-		console.log('cmtList size:'+size);
-		
-		return connection.query("SELECT * FROM (SELECT C.SEQ AS COMMENT_SEQ, " +
-				"(SELECT NAME FROM SCHEDULE WHERE SEQ = A.SCHEDULE_SEQ) AS SCHEDULE_NAME, " +
-				"C.CONTENTS AS CONTENTS," +
-				"(SELECT NAME FROM USER WHERE SEQ = C.USER_SEQ) AS USER_NAME,  " +
-				"C.USER_SEQ AS USER_SEQ " +
-				"FROM COMMENT C INNER JOIN APPLY A " +
-				"ON C.APPLY_SEQ = A.SEQ " +
-				"WHERE C.EXAM_SEQ = "+examSeq+") M " + 
-				"LIMIT ?, ?", [begin, size], callback);
+	
+		return connection.query("SELECT " +
+				"(SELECT S.NAME FROM SCHEDULE S INNER JOIN APPLY A " +
+				"ON S.SEQ = A.SCHEDULE_SEQ " +
+				"WHERE A.SEQ = C.APPLY_SEQ " +
+				"GROUP BY S.NAME) AS SCHEDULE_NAME, " +
+				"C.CONTENTS AS CONTENTS, " +
+				"(SELECT NAME FROM USER WHERE SEQ = C.USER_SEQ) AS USER_NAME, " +
+				"C.USER_SEQ AS USER_SEQ , " +
+				"C.DATE AS DATE " +
+				"FROM COMMENT C " +
+				"WHERE EXAM_SEQ = ? ORDER BY DATE DESC " + 
+				"LIMIT ?, ?", [examSeq, begin, size], callback);
 	}, 
 
 	
@@ -44,16 +45,34 @@ var Exam = {
 
 	cmtCount : function (examSeq, callback) {
 		
-		return connection.query("SELECT COUNT(*) AS CNT FROM (SELECT * FROM (SELECT C.SEQ AS COMMENT_SEQ, " +
-				"(SELECT NAME FROM SCHEDULE WHERE SEQ = A.SCHEDULE_SEQ) AS SCHEDULE_NAME, " +
-				"C.CONTENTS AS CONTENTS," +
+		return connection.query("SELECT COUNT(*) AS CNT FROM ( SELECT" +
+				"(SELECT S.NAME FROM SCHEDULE S INNER JOIN APPLY A " +
+				"ON S.SEQ = A.SCHEDULE_SEQ " +
+				"WHERE A.SEQ = C.APPLY_SEQ " +
+				"GROUP BY S.NAME) AS SCHEDULE_NAME, " +
+				"C.CONTENTS AS CONTENTS, " +
 				"(SELECT NAME FROM USER WHERE SEQ = C.USER_SEQ) AS USER_NAME, " +
-				"C.USER_SEQ AS USER_SEQ " +
-				"FROM COMMENT C INNER JOIN APPLY A " +
-				"ON C.APPLY_SEQ = A.SEQ " +
-				"WHERE C.EXAM_SEQ = "+examSeq+")M)C", callback);
+				"C.USER_SEQ AS USER_SEQ , " +
+				"C.DATE AS DATE " +
+				"FROM COMMENT C " +
+				"WHERE EXAM_SEQ = ? ORDER BY DATE DESC)C", [examSeq], callback);
 	},
 	
+	selectApply : function (examSeq, userSeq, callback) {
+		
+		return connection.query("SELECT A.SEQ AS APPLY_SEQ " +
+				"FROM APPLY A INNER JOIN PERIOD P " +
+				"ON A.PERIOD_SEQ = P.SEQ " +
+				"WHERE P.EXAM_SEQ = ? AND A.USER_SEQ = ? " +
+				"ORDER BY A.SEQ DESC LIMIT 1",[examSeq, userSeq], callback);
+	},
+	
+	InsertComment : function (params, callback){
+		return connection.query(
+				"INSERT INTO COMMENT (APPLY_SEQ, EXAM_SEQ, USER_SEQ, CONTENTS, DATE) " +
+				"VALUES (?, ?, ?, ?,  NOW())"
+			, [params.applySeq, params.examSeq, params.userSeq, params.contents], callback);
+	}
 };
 
 module.exports = Exam; 
