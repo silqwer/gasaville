@@ -129,7 +129,7 @@ module.exports.best = (req, res) => {
 		
 		res.render('adm/apply/best', { 
 			'list': rows,
-			'title': '가장 신청 마감이 빠른 고사장'
+			'title': '신청 마감이 가장 빠른 고사장'
 		}); 
 		
 	});

@@ -61,10 +61,6 @@ module.exports.insertApply = (req, res) => {
 			console.log(err);
 			throw err;
 		}
-		console.log('user:'+params.user);
-		console.log('seq:'+params.seq);
-		console.log('rows[0].STATUS:'+rows[0].STATUS);
-		console.log('result:'+Array.isArray(rows[0].STATUS, [1, 2]));
 		
 		if(rows[0].STATUS === 0) {
 			let insertParam = {
