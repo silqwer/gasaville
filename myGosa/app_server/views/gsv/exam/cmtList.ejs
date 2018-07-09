@@ -21,13 +21,15 @@
 		<tr class="pop-comment">
 			<td><%=list[i].SCHEDULE_NAME%></td>
 			<td>
-				<p class="fl"><%=list[i].CONTENTS%></p>
+				<p class="fl">
+					<input type="text" class="cmtCts" data-comment="<%=list[i].SEQ%>" value="<%=list[i].CONTENTS%>" readonly="readonly">
+				</p>
 				<!-- 사용자 비교 로직 추가  -->
 				<% if ( userInfo.SEQ == list[i].USER_SEQ) {%>
 				<p class="fr">
-					<button type="button" data-comment="<%=list[i].COMMENT_SEQ%>" class="sbtn fcblue wrtBtn"><i class="fa fa-pencil-alt"></i></button>
-					<button type="button" data-comment="<%=list[i].COMMENT_SEQ%>" class="sbtn fcred ml5 dltBtn"><i class="fa fa-trash-alt"></i></button>
-					<button type="button" data-comment="<%=list[i].COMMENT_SEQ%>" class="sbtn fcgreen ml5 entBtn"><i class="fa fa-check"></i></button>
+					<button type="button" data-comment="<%=list[i].SEQ%>" data-exam="<%=list[i].EXAM_SEQ%>" class="sbtn fcblue wrtBtn"><i class="fa fa-pencil-alt"></i></button>
+					<button type="button" data-comment="<%=list[i].SEQ%>" data-exam="<%=list[i].EXAM_SEQ%>" class="sbtn fcred dltBtn"><i class="fa fa-trash-alt"></i></button>
+					<button type="button" data-comment="<%=list[i].SEQ%>" data-exam="<%=list[i].EXAM_SEQ%>" class="sbtn fcgreen entBtn" style="display: none;" ><i class="fa fa-check"></i></button>
 				</p>
 				<% } %>
 			</td>

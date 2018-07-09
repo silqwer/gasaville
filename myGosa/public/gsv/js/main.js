@@ -92,6 +92,7 @@
 							str += '<button id="cmtIstBtn" type="button" data-apply="'+data.applySeq+'" data-exam="'+exam+'" class="sbtn"><i class="fa fa-check fcgreen ml5"></i></button>';
 							str += '</p>';
 							$('#cmtInpForm').append(str);
+							
 							//동적으로 이벤트 붙이기 
 							$('#cmtIstBtn').on(Main.listeners.cmtInst);
 						}
@@ -119,12 +120,10 @@
 					let callback = (data) => {
 						if(data.result){
 							$('#commentIframe').attr('src', '/gsv/main/exam/comment/list/'+exam);
+							$('#cmtContents').val('');
 						}
 					}
-					console.log('exam:'+exam);
-					console.log('contents:'+contents);
-					console.log('apply:'+apply);
-					
+				
 					let isSuccess = Main.fn.connectAjax('/gsv/main/exam/comment/insert', 'post', 'false', {
 						'applySeq': apply,
 						'examSeq': exam,
@@ -261,28 +260,58 @@
 			write : {
 				click : function(){
 					let self = $(this)[0];
-					let exam = $(self).data('exam');
-					console.log('update:'+exam);
-					console.log('comment:'+$(self).data('comment'));
-					alert('update');
+					let examSeq = $(self).data('exam');
+					let cmtSeq = $(self).data('comment');
+					
+					$(self).hide();									//코멘트 수정 버튼 숨김
+					$('.entBtn[data-comment="'+cmtSeq+'"]').show();	//코멘트 수정 확인 버튼 보여주기
+					$('.cmtCts[data-comment="'+cmtSeq+'"]').attr("readonly",false);	
+
 				}
 			},
 			
 			delete : {
 				click : function(){
 					let self = $(this)[0];
-					let exam = $(self).data('exam');
-					console.log('delete:'+exam); 
-					alert('delete'); 
+					let cmtSeq = $(self).data('comment');
+					let examSeq = $(self).data('exam');
+					
+					if(confirm('후기를 삭제하시겠습니까?')){
+						let callback = (data) => {
+							if(data.result){
+								$('#commentIframe', parent.document).attr('src', '/gsv/main/exam/comment/list/'+data.examSeq);
+							}
+						}
+						
+						let isSuccess = Main.fn.connectAjax('/gsv/main/exam/comment/delete', 'post', 'false', {
+							'cmtSeq': cmtSeq,
+							'examSeq': examSeq
+						}, callback);
+					}
 				}
 			},
 			
 			enter : {
 				click : function(){
 					let self = $(this)[0];
-					let exam = $(self).data('exam');
-					console.log('confirm:'+exam); 
-					alert('confirm');
+					let cmtSeq = $(self).data('comment');
+					let examSeq = $(self).data('exam');
+					let cmtCts = $('.cmtCts[data-comment="'+cmtSeq+'"]').val();
+					if(confirm('후기를 수정하시겠습니까?')){
+						let callback = (data) => {
+							if(data.result){
+								$('#commentIframe', parent.document).attr('src', '/gsv/main/exam/comment/list/'+data.examSeq);
+								$('#cmtCts').val('');
+							}
+						}
+						
+						let isSuccess = Main.fn.connectAjax('/gsv/main/exam/comment/update', 'post', 'false', {
+							'cmtSeq': cmtSeq, 
+							'examSeq': examSeq,
+							'cmtCts':cmtCts
+						}, callback);
+					}
+					
 				}
 			},
 			

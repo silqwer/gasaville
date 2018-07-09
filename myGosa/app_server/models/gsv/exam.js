@@ -17,7 +17,7 @@ var Exam = {
 	
 	cmtList : function(examSeq, begin, size, callback) {
 	
-		return connection.query("SELECT " +
+		return connection.query("SELECT C.SEQ, C.EXAM_SEQ, " +
 				"(SELECT S.NAME FROM SCHEDULE S INNER JOIN APPLY A " +
 				"ON S.SEQ = A.SCHEDULE_SEQ " +
 				"WHERE A.SEQ = C.APPLY_SEQ " +
@@ -67,12 +67,24 @@ var Exam = {
 				"ORDER BY A.SEQ DESC LIMIT 1",[examSeq, userSeq], callback);
 	},
 	
-	InsertComment : function (params, callback){
+	insertComment : function (params, callback){
 		return connection.query(
 				"INSERT INTO COMMENT (APPLY_SEQ, EXAM_SEQ, USER_SEQ, CONTENTS, DATE) " +
 				"VALUES (?, ?, ?, ?,  NOW())"
 			, [params.applySeq, params.examSeq, params.userSeq, params.contents], callback);
-	}
+	}, 
+	
+	deleteComment : function (cmtSeq, callback){
+		return connection.query(
+				"DELETE FROM COMMENT WHERE SEQ =?"
+			, [cmtSeq], callback);
+	}, 
+	
+	updateComment : function (cmtCts, cmtSeq, callback){
+		return connection.query(
+				"UPDATE COMMENT SET CONTENTS = ? WHERE SEQ = ?"
+			, [cmtCts, cmtSeq], callback);
+	}, 
 };
 
 module.exports = Exam; 

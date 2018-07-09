@@ -90,7 +90,7 @@ module.exports.selectApply = (req, res) => {
 };
 
 //출석고사 고사장 후기 등록
-module.exports.InsertComment = (req, res) => {
+module.exports.insertComment = (req, res) => {
 	
 	let examSeq = req.body.examSeq;
 	let applySeq = req.body.applySeq;
@@ -103,7 +103,7 @@ module.exports.InsertComment = (req, res) => {
 		'userSeq':userSeq,
 	};
 	
-	exam.InsertComment(params, function(err, rows){
+	exam.insertComment(params, function(err, rows){
 		
 		if (err) {
 			console.error(err);
@@ -117,6 +117,48 @@ module.exports.InsertComment = (req, res) => {
 	});
 };
 
+//출석고사 고사장 후기 삭제
+module.exports.deleteComment = (req, res) => {
+	
+	let cmtSeq = req.body.cmtSeq;
+	let examSeq = req.body.examSeq;
+	
+	exam.deleteComment(cmtSeq, function(err, rows){
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
+		res.send({
+			'result' : true,
+			'examSeq': examSeq
+		});
+		
+	});
+};
+
+//출석고사 고사장 후기 수정
+module.exports.updateComment = (req, res) => {
+	
+	let examSeq = req.body.examSeq;
+	let cmtSeq = req.body.cmtSeq;
+	let cmtCts = req.body.cmtCts;
+	
+	exam.updateComment(cmtCts, cmtSeq, function(err, rows){
+		
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		
+		res.send({
+			'result' : true, 
+			'examSeq': examSeq
+		});
+		
+	});
+};
 
 
 //출석고사 고사장 후기 목록
