@@ -69,7 +69,11 @@ input[type="number"]::-webkit-inner-spin-button {
 .fcgreen{color:#5cb85c}
 
 .fl{float:left}
-.fr{float:right}
+.fr{
+	float:right;
+  width: 55px;
+  height: 25px;
+}
 
 .tac{text-align:center}
 
@@ -146,6 +150,8 @@ a:hover{color:#337ab7}
 .sbtn{
 	display:inline-block;
 	background:none;
+	width: 23px;
+  height: 23px;
 }
 .mbtn{
 	width:100px;
@@ -633,7 +639,7 @@ h4{color:#000}
 
 #cmtContents{
 	border: 1px solid #ddd;
-  width: 94%;
+  width: 90%;
   float: left;
   margin-right: 2%;
 }
