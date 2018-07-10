@@ -171,103 +171,78 @@ module.exports.updateComment = (req, res) => {
 //출석고사 고사장 후기 목록
 module.exports.cmtList = (req, res) => {
 	let examSeq = req.params.exam;
-	res.redirect('/gsv/main/exam/comment/list/'+examSeq+'/5');
+	res.redirect('/gsv/main/exam/comment/list/'+examSeq+'/0');
 };
 
 
 //고사장 후기 리스트 페이지 
 module.exports.cmtListPage = (req, res) => {
 	
-	let size = Number(req.params.size);			// 한 페이지에 보여줄 개수		
+	let start = req.params.start;
+	start = parseInt(start, 10);
 	let examSeq = req.params.exam;
 	
-	exam.cmtCount(examSeq, function(err, rows){
+	exam.cmtList(examSeq, start, function(err, rows){
 		
-		let result = false;
+		if (err) {
+			console.error(err);
+			throw err;
+		}
 		
-		if(rows === undefined){
-			
+		if(rows.length <= 0){
 			//조회 결과 없음 
 			res.render('gsv/exam/cmtList', { 
 				'title' : '고사장 후기',
 				'userInfo' : req.user,
-				'page' : page,
-				'result' : result
+				'start' : start,
+				'result' : false
 			});
 		
-			return;
-		
 		}else{
-			result = true;
-		}
-	
-		let begin = 0;				// 시작 번호
-	
-		exam.cmtList(examSeq, begin, size, function(err, rows){
-			
-			if (err) {
-				console.error(err);
-				throw err;
-			}
-			
 			res.render('gsv/exam/cmtList', { 
 				'title' : '고사장 참여이력',
 				'userInfo' : req.user,
 				'list' : rows, 
-				'size' : size, 
+				'start' : start + 5, 
 				'exam' : examSeq,
-				'result' : result
+				'result' : true
 			}); 
-		});
+		}
 	});
 };
 
 //고사장 후기 리스트 페이지 더 가져오기  
 module.exports.cmtListMore = (req, res) => {
 	
-	let page = req.body.page;
+	let start = req.body.start;
+	start = parseInt(start, 10);
 	let examSeq = req.body.exam;
 	
-	exam.cmtCount(examSeq, function(err, rows){
-		
-		let result = false;
-		
-		if(rows === undefined){
+	exam.cmtList(examSeq, start, function(err, rows){
+		if (err) {
+			console.error(err);
+			throw err;
 			
-			//조회 결과 없음 
-			res.render('gsv/exam/cmtList', { 
+		}
+
+		if(rows.length > 0){
+			res.send({
 				'title' : '고사장 후기',
 				'userInfo' : req.user,
-				'page' : page,
-				'result' : result
-			});
-		
-			return;
-		
-		}else{
-			result = true;
-		}
-	
-		page = parseInt(page, 10);					// 십진수 만들기 
-		let size = 5; 								// 한 페이지에 보여줄 개수		
-		let begin = (page - 1);						// 시작 번호
-		
-		exam.cmtList(examSeq, begin, size, function(err, rows){
-			
-			if (err) {
-				console.error(err);
-				throw err;
-			}
-			
-			res.send({
-				'result': true, 
-				'list' : rows,
-				'userInfo' : req.user,
-				'page' : page, 
+				'list' : rows, 
+				'start' : start + 5, 
 				'exam' : examSeq,
+				'result' : true
+			}); 
+		}else{
+			//조회 결과 없음 
+			res.send({
+				'title' : '고사장 후기',
+				'userInfo' : req.user,
+				'start' : start,
+				'result' : false
 			});
-			
-		});
+		}
 	});
 };
 
