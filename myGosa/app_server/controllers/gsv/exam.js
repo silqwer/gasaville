@@ -76,17 +76,24 @@ module.exports.selectApply = (req, res) => {
 	let examSeq = req.body.examSeq;
 	let userSeq = req.user.SEQ;
 	
-	exam.selectApply(examSeq, userSeq, function(err, rows){
-		if (err) {
-			console.error(err);
-			throw err;
+	exam.countApply(examSeq, userSeq, function(err, rows){
+		if(rows[0].CNT > 0){
+			exam.selectApply(examSeq, userSeq, function(err, rows){
+				if (err) {
+					console.error(err);
+					throw err;
+				}
+				res.send({             
+					applySeq : rows[0].APPLY_SEQ
+				});
+			});
+		}else{
+			res.send({             
+				applySeq : 0
+			});
 		}
-		
-		res.send({
-			applySeq : rows[0].APPLY_SEQ
-		});
-		
 	});
+	
 };
 
 //출석고사 고사장 후기 등록

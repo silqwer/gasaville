@@ -2,15 +2,13 @@ var mysql_dbc = require('../../mysql/db_con.js')();
 var connection = mysql_dbc.init();
 
 var Notice = {
-	list : function (page, callback) {
-		return connection.query(
-			"SELECT "+
-			"@ROWNUM := @ROWNUM+1 AS NUM, NOTICE.SEQ, NOTICE.TITLE, DATE_FORMAT(NOTICE.DATE, '%Y-%m-%d') AS DATE, USER.ID, USER.NAME "+
-			"FROM NOTICE AS NOTICE LEFT JOIN USER AS USER ON (NOTICE.USER_SEQ =  USER.SEQ),"+
-			"(SELECT @ROWNUM:=0) R "+
-			"ORDER BY NUM DESC "+
-			"LIMIT ?, 10",
-			page, callback);
+	list : function (begin, size, callback) {
+		return connection.query("SELECT SEQ, TITLE, " +
+				"DATE_FORMAT(START_DATE, '%Y-%m-%d') AS START_DATE, " +
+				"(SELECT NAME FROM USER WHERE SEQ = USER_SEQ) AS NAME " +
+				"FROM NOTICE " +
+				"ORDER BY SEQ DESC " +
+				"LIMIT ?, ?", [begin, size], callback);
 	},
 
 	view : function (view, callback) {
@@ -23,7 +21,7 @@ var Notice = {
 	},
 
 	count : function (callback) {
-		return connection.query("SELECT COUNT(*) AS COUNT FROM NOTICE", callback);
+		return connection.query("SELECT COUNT(*) AS CNT FROM NOTICE", callback);
 	},
 
 	getNearRecored : function(record, callback) {

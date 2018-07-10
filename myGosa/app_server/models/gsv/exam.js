@@ -67,6 +67,14 @@ var Exam = {
 				"ORDER BY A.SEQ DESC LIMIT 1",[examSeq, userSeq], callback);
 	},
 	
+	countApply : function (examSeq, userSeq, callback) {
+		
+		return connection.query("SELECT COUNT(A.SEQ) AS CNT " +
+				"FROM APPLY A INNER JOIN PERIOD P " +
+				"ON A.PERIOD_SEQ = P.SEQ " +
+				"WHERE P.EXAM_SEQ = ? AND A.USER_SEQ = ? ",[examSeq, userSeq], callback);
+	},
+	
 	insertComment : function (params, callback){
 		return connection.query(
 				"INSERT INTO COMMENT (APPLY_SEQ, EXAM_SEQ, USER_SEQ, CONTENTS, DATE) " +

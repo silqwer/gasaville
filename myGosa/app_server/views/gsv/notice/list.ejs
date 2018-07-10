@@ -2,6 +2,7 @@
 	<div class="content-wrap">
 		<h2>공지사항</h2>
 		<div>
+			<input type="hidden" id="page" name="page" value="<%=page%>">
 			<table class="thead-tbl">
 				<colgroup>
 					<col style="width:12%">
@@ -24,31 +25,40 @@
 						<td class="tac">관리자1</td>
 						<td class="tac">2018.12.12</td>
 					</tr>
-					<% for(let listCount=0; listCount<noticeList.length; listCount++) { %>
+					<% for(let i=0; i<list.length; ++i) { %>
 					<tr>
-						<td><%=noticeList[listCount].NUM%></td>
-						<td><a href="/gsv/notice/list/<%=nowPage%>/<%=noticeList[listCount].SEQ%>"><%=noticeList[listCount].TITLE%></a></td>
-						<td class="tac"><%=noticeList[listCount].NAME%></td>
-						<td class="tac"><%=noticeList[listCount].DATE%></td>
+						<td><%=max-i%></td>
+						<td><a href="/gsv/notice/list/<%=page%>/<%=list[i].SEQ%>"><%=list[i].TITLE%></a></td>
+						<td class="tac"><%=list[i].NAME%></td>
+						<td class="tac"><%=list[i].START_DATE%></td>
 					</tr>
 					<% } %>
 				</tbody>
 			</table>
 		</div>
-		
+	
 		<div class="pagenum">
 			<ul>
-				<li><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-				<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-				<li class="on">1</li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-				<li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+				<% if(page > pageSize) { %>
+				<li><a href="/gsv/notice/list/1"><i class="fa fa-angle-double-left"></i></a></li>
+				<li><a href="/gsv/notice/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+				<% } %>
+				
+				<% for (var i=startPage; i<=endPage; i++) { %>
+      	<% if (i== page) {%>
+	        	<li class="on"><%=i%></li>
+	        	<% } else { %>
+	        	<li><a href="/gsv/notice/list/<%=i%>"><%=i%></a></li>
+      		<% } %>
+     		<% } %>
+				
+				<% if (endPage < totalPage) { %>
+				<li><a href="/gsv/notice/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
+				<li><a href="/gsv/notice/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+   	    <% } %>
 			</ul>
 		</div>
+		
 	</div>
 	
 	<div class="top">
