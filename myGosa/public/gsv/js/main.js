@@ -138,86 +138,20 @@
 				click : function(){
 					let self = $(this)[0];
 					let exam = $(self).data('exam');
-					let page = Number($(self).data('page')) + 5;
+					let start =$(self).data('start');
 					
 					let params = {
-						'page': page, 
-						'exam': exam
-					}; 
-					
-					let callback = (data) => {
-						
-						if(!data.result){
-							console.log('comment more error'); 
-							return;
-						}
-						
-						let listLength = data.list.length;
-						
-						if(listLength <= 0){
-							alert('더 이상 가져올 데이터가 없습니다.');
-							return;
-						}
-						
-						let list = data.list; 
-						let userSeq = data.userInfo.SEQ;
-				
-						//동적 데이터 넣기 
-						for(let i=0; i<listLength; ++i){
-							let str = '<tr class="pop-comment">';
-							str += '<td>'+list[i].SCHEDULE_NAME+'</td>'; 
-							str += '<td>';
-							str += '<p class="fl">'+list[i].CONTENTS+'</p>';
-							
-							//사용자 비교
-							if(userSeq === list[i].USER_SEQ){
-								str += '<p class="fr">'; 
-								str += '<button type="button" data-comment="'+list[i].COMMENT_SEQ+'" class="sbtn fcblue wrtBtn"><i class="fa fa-pencil-alt"></i></button>';
-								str += '<button type="button" data-comment="'+list[i].COMMENT_SEQ+'" class="sbtn fcred ml5 dltBtn"><i class="fa fa-trash-alt"></i></button>';
-								str += '<button type="button" data-comment="'+list[i].COMMENT_SEQ+'" class="sbtn fcgreen ml5 entBtn"><i class="fa fa-check"></i></button>';
-								str += '</p>'; 
-							}
-							
-							str += '</td>';
-							str += '<td>'+list[i].USER_NAME+'</td>';
-							str += '</tr>';
-							
-							$('#cmtList tbody').append(str);
-							
-						}
-						
-						$(self).data('page', page);	//data-page 증가된 값으로 설정 
-					}
-					// 이벤트 바인딩 
-					//$('#cmtList').on('click', '.wrtBtn', Main.listeners.write);
-					let isSuccess = Main.fn.getDataAjax('/main/exam/comment/list/more', 'post', 'false', params, callback);
-				}
-			}, 
-			
-			moremore : {
-				click : function(){
-					let self = $(this)[0];
-					let exam = $(self).data('exam');
-					let size = Number($(self).data('size')) + 5;
-
-					let params = {
-						'page': size, 
+						'start': start, 
 						'exam': exam
 					}; 
 
 					let callback = (data) => {
 						if(!data.result){
-							console.log('comment more error'); 
-							return;
-						}
-						
-						let listLength = data.list.length;
-						
-						if(listLength <= 0){
 							alert('더 이상 가져올 데이터가 없습니다.');
 							return;
 						}
 						
+						let listLength = data.list.length;
 						let list = data.list; 
 						let userSeq = data.userInfo.SEQ;
 				
@@ -247,13 +181,10 @@
 							$('#cmtList tbody .entBtn[data-comment="'+list[i].COMMENT_SEQ+'"]').on(Main.listeners.enter);
 							
 						}
-						
-						$(self).data('page', size);	//data-page 증가된 값으로 설정 
+						$('#cmtMoreBtn').data('start', data.start);	//data-page 증가된 값으로 설정 
 					}
 
 					let moreComment = Main.fn.getDataAjax('/main/exam/comment/list/more', 'post', 'false', params, callback);
-					
-					//location.href = '/gsv/main/exam/comment/list/'+exam+'/'+size;
 				}
 			}, 
 			
@@ -344,6 +275,7 @@
 					'type': type,
 					'async': isSync,
 					'data': params,
+					'dataType' : 'json',
 					'success' : function(data, status) {
 						if(typeof(cb) === 'function'){
 							cb(data);
@@ -367,6 +299,7 @@
 					'type': type,
 					'async': isSync,
 					'data': params,
+					'dataType' : 'json',
 					'success' : function (data, status) {
 						if(typeof(cb) === 'function'){
 							cb(data);
@@ -449,7 +382,7 @@
 			Main.triggers.examName.on(Main.listeners.popWrap);
 			Main.triggers.close.on(Main.listeners.closeWrap);
 			Main.triggers.dimbg.on(Main.listeners.dimbgEvent);
-			Main.triggers.more.on(Main.listeners.moremore);
+			Main.triggers.more.on(Main.listeners.more);
 			Main.triggers.write.on(Main.listeners.write);
 			Main.triggers.delete.on(Main.listeners.delete);
 			Main.triggers.enter.on(Main.listeners.enter);
