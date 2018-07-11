@@ -507,7 +507,7 @@ table{
 }
 .view .title ul{
 	overflow:hidden;
-	margin-top:2px
+	margin-top:20px;
 }
 .view .title ul li{
 	float:left;
@@ -721,4 +721,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .examClass{border:1px solid #dddddd;}
+.ntsDate{
+	
+}
 

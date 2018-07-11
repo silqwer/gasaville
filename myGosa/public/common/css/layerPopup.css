@@ -9,7 +9,7 @@ body {
 }
 
 .pop-layer .pop-container {
-  padding: 20px 25px;
+  padding: 40px 25px 20px 25px;
 }
 
 .pop-layer p.ctxt {
@@ -97,6 +97,27 @@ a.btn-layerClose {
   color: #fff;
   line-height: 25px;
   float: right;
+  
+}
+
+.popClose{
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
+#addBtn{
+	margin-right: 10px; 
+  margin-bottom: 10px;
+}
+
+#updateBtn{
+	margin-right: 10px; 
+  margin-bottom: 10px;
+}
+
+#deleteBtn{
+	margin-right: 10px; 
+  margin-bottom: 10px;
 }
 
 a.btn-layerClose:hover {
@@ -110,4 +131,23 @@ a.btn-layerClose:hover {
   display: table;
   font-size: 20px;
   font-weight: 600;
+}
+
+.iptDiv{
+	margin-bottom: 5px;
+}
+
+.iptDiv input {
+	border: 1px solid #ddd;
+	margin-left: 15px;
+	width: 385px;
+}
+
+.iptDiv label {
+	font-size: 15px;
+}
+
+.pop-conts p {
+	font-size: 25px;
+	text-align: center;
 }
