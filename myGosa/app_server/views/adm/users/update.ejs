@@ -10,57 +10,83 @@
   	<input type="hidden" id="usersPage" name="usersPage" value="<%=page%>">
   	<input type="hidden" id="usersSeq" name="usersSeq" value="<%=user.SEQ%>">
     <form id="commonForm" name="commonForm"></form>
-    <h1><%= title %></h1>
-   	
-   	<div>
-   		<label>부서</label>
-    	<select id="department">
-    	<% for(let i=0; i<departmentList.length; ++i){ %>
-    	  <% if (user.DEPARTMENT_SEQ === departmentList[i].SEQ) {%>
-    	   	<option value="<%=departmentList[i].SEQ%>" selected="selected"><%=departmentList[i].NAME%></option>
-    	  <%}else{%>
-    	  	<option value="<%=departmentList[i].SEQ%>"><%=departmentList[i].NAME%></option>
-    	  <%}%>
-    	<%}%>
-		</select>
-    </div>
-   	
-   	<div>
-   		<label>직급</label>
-    	<select id="position">
-    	<% for(let i=0; i<positionList.length; ++i){ %>
-    	  <% if (user.POSITION_SEQ === positionList[i].SEQ) {%>
-    	   	<option value="<%=positionList[i].SEQ%>" selected="selected"><%=positionList[i].NAME%></option>
-    	  <%}else{%>
-    	  	<option value="<%=positionList[i].SEQ%>"><%=positionList[i].NAME%></option>
-    	  <%}%>
-    	<%}%>
-		</select>
-    </div>
-   	
-   	<div>
-   		<label>관리자</label>
-    	<select id="admin">
-    	<% if (user.ADMIN === 'Y') {%>
-           <option value="Y" selected="selected">Y</option>
-           <option value="N">N</option>
-        <% } else { %>
-          <option value="Y">Y</option>
-           <option value="N"selected="selected">N</option>
-        <% } %>
+    
+    <div class="main-wrap">
+    	<% include ../common/menu %>
     	
-		</select>
+    	<div class="content-wrap write">
+    		<h2><%= title %></h2>
+    		<div class="view">
+    			<table class="tbody-tbl">
+						<colgroup>
+							<col style="width:20%">
+							<col style="width:80%">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>부서</th>
+								<td>
+									<select id="department">
+							    	<% for(let i=0; i<departmentList.length; ++i){ %>
+							    	  <% if (user.DEPARTMENT_SEQ === departmentList[i].SEQ) {%>
+							    	   	<option value="<%=departmentList[i].SEQ%>" selected="selected"><%=departmentList[i].NAME%></option>
+							    	  <%}else{%>
+							    	  	<option value="<%=departmentList[i].SEQ%>"><%=departmentList[i].NAME%></option>
+							    	  <%}%>
+							    	<%}%>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>직급</th>
+								<td>
+									<select id="position">
+							    	<% for(let i=0; i<positionList.length; ++i){ %>
+							    	  <% if (user.POSITION_SEQ === positionList[i].SEQ) {%>
+							    	   	<option value="<%=positionList[i].SEQ%>" selected="selected"><%=positionList[i].NAME%></option>
+							    	  <%}else{%>
+							    	  	<option value="<%=positionList[i].SEQ%>"><%=positionList[i].NAME%></option>
+							    	  <%}%>
+							    	<%}%>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>관리자</th>
+								<td>
+									<select id="admin">
+							    	<% if (user.ADMIN === 'Y') {%>
+							           <option value="Y" selected="selected">Y</option>
+							           <option value="N">N</option>
+							        <% } else { %>
+							          <option value="Y">Y</option>
+							           <option value="N"selected="selected">N</option>
+							        <% } %>
+									</select>
+								</td>
+							</tr>
+							<tr>	
+								<th>이름</th>
+								<td><input type="text" id="userName" name="userName" value="<%=user.NAME%>"></td>
+							</tr>
+							<tr>
+								<th>전화번호</th>
+								<td>
+									<input type="text" id="userCellphone" name="userCellphone" value="<%=user.CELLPHONE%>">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+		
+					<div class="btnfr">
+						<button type="button" class="mbtn skybtn" id="updateBtn">수정</button>
+						<button type="button" class="mbtn redbtn" id="deleteBtn">삭제</button>
+						<button type="button" class="mbtn whitebtn" id="cancelBtn">취소</button>
+					</div>
+    		</div>
+    	</div>
     </div>
-   	<div>
-   		이름: <input type="text" id="userName" name="userName" value="<%=user.NAME%>"><br>
-   		전화번호: <input type="text" id="userCellphone" name="userCellphone" value="<%=user.CELLPHONE%>"><br>
-   	</div>
-   
-    <div>
-    	<button id="updateBtn">수정</button>
-    	<button id="deleteBtn">삭제</button>
-    	<button id="cancelBtn">취소</button>
-    </div>
+   	
   </body>
   <script src='/adm/js/users.js'></script>
 </html>

@@ -12,8 +12,29 @@ module.exports.notice = (req, res) =>{
 //공지사항 관리 리스트 페이지 
 module.exports.listPage = (req, res) => {
 	
-	notice.count(function(err, rows){
-		let page = req.params.page;
+	let page = req.params.page;
+	let category = req.params.category;
+	let word = req.params.word;
+	
+	notice.count(category, word, function(err, rows){
+		
+		let result = false;
+		
+		if(rows === undefined){
+			//조회 결과 없음 
+			res.render('adm/notice/list', { 
+				'title' : '공지사항 관리',
+				'userInfo' : req.user,
+				'page' : page, 
+				'result' : result
+			});
+		
+			return;
+		
+		}else{
+			result = true;
+		}
+		
 		page = parseInt(page, 10);					// 십진수 만들기 
 		let size = 10; 								// 한 페이지에 보여줄 개수		
 		let begin = (page - 1) * size;				// 시작 번호
@@ -30,15 +51,21 @@ module.exports.listPage = (req, res) => {
 		
 		let max = cnt - ((page-1) * size);			// 전체 글이 존재하는 개수
 		
-		notice.list(begin, size, function(err, rows){
+		notice.list(category, word, begin, size, function(err, rows){
 			
 			if (err) {
 				console.error(err);
 				throw err;
 			}
 			
+			let search = '';
+			
+			if(word !== undefined){
+				search = category + '/' + word;
+			}
+			
 			res.render('adm/notice/list', { 
-				'title' : '고사장 관리',
+				'title' : '공지사항 관리',
 				'userInfo' : req.user,
 				'list' : rows, 
 				'page' : page, 
@@ -46,7 +73,11 @@ module.exports.listPage = (req, res) => {
 				'startPage' : startPage,
 				'endPage' : endPage,
 				'totalPage' : totalPage,
-				'max' : max
+				'max' : max,
+				'category' : category,
+				'word' : word,
+				'search' : search,
+				'result' : result
 			}); 
 		});
 	});
@@ -86,20 +117,39 @@ module.exports.updatePage = (req, res) => {
 	let page = req.params.page; 
 	let seq = req.params.seq; 
 	
-	notice.read(seq, function(err, rows){
-		
+	notice.upDown(seq, function (err, rows) {
 		if (err) {
 			console.error(err);
 			throw err;
 		}
 		
-		res.render('adm/notice/update', { 
-			'title' : '공지사항 관리',
-			'userInfo' : req.user,
-			'notice' : rows[0], 
-			'page' : page
-		}); 
+		let pre = null;
+		let next = null;
+		
+		if(rows[0] !== undefined){
+			pre = rows[0];
+		}
+		
+		if(rows[1] !== undefined){
+			next = rows[1];
+		}
+		
+		notice.read(seq, function(err, rows){
+			if (err) {
+				console.error(err);
+				throw err;
+			}
+			res.render('adm/notice/update', { 
+				'title' : '공지사항 관리',
+				'userInfo' : req.user,
+				'notice' : rows[0], 
+				'pre' : pre, 
+				'next' : next, 
+				'page' : page
+			}); 
+		});
 	});
+	
 };
 
 module.exports.update = (req, res) =>{
@@ -133,7 +183,6 @@ module.exports.delete = (req, res) => {
 			console.error(err);
 			throw err;
 		}
-		
 		
 		res.redirect('/admin/notice/list/'+page);
 	});

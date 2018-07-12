@@ -6,16 +6,43 @@ var connection = mysql_dbc.init();
 
 
 var Notice = {
-	count : function (callback) {
-		return connection.query('SELECT COUNT(*) AS CNT FROM NOTICE', callback);
+	count : function (category, word, callback) {
+		
+		let sql = "SELECT COUNT(*) AS CNT FROM NOTICE";
+		
+		if(word !== undefined){
+			switch(category){
+			case "title":
+				sql += " WHERE TITLE LIKE '%"+word+"%'";
+				break;
+			case "contents":
+				sql += " WHERE CONTENTS LIKE '%"+word+"%'";
+				break;
+			}
+		}
+		
+		return connection.query(sql, callback);
 	}, 
 	
-	list : function(begin, size, callback) {
+	list : function(category, word, begin, size, callback) {
+		
+		let sql = "";
+		
+		if(word !== undefined){
+			switch(category){
+			case "title":
+				sql += "WHERE TITLE LIKE '%"+word+"%' ";
+				break;
+			case "contents":
+				sql += "WHERE CONTENTS LIKE '%"+word+"%' ";
+				break;
+			}
+		}
 		
 		return connection.query("SELECT SEQ, TITLE, " +
 				"DATE_FORMAT(START_DATE, '%Y-%m-%d') AS START_DATE, " +
 				"DATE_FORMAT(END_DATE, '%Y-%m-%d') AS END_DATE " +
-				"FROM NOTICE " +
+				"FROM NOTICE " + sql +
 				"ORDER BY SEQ DESC " +
 				"LIMIT ?, ?", [begin, size], callback);
 	}, 
@@ -28,9 +55,19 @@ var Notice = {
 	read : function (seq, callback) {
 		return connection.query("SELECT SEQ, TITLE, CONTENTS, " +
 				"DATE_FORMAT(START_DATE, '%Y-%m-%d') AS START_DATE, " +
-				"DATE_FORMAT(END_DATE, '%Y-%m-%d') AS END_DATE " +
+				"DATE_FORMAT(END_DATE, '%Y-%m-%d') AS END_DATE, " +
+				"DATE_FORMAT(DATE, '%Y-%m-%d') AS DATE " +
 				"FROM NOTICE " +
 				"WHERE SEQ = ?", [seq], callback);
+	},
+	
+	upDown : function (seq, callback) {
+		let pre = Number(seq)-1;
+		let next = Number(seq)+1;
+		
+		return connection.query("SELECT SEQ,TITLE, DATE_FORMAT(DATE, '%Y-%m-%d') AS DATE FROM NOTICE WHERE SEQ = ? " +
+				"UNION " +
+				"SELECT SEQ, TITLE, DATE_FORMAT(DATE, '%Y-%m-%d') AS DATE FROM NOTICE WHERE SEQ = ?", [pre, next], callback);
 	},
 	
 	update : function (params, callback) {

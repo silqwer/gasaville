@@ -9,25 +9,38 @@
   <body>
   	<input type="hidden" id="examPage" name="examPage" value="<%=page%>">
     <form id="commonForm" name="commonForm"></form>
-    <h1><%= title %></h1>
-   	<table>
-   		<tr>
-   			<th>고사장 이름</th>
-   			<th>학교 이름</th>
-   			<th>주소</th>		
-   		</tr>
-   		<tr>
-   			<td><input type="text" id="examName" name="examName" value=""></td>
-   			<td><input type="text" id="examSch" name="examSch" value=""></td>
-   			<td><input type="text" id="examAddr" name="examAddr" value=""></td>
+    
+    <div class="main-wrap">
+   		<% include ../common/menu %>
+   	
+   		<div class="content-wrap write">
+   			<h2><%= title %></h2>
    			
-   		</tr>
-   	</table>
-   
-    <div>
-    	<button id="insertBtn">등록</button>
-    	<button id="cancelBtn">취소</button>
-    </div>
+   			<div class="view">
+   				<table class="tbody-tbl">
+			   		<tr>
+			   			<th>고사장 이름</th>
+			   			<th>학교 이름</th>
+			   			<th>주소</th>		
+			   		</tr>
+			   		<tr>
+			   			<td><input type="text" id="examName" class="listmodi" name="examName" value=""></td>
+			   			<td><input type="text" id="examSch" class="listmodi" name="examSch" value=""></td>
+			   			<td><input type="text" id="examAddr" class="listmodi" name="examAddr" value=""></td>
+			   		</tr>
+			   	</table>
+   				
+   				<div class="btnfr">
+						<button type="button" id="insertBtn" class="mbtn skybtn">등록</button>
+						<button type="button" id="cancelBtn" class="mbtn whitebtn">목록</button>
+					</div>
+   				
+   			</div>
+   		
+   		</div>
+   		
+   	</div>
+   		
   </body>
  
   <script src='/adm/js/exam.js'></script>

@@ -2,71 +2,61 @@
 <html>
   <head>
     <title><%= title %></title>
-    <script src='/common/js/jquery/jquery.min.js'></script>
-    <script src='/adm/js/gosa.js'></script>
-    <link rel='stylesheet' href='/adm/css/style.css' />
-    <style type="text/css">
-    .schedule{
-    min-width: 100px;
-    min-height: 300px;
-    background-color: aliceblue;
-    width: 120px;
-    float: left;
-    }
-    
-    .exam{
-    min-width: 100px;
-    min-height: 300px;
-    background-color: antiquewhite;
-    width: 120px;
-    float: left;
-    }
-   	
-   	.examClass{
-    background-color: cadetblue;
-    float: left;
-    border: 0.2px solid black;
-   	}
-    </style>
+    <% include ../common/head %>
   </head>
   <body>
   	<input type="hidden" id="examPage" name="examPage" value="<%=page%>">
   	<input type="hidden" id="selectedSchSeq" name="selectedSchSeq" value="<%=selected_schedule_seq%>">
   	<input type="hidden" id="selectedSchName" name="selectedSchName" value="<%=selected_schedul_name%>">
     <form id="commonForm" name="commonForm"></form>
-    <h1><%= title %></h1>
-    <h1><%= selected_schedul_name %></h1>
-   	<div class="schedule">
-   		<% for(let i=0; i<schedule.length; ++i){ %>
-   			<% if(schedule[i].CHECKED === "checked"){ %>
-   				<input type="radio" name="schName" class="schName" value="<%=schedule[i].SEQ%>" checked="<%=schedule[i].CHECKED%>"><%=schedule[i].NAME%><br>
-   			<% } else { %>
-   				<input type="radio" name="schName" class="schName" value="<%=schedule[i].SEQ%>"><%=schedule[i].NAME%><br>	
-   			<% } %>
-   		<% } %>
-   	</div>
-   	<div class="exam">
-   		<% for(let i=0; i<exam.length; ++i){ %>
-   			<% if(exam[i].CHECKED === "checked"){ %>
-   				<input type="checkbox" name="examName" class="examName" value="<%=exam[i].SEQ%>" checked="<%=exam[i].CHECKED%>"><%=exam[i].NAME%><br>  			
-   			<% } else { %>
-   				<input type="checkbox" name="examName" class="examName" value="<%=exam[i].SEQ%>"><%=exam[i].NAME%><br>  			
-   			<% } %>
-   		<% } %>
-   	</div>
-   	
-   	<div class="examClass">
-   		<% for(let i=0; i<exam.length; ++i){ %>
-   		<input type="number" id="examClass_<%=exam[i].SEQ%>" class="examClass"  min="1" max="5" value="<%=exam[i].CLASS%>"><br>
-   		<% } %>
-   	</div>
-   
-    <div>
-    	<button id="updateBtn">수정</button>
-    	<button id="deleteBtn">삭제</button>
-    	<button id="cancelBtn">취소</button>
+    <div class="main-wrap">
+    	<% include ../common/menu %>
+    	<div class="content-wrap">
+    		<h2><%= title %></h2>
+    		
+    		<div class="tablist">
+					<ul class="monthlist">
+			  		<li class="chk">
+		  				<input type="radio" name="schName" class="schName" id="schName" value="<%=schedule.SCHEDULE_SEQ%>" checked="checked">
+		  				<label for="schName"><%=schedule.SCHEDULE_NAME%></label>
+	  				</li>
+					</ul>
+					
+					<form id="tab1">
+						<fieldset>
+							<ul>
+								<% for(let i=0; i<exam.length; ++i){ %>
+					   			<% if(exam[i].CHECKED === "checked"){ %>
+					   				<li>
+											<span>
+												<input type="checkbox" name="examName" id="examName<%=i%>" class="examName" value="<%=exam[i].SEQ%>" checked="<%=exam[i].CHECKED%>">
+												<label for="examName<%=i%>"><%=exam[i].NAME%></label>
+												<label for="schoolName<%=i%>"><%=exam[i].SCHOOL%></label>
+											</span>
+											<input type="number" id="examClass_<%=exam[i].SEQ%>" class="examClass"  min="1" max="5" value="<%=exam[i].CLASS%>"><br>
+										</li>
+					   			<% } else { %>
+					   				<li>
+											<span>
+												<input type="checkbox" name="examName" id="examName<%=i%>" class="examName" value="<%=exam[i].SEQ%>">
+												<label for="examName<%=i%>"><%=exam[i].NAME%></label>
+												<label for="schoolName<%=i%>"><%=exam[i].SCHOOL%></label>
+											</span>
+											<input type="number" id="examClass_<%=exam[i].SEQ%>" class="examClass"  min="1" max="5" value="<%=exam[i].CLASS%>"><br>
+										</li> 			
+					   			<% } %>
+					   		<% } %>
+			   			</ul>
+						</fieldset>
+					</form>
+				</div>
+    		<div class="btnfr">
+					<button type="button" id="updateBtn" class="mbtn skybtn">수정</button>
+					<button type="button" id="deleteBtn" class="mbtn redbtn">삭제</button>
+					<button type="button" id="cancelBtn"  class="mbtn whitebtn">목록</button>
+				</div>   
+    	</div>
     </div>
   </body>
- 
   <script src='/adm/js/periods.js'></script>
 </html>

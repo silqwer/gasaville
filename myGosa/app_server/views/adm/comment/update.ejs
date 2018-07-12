@@ -8,36 +8,48 @@
   </head>
   <body>
   	<input type="hidden" id="commentPage" name="commentPage" value="<%=page%>">
-	<input type="hidden" id="commentSeq" name="commentSeq" value="<%=comment.SEQ%>">
+		<input type="hidden" id="commentSeq" name="commentSeq" value="<%=comment.SEQ%>">
     <form id="commonForm" name="commonForm"></form>
-    <h1><%= title %></h1>
-   	<table>
-   		<tr>
-   			<th>번호</th>
-   			<th>고사장</th>
-   			<th>학교</th>
-   			<th>기수</th>
-   			<th>소속</th>
-   			<th>직책</th>
-   			<th>이름</th>
-   			<th>내용</th>		
-   		</tr>
-   		<tr>
-   			<td><%=number%></td>
-   			<td><%=comment.EXAM%></td>
-   			<td><%=comment.SCHOOL%></td>
-   			<td><%=comment.SCHEDULE%></td>
-   			<td><%=comment.DEPARTMENT%></td>
-   			<td><%=comment.POSITION%></td>
-   			<td><%=comment.NAME%></td>
-   			<td><%=comment.CONTENTS%></td>
-   		</tr>
-   	</table>
-   
-    <div>
-    	<button id="deleteBtn">삭제</button>
-    	<button id="cancelBtn">취소</button>
+    
+    <div class="main-wrap">
+    	<% include ../common/menu %>
+    	
+    	<div class="content-wrap write">
+    		<h2><%= title %></h2>
+    		<div class="view">
+    			<table class="tbody-tbl">
+			   		<tr>
+			   			<th>번호</th>
+			   			<th>고사장</th>
+			   			<th>학교</th>
+			   			<th>기수</th>
+			   			<th>소속</th>
+			   			<th>직책</th>
+			   			<th>이름</th>
+			   			<th>내용</th>		
+			   		</tr>
+			   		<tr>
+			   			<td><%=number%></td>
+			   			<td><%=comment.EXAM%></td>
+			   			<td><%=comment.SCHOOL%></td>
+			   			<td><%=comment.SCHEDULE%></td>
+			   			<td><%=comment.DEPARTMENT%></td>
+			   			<td><%=comment.POSITION%></td>
+			   			<td><%=comment.NAME%></td>
+			   			<td><%=comment.CONTENTS%></td>
+			   		</tr>
+			   	</table>
+			   	
+			   	<div class="btnfr">
+			    	<button class="mbtn redbtn" id="deleteBtn">삭제</button>
+			    	<button class="mbtn whitebtn" id="cancelBtn">취소</button>
+			    </div>
+			   	
+    		</div>
+    	</div>
+    	
     </div>
+    
   </body>
  
   <script src='/adm/js/comment.js'></script>

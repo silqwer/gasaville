@@ -1,0 +1,76 @@
+<link rel="stylesheet" type="text/css" href="/hana2/css/css.css">
+<script type="text/javascript" src="/common/js/jquery/jquery.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+<input type="hidden" id="page" name="page" value="<%=page%>">
+
+<div class="fl ml15">
+	<h4>신청 이력</h4>
+	<% if(result == true && list.length > 0) { %>
+	<table class="thead-tbl">
+		<colgroup>
+			<col style="width:12%">
+			<col style="width:25%">
+			<col style="width:30%">
+			<col style="width:12%">
+			<col style="width:17%">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>번호</th>
+		   		<th>기수</th>
+		   		<th>소속</th>
+		   		<th>직위</th>
+		   		<th>이름</th>		
+				</tr>
+			</thead>
+			<tbody>
+				<% for(let i=0; i<list.length; ++i){ %>
+		   	<tr style="text-align: center;">
+					<td><%=max-i%></td>
+					<td><%=list[i].SCHEDULE_NAME%></td>
+					<td><%=list[i].DEPARTMENT%></td>
+					<td><%=list[i].POSITION%></td>
+					<td><%=list[i].USER_NAME%></td>
+				</tr>
+		   	<% } %>
+			</tbody>
+		</table>
+	<% }else{ %>
+	<div>게시물이 없습니다.</div>
+	<% } %>
+	
+	<% if(result == true) { %>
+	<div class="pagenum">
+		<ul>
+			<% if(page > pageSize) { %>
+			<li><a href="/gsv/exam/history/list/1"><i class="fa fa-angle-double-left"></i></a></li>
+			<li><a href="/gsv/exam/history/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+			<% } %>
+			
+			<% for (var i=startPage; i<=endPage; i++) { %>
+        	<% if (i== page) {%>
+        	<li class="on"><%=i%></li>
+        	<% } else { %>
+        	<li><a href="/gsv/exam/history/list/<%=i%>"><%=i%></a></li>
+       		<% } %>
+      		<% } %>
+			
+			<% if (endPage < totalPage) { %>
+			<li><a href="/gsv/exam/history/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
+			<li><a href="/gsv/exam/history/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+      	    <% } %>
+		</ul>
+	</div>
+<% } %>
+</div>
+
+<script type="text/javascript" src="/gsv/js/main.js"></script>
+
+
+
+
+
+
+			 	
+			 

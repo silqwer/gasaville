@@ -1,66 +1,69 @@
 <div class="main-wrap">
-	<div class="clock-wrap">
-		<p>신청은 10시 시작입니다.</p>
-		<div class="hour-wrap">
-			<div class="digit-top">
-				<div class="front">00</div>
-				<div class="back">00</div>
-			</div>
-			<div class="digit-bottom">
-				<div class="front">00</div>
-			</div>
-		</div>
-		<div class="min-wrap">
-			<div class="digit-top">
-				<div class="front">00</div>
-				<div class="back">00</div>
-			</div>
-			<div class="digit-bottom">
-				<div class="front">00</div>
-			</div>
-		</div>
-		<div class="sec-wrap">
-			<div class="digit-top">
-				<div class="front">00</div>
-				<div class="back">00</div>
-			</div>
-			<div class="digit-bottom">
-				<div class="front">00</div>
-			</div>
-		</div>
-	</div>
-
 	<div class="content-wrap">
-		<div class="menu">
-			<ul class="fl">
-				<li class="on"><a href="/gsv/main">신청</a></li>
-				<li><a href="#">신청관리</a></li>
-				<li><a href="#">지인관리</a></li>
-			</ul>
-			<ul class="fr">
-				 <li><a href="/gsv/notice/list">공지사항</a></li>
-				 <li><a href="/gsv/logout">로그아웃</a></li>
+		<h2>공지사항</h2>
+		<div>
+			<input type="hidden" id="page" name="page" value="<%=page%>">
+			<table class="thead-tbl">
+				<colgroup>
+					<col style="width:12%">
+					<col style="width:*%">
+					<col style="width:20%">
+					<col style="width:20%">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>날짜</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="notitop">
+						<td><span class="fcred">[공지]</span></td>
+						<td><a href="">긴급 공지! 필독요망!</a></td>
+						<td class="tac">관리자1</td>
+						<td class="tac">2018.12.12</td>
+					</tr>
+					<% for(let i=0; i<list.length; ++i) { %>
+					<tr>
+						<td><%=max-i%></td>
+						<td><a href="/gsv/notice/list/<%=page%>/<%=list[i].SEQ%>"><%=list[i].TITLE%></a></td>
+						<td class="tac"><%=list[i].NAME%></td>
+						<td class="tac"><%=list[i].START_DATE%></td>
+					</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+	
+		<div class="pagenum">
+			<ul>
+				<% if(page > pageSize) { %>
+				<li><a href="/gsv/notice/list/1"><i class="fa fa-angle-double-left"></i></a></li>
+				<li><a href="/gsv/notice/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+				<% } %>
+				
+				<% for (var i=startPage; i<=endPage; i++) { %>
+      	<% if (i== page) {%>
+	        	<li class="on"><%=i%></li>
+	        	<% } else { %>
+	        	<li><a href="/gsv/notice/list/<%=i%>"><%=i%></a></li>
+      		<% } %>
+     		<% } %>
+				
+				<% if (endPage < totalPage) { %>
+				<li><a href="/gsv/notice/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
+				<li><a href="/gsv/notice/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+   	    <% } %>
 			</ul>
 		</div>
-		<div class="content">
-			<div class="notice-title">
-				<h1>공지사항</h1>
-			</div>
-			<table>
-				<tr>
-					<th>no</th>
-					<th>title</th>
-					<th>author</th>
-					<th>date</th>
-				</tr>
-			<% for(let listCount=0; listCount<list.length; listCount++) { %>
-			<tr>
-				<td><%=listCount+1%></td>
-				<td><a href="/gsv/notice/view/<%=list[listCount].SEQ%>"><%=list[listCount].TITLE%></a></td>
-				<td><%=list[listCount].NAME%></td>
-				<td><%=list[listCount].DATE%></td>
-			<tr>
-			<% } %>
-		</div>
+		
+	</div>
+	
+	<div class="top">
+		<a href="#">
+			<span>TOP</span>
+		</a>
 	</div>
 </div>

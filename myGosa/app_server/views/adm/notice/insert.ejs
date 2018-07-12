@@ -3,25 +3,75 @@
   <head>
     <title><%= title %></title>
     <script src='/common/js/jquery/jquery.min.js'></script>
+    <script src="/common/js/tui-editor/tui-code-snippet.min.js"></script>
+    <script src="/common/js/tui-editor/markdown-it.min.js"></script>
+    <script src="/common/js/tui-editor/toMark.min.js"></script>
+    <script src="/common/js/tui-editor/codemirror.js"></script>
+    <script src="/common/js/tui-editor/highlight.pack.min.js"></script>
+    <script src="/common/js/tui-editor/squire.js"></script>
+    <script src="/common/js/tui-editor/tui-editor-Editor-all.min.js"></script>
+    
     <script src='/adm/js/gosa.js'></script>
     <link rel='stylesheet' href='/adm/css/style.css' />
+    <link rel="stylesheet" href="/common/css/tui-editor/codemirror.css">
+    <link rel="stylesheet" href="/common/css/tui-editor/github.css">
+    <link rel="stylesheet" href="/common/css/tui-editor/tui-editor.min.css">
+    <link rel="stylesheet" href="/common/css/tui-editor/tui-editor-contents.min.css">
   </head>
   <body>
-  	<input type="hidden" id="noticePage" name="noticePage" value="<%=page%>">
-    <form id="commonForm" name="commonForm"></form>
-   	<label>시작일</label>
-   	<input type="date" id="startDate"><br>
-   	<label>종료일</label>
-   	<input type="date" id="endDate"><br>
-   	<label>제목</label>
-   	<input type="text" id="title"><br>
-   	<label>내용</label>
-   	<input type="text" id="contents"><br>
-   	
-    <div>
-    	<button id="insertBtn">등록</button>
-    	<button id="cancelBtn">취소</button>
-    </div>
+   	<input type="hidden" id="page" name="page" value="<%=page%>">
+   	<form id="commonForm" name="commonForm"></form>
+  	
+  	<div class="main-wrap">
+  		<% include ../common/menu %>
+  	
+  		<div class="content-wrap write">
+  			<h2><%= title %></h2>
+  			
+  			<div class="view">
+  				<div class="title">
+						<form action="#" method="post">
+							<fieldset>
+								<legend>제목</legend>
+								<input type="text" id="title" placeholder="제목을 입력해 주세요.">
+							</fieldset>
+						</form>
+						<ul>
+							<li><span class="mr10">시작일</span><input type="date" id="startDate"></li>
+							<li><span class="mr10">종료일</span><input type="date" id="endDate"></li>
+						</ul>
+					</div>
+					
+					<div class="text">
+						<div class="img">
+							<a href="#">파일첨부<i class="fa fa-folder-open ml5"></i></a>
+							<p>마우스로 파일을 끌어오세요.</p>
+						</div>
+						<form action="#" method="post" class="mt15">
+							<fieldset>
+								<legend>내용</legend>
+								<div id="contents"></div>
+								<script>
+								    $('#contents').tuiEditor({
+								        initialEditType: 'markdown',
+								        previewStyle: 'vertical',
+								        height: 300
+								    });
+								</script>
+							</fieldset>
+						</form>
+					</div>
+					
+					<div class="btnfr">
+						<button type="button" class="mbtn whitebtn" id="cancelBtn">목록</button>
+						<button type="button" class="mbtn skybtn" id="insertBtn">등록</button>
+					</div>
+  			</div>
+  			
+  		</div>
+  		
+  	</div>
+  
   </body>
  
   <script src='/adm/js/notice.js'></script>

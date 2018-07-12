@@ -1,3 +1,69 @@
+<script src="/common/js/tui-editor/markdown-it.min.js"></script>
+<script src="/common/js/tui-editor/tui-code-snippet.min.js"></script>
+<script src="/common/js/tui-editor/highlight.pack.min.js"></script>
+<script src="/common/js/tui-editor/tui-editor-Viewer.min.js"></script>
+<link rel="stylesheet" href="/common/css/tui-editor/github.css">
+<link rel="stylesheet" href="/common/css/tui-editor/tui-editor-contents.min.css">
 
-view.ejs
+<div class="main-wrap">
+	<div class="content-wrap">
+		<h2>공지사항</h2>
+		<div class="view">
+			<div class="title">
+				<p><%=content[0].TITLE%></p>
+				<ul>
+					<li><span class="mr10">작성자</span><%=content[0].NAME%></li>
+					<li><span class="mr10">등록일</span><%=content[0].DATE%></li>
+				</ul>
+			</div>
+			<div class="text">
+				<div id="contents"></div>
+				<input type="hidden" id="contentCnts" name="contentCnts" value="<%=content[0].CONTENTS%>">
+				<script type="text/javascript">
+					$('#contents').tuiEditor({
+			    	initialEditType: 'markdown',
+			      previewStyle: 'vertical',
+			      height: 300, 
+			      viewOnly:true
+			    });
+					
+					 $('#contents').tuiEditor('setValue', $('#contentCnts').val());
+				</script>
+				
+			</div>
+			<div class="list">
+				<ul>
+					<% if(nearRecord.length === 2) {%>
+					<li class="pre">
+						<p><i class="fa fa-caret-up mr10"></i>이전글</p>
+						<a href="/gsv/notice/list/<%=list%>/<%=nearRecord[0].SEQ%>"><%=nearRecord[0].TITLE%></a>
+						<span><%=nearRecord[0].DATE%></span>
+					</li>
+					<li class="next">
+						<p><i class="fa fa-caret-down mr10"></i>다음글</p>
+						<a href="/gsv/notice/list/<%=list%>/<%=nearRecord[1].SEQ%>"><%=nearRecord[1].TITLE%></a>
+						<span><%=nearRecord[1].DATE%></span>
+					</li>
+					<% } else { %>
+					<li class="pre">
+						<p><i class="fa fa-caret-up mr10"></i>이전글</p>
+						<a href="/gsv/notice/list/<%=list%>/<%=nearRecord[0].SEQ%>"><%=nearRecord[0].TITLE%></a>
+						<span><%=nearRecord[0].DATE%></span>
+					</li>
+					<% } %>
+				</ul>
+				<a class="mbtn whitebtn mt20 fr" href="/gsv/notice/list/<%=list%>">
+					<button type="button" class="mbtn whitebtn">목록</button>
+				</a>
+				
+			</div>
+		</div>
+	</div>
+	
+	<div class="top">
+		<a href="#">
+			<span>TOP</span>
+		</a>
+	</div>
+</div>
 

@@ -18,9 +18,9 @@ module.exports = (function(){
 		real: {
 			host: 'localhost',
 			port: '3306',
-			user: 'root',
-			password: '',
-			database: ''
+			user: 'user_swprodg',
+			password: 'xpzmqlf',
+			database: 'gosa'
 		},
 		
 		//개발 디비

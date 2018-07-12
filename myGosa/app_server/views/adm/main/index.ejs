@@ -2,20 +2,12 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/adm/css/style.css' />
+    <% include ../common/head %>
   </head>
   <body>
-  	<% include ../common/header %>
+  	<div class="main-wrap">
   	<% include ../common/menu %>
-    <h1><%= title %></h1>
-    <p>SEQ : <%= userInfo.SEQ %></p>
-    <p>ID : <%= userInfo.ID %></p>
-    <p>NAME : <%= userInfo.NAME %></p>
-    <p>PASSWORD : <%= userInfo.PASSWORD %></p>
-    <p>CELLPHONE : <%= userInfo.CELLPHONE %></p>
-    <p>DEPARTMENT : <%= userInfo.DEPARTMENT_SEQ %></p>
-    <p>POSITION : <%= userInfo.POSITION_SEQ %></p>
-    <% include ../common/footer %>
+  	</div>
   </body>
 </html>
 

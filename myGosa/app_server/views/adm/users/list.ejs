@@ -2,67 +2,91 @@
 <html>
   <head>
     <title><%= title %></title>
-    <script src='/common/js/jquery/jquery.min.js'></script>
-    <script src='/adm/js/gosa.js'></script>
-    <link rel='stylesheet' href='/adm/css/style.css' />
+    <% include ../common/head %>
   </head>
   <body>
-  	<input type="hidden" id="userPage" name="userPage" value="<%=page%>">
-    <h1><%= title %></h1>
-    
-    <div>
-    	<select>
-		  <option value="id" selected="selected">아이디</option>
-		  <option value="name">이름</option>
-		  <option value="department">소속</option>
-		  <option value="position">직책</option>
-		  <option value="cellphone">연락처</option>
-		</select>
-    </div>
-    <div><input type="text" id="searchWord" name="searchWord"><button>검색</button></div>
-   	<table>
-   		<tr>
-   			<th>번호</th>
-   			<th>아이디</th>
-   			<th>이름</th>
-   			<th>소속</th>
-			<th>직급</th>
-   			<th>연락처</th>
-   		</tr>
-   		<% for(let i=0; i<list.length; ++i){ %>
-   		<tr>
-   			<td><%=max-i%></td>
-   			<td><%=list[i].ID%></td>
-   			<td><a href="/admin/users/update/<%=page%>/<%=list[i].SEQ%>"><%=list[i].NAME%></a></td>
-   			<td><%=list[i].DEPARTMENT%></td>
-   			<td><%=list[i].POSITION%></td>
-   			<td><%=list[i].CELLPHONE%></td>
-   		</tr>
-   		<% } %>
-   	</table>
-   	<div>
-      <% if(page > pageSize) { %>
-        [ <a href="/admin/users/list/1" style="text-decoration: none;">◀◀</a> ]
-        [ <a href="/admin/users/list/<%=startPage-1%>" style="text-decoration: none;">◀</a> ]
-      <% } %>
-     
-      &nbsp;&nbsp;
-      <% for (var i=startPage; i<=endPage; i++) { %>
-        <% if (i== page) {%>
-          [ <%=i%> ]
-        <% } else { %>
-          [ <a href="/admin/users/list/<%=i%>" style="text-decoration: none;"><%=i%></a> ]
-        <% } %>
-      <% } %>
-      &nbsp;&nbsp;
-      <% if (endPage < totalPage) { %>
-        [ <a href="/admin/users/list/<%=endPage+1%>" style="text-decoration: none;">▶</a> ]
-        [ <a href="/admin/users/list/<%=totalPage%>" style="text-decoration: none;">▶▶</a> ]
-      <% } %>
-      
-    </div>
-    <div>
-    <button id="addBtn">등록</button>
+  	<input type="hidden" id="page" name="page" value="<%=page%>">
+  	<input type="hidden" id="category" name="category" value="<%=category%>">
+    <div class="main-wrap">
+    	<% include ../common/menu %>
+  		<div class="content-wrap">
+    	<h2><%= title %></h2>
+    	
+    	<div class="search">
+				<select id="searchCategory">
+				  <option value="id">아이디</option>
+				  <option value="name">이름</option>
+				  <option value="department">소속</option>
+				  <option value="position">직책</option>
+				  <option value="cellphone">연락처</option>
+				</select>
+				<form id="searchForm" method="get">
+				<fieldset>
+					<legend>검색</legend>
+					<input type="text" id="searchWord" value="<%=word%>">
+					<input type="button" value="검색" class="sbtn" data-url="/admin/users/list" id="searchBtn">
+				</fieldset>
+				</form>
+			</div>
+    	
+    	<div>
+					<table class="thead-tbl">
+						<colgroup>
+							<col style="width:10%">
+							<col style="width:10%">
+							<col style="width:10%">
+							<col style="width:15%">
+							<col style="width:10%">
+							<col style="width:*%">
+						</colgroup>
+						<thead>
+							<tr>
+				   			<th>번호</th>
+				   			<th>아이디</th>
+				   			<th>이름</th>
+				   			<th>소속</th>
+								<th>직급</th>
+				   			<th>연락처</th>
+				   		</tr>
+						</thead>
+						<tbody>
+							<% for(let i=0; i<list.length; ++i){ %>
+				   		<tr>
+				   			<td><%=max-i%></td>
+				   			<td><%=list[i].ID%></td>
+				   			<td><a href="/admin/users/update/<%=page%>/<%=list[i].SEQ%>"><%=list[i].NAME%></a></td>
+				   			<td><%=list[i].DEPARTMENT%></td>
+				   			<td><%=list[i].POSITION%></td>
+				   			<td><%=list[i].CELLPHONE%></td>
+				   		</tr>
+				   		<% } %>
+						</tbody>
+					</table>
+				</div>
+				
+				<div class="pagenum">
+					<ul>
+						<% if(page > pageSize) { %>
+						<li><a href="/admin/users/list/1/<%=search%>"><i class="fa fa-angle-double-left"></i></a></li>
+						<li><a href="/admin/users/list/<%=startPage-1%>/<%=search%>"><i class="fa fa-angle-left"></i></a></li>
+						<% } %>
+						
+						<% for (var i=startPage; i<=endPage; i++) { %>
+			        	<% if (i== page) {%>
+			        	<li class="on"><%=i%></li>
+			        	<% } else { %>
+			        	<li><a href="/admin/users/list/<%=i%>/<%=search%>"><%=i%></a></li>
+			       		<% } %>
+			      		<% } %>
+						
+						<% if (endPage < totalPage) { %>
+						<li><a href="/admin/users/list/<%=endPage+1%>/<%=search%>"><i class="fa fa-angle-right"></i></a></li>
+						<li><a href="/admin/users/list/<%=totalPage%>/<%=search%>"><i class="fa fa-angle-double-right"></i></a></li>
+			      	    <% } %>
+					</ul>
+				</div>
+				
+    	</div>
     </div>
   </body>
   <script src='/adm/js/users.js'></script>

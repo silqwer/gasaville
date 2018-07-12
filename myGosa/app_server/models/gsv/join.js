@@ -14,10 +14,11 @@ var mysql_dbc = require('../../mysql/db_con.js')();
 var connection = mysql_dbc.init();
 
 var Join = {
+	
 	insert : function (params, callback) {
-		return connection.query("INSERT INTO USER (ID, NAME, PASSWORD, CELLPHONE, DEPARTMENT_SEQ, POSITION_SEQ)" +
-				"VALUES (?, ?, ?, ?, ?, ?)", 
-				[params.id, params.name, params.password, params.cellphone, params.department_seq, params.position_seq], callback);
+		return connection.query("INSERT INTO USER (ID, NAME, PASSWORD, CELLPHONE, DEPARTMENT_SEQ, POSITION_SEQ) " +
+			"VALUES (?, ?, ?, ?, ?, ?)", 
+			[params.id, params.name, params.password, params.cellphone, params.department_seq, params.position_seq], callback);
 	},
 
 	departmentList : function (callback) {
@@ -26,6 +27,10 @@ var Join = {
 
 	positionList : function (callback) {
 		return connection.query("SELECT * FROM POSITION", callback);
+	},
+
+	availableId : function (params, callback) {
+		return connection.query("SELECT IFNULL(MAX(SEQ), 0) AS SEQ FROM USER WHERE ID=?", params.id, callback);
 	}
 };
 

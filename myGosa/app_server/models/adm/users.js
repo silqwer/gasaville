@@ -14,27 +14,67 @@ var Users = {
 		return connection.query('SELECT * FROM USER WHERE SEQ = ?',[seq], callback);
 	},
 	
-	insert : function (Users, callback) {
-		return connection.query('INSERT INTO USER (ID, PASSWORD) VALUES(?,?)', [Users.ID, Users.PASSWORD], callback);
-	}, 
-	
 	login : function (Users, callback) {
 		return connection.query('SELECT * FROM USER WHERE ID = ? AND PASSWORD =? ', [Users.id, Users.password], callback);
 	}, 
 	
-	findById : function (id, callback) {
-		return connection.query('SELECT * FROM USER WHERE ID = ?', [id], callback);
-	}, 
-	
-	count : function (callback) {
-		return connection.query('SELECT COUNT(*) AS CNT FROM USER', callback);
-	}, 
-	
-	list : function(begin, size, callback) {
-		return connection.query("SELECT SEQ, ID, NAME, " +
+	count : function (category, word, callback) {
+		let sql = "SELECT COUNT(*) AS CNT FROM (SELECT SEQ, ID, NAME, " +
 				"(SELECT NAME FROM DEPARTMENT WHERE SEQ = U.DEPARTMENT_SEQ) AS DEPARTMENT, " +
 				"(SELECT NAME FROM POSITION WHERE SEQ = U.POSITION_SEQ) AS POSITION , " +
-				"CELLPHONE FROM USER U " +
+				"CELLPHONE FROM USER U) M ";
+		
+		if(word !== undefined){
+			switch(category){
+			case "id":
+				sql += " WHERE ID LIKE '%"+word+"%'";
+				break;
+			case "name":
+				sql += " WHERE NAME LIKE '%"+word+"%'";
+				break;
+			case "department":
+				sql += " WHERE DEPARTMENT LIKE '%"+word+"%'";
+				break;	
+			case "position":
+				sql += " WHERE POSITION LIKE '%"+word+"%'";
+				break;	
+			case "cellphone":
+				sql += " WHERE CELLPHONE LIKE '%"+word+"%'";
+				break;	
+			}
+		}
+	
+		return connection.query(sql, callback);
+	}, 
+	
+	list : function(category, word,  begin, size, callback) {
+		
+		let sql = "";
+		
+		if(word !== undefined){
+			switch(category){
+			case "id":
+				sql += "WHERE ID LIKE '%"+word+"%' ";
+				break;
+			case "name":
+				sql += "WHERE NAME LIKE '%"+word+"%' ";
+				break;
+			case "department":
+				sql += "WHERE DEPARTMENT LIKE '%"+word+"%' ";
+				break;	
+			case "position":
+				sql += "WHERE POSITION LIKE '%"+word+"%' ";
+				break;	
+			case "cellphone":
+				sql += "WHERE CELLPHONE LIKE '%"+word+"%' ";
+				break;	
+			}
+		}
+		
+		return connection.query("SELECT * FROM (SELECT SEQ, ID, NAME, " +
+				"(SELECT NAME FROM DEPARTMENT WHERE SEQ = U.DEPARTMENT_SEQ) AS DEPARTMENT, " +
+				"(SELECT NAME FROM POSITION WHERE SEQ = U.POSITION_SEQ) AS POSITION , " +
+				"CELLPHONE FROM USER U) M " + sql + 
 				"ORDER BY SEQ DESC " +
 				"LIMIT ?, ?", [begin, size], callback);
 	},

@@ -6,12 +6,23 @@
  *
  */
 var join =  require('../../models/gsv/join');
+//var bcrypt = require('bcrypt-nodejs');
 
 module.exports.insert = (req, res) => {
+	let passwd = null;
+	bcrypt.hash(req.body.password, null, null, function(err, hash) {
+		if(err) {
+			console.log(err);
+			throw err;
+		}
+
+		passwd = hash;
+	});
+
 	let param = {
 		id 			: req.body.id,
 		name 		: req.body.name,
-		password 	: req.body.password,
+		password 	: passwd,
 		cellphone 	: req.body.cellphone,
 		department_seq : req.body.department_seq,
 		position_seq : req.body.position_seq
@@ -51,6 +62,30 @@ module.exports.main = (req, res) => {
 				department : department,
 				position: rows
 			});
+		});
+	});
+};
+
+module.exports.availableId = (req, res) => {
+	let result = null;
+	let param = {
+		id: req.body.inputId
+	};
+
+	join.availableId(param, function(err, rows) {
+		if(err) {
+			console.log(err);
+			throw err;
+		}
+
+		if(rows[0].SEQ===0) {
+			result = true;
+		} else {
+			result = false;
+		}
+
+		res.send({
+			'result': result
 		});
 	});
 };

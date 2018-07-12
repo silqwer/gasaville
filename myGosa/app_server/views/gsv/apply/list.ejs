@@ -1,0 +1,74 @@
+
+<input type="hidden" id="page" name="page" value="<%=page%>">
+
+ <div class="main-wrap">
+	<div class="content-wrap">
+	<h2><%= title %></h2>
+  
+ 	<div>
+		<table class="thead-tbl">
+			<colgroup>
+				<col style="width:10%">
+				<col style="width:10%">
+				<col style="width:*%">
+				<col style="width:10%">
+				<col style="width:15%">
+				<col style="width:10%">
+				<col style="width:10%">
+				<col style="width:15%">
+			</colgroup>
+			<thead>
+				<tr>
+	   			<th>번호</th>
+	   			<th>고사장</th>
+	   			<th>학교</th>
+	   			<th>반</th>
+					<th>소속</th>
+	   			<th>직책</th>
+	   			<th>이름</th>	
+	   			<th>연락처</th>	
+	   		</tr>
+			</thead>
+			<tbody>
+				<% for(let i=0; i<list.length; ++i){ %>
+	   		<tr>
+	   			<td><%=max-i%></td>
+	   			<td><%=list[i].EXAM_NAME%></td>
+	   			<td><%=list[i].EXAM_SCHOOL%></td>
+	   			<td><%=list[i].CLASS%></td>
+	   			<td><%=list[i].DEPARTMENT%></td>
+	   			<td><%=list[i].POSITION%></td>
+	   			<td><%=list[i].USER_NAME%></td>
+	   			<td><%=list[i].CELLPHONE%></td>
+	   		</tr>
+	   		<% } %>
+			</tbody>
+		</table>
+	</div>
+	
+		<% if(result == true) { %>
+		<div class="pagenum">
+		<ul>
+			<% if(page > pageSize) { %>
+			<li><a href="/gsv/apply/list/1"><i class="fa fa-angle-double-left"></i></a></li>
+			<li><a href="/gsv/apply/list/<%=startPage-1%>"><i class="fa fa-angle-left"></i></a></li>
+			<% } %>
+			
+			<% for (var i=startPage; i<=endPage; i++) { %>
+        	<% if (i== page) {%>
+        	<li class="on"><%=i%></li>
+        	<% } else { %>
+        	<li><a href="/gsv/apply/list/<%=i%>"><%=i%></a></li>
+       		<% } %>
+      		<% } %>
+			
+			<% if (endPage < totalPage) { %>
+			<li><a href="/gsv/apply/list/<%=endPage+1%>"><i class="fa fa-angle-right"></i></a></li>
+			<li><a href="/gsv/apply/list/<%=totalPage%>"><i class="fa fa-angle-double-right"></i></a></li>
+      <% } %>
+		</ul>
+	</div>
+	<% } %>
+	
+	</div>
+ </div>

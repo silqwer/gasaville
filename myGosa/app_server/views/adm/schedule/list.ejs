@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-  	<meta charset='utf-8' />
-    <title><%= title %></title>
-    <link href='/common/css/style.css' rel='stylesheet' />
-    <link href='/adm/css/layerPopup.css' rel='stylesheet' />
-    <link href='/common/css/fullcalendar/fullcalendar.css' rel='stylesheet' />
+ 	<meta charset='utf-8' />
+  <title><%= title %></title>
+  <% include ../common/head %>
+
+  <link href='/common/css/layerPopup.css' rel='stylesheet' />
+   <link href='/common/css/fullcalendar/fullcalendar.css' rel='stylesheet' />
 	<link href='/common/css/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-	
 	<script src='/common/js/fullcalendar/moment.min.js'></script>
-	<script src='/common/js/jquery/jquery.min.js'></script>
 	<script src='/common/js/fullcalendar/fullcalendar.min.js'></script>
-	
-	<script src='/adm/js/gosa.js'></script>
-	
+
 	<script>
 		  $(document).ready(function() {
 			var today = new Date();
@@ -50,7 +47,8 @@
 		          window.gosa.addLayerPopup('#addLayer');
 		      
 		      	  //신청일 초기화 
-		          $('#applyDate').val(date.format('YYYY-MM-DD')+'T10:00');
+		          $('#applyDate').val(date.format('YYYY-MM-DD'));
+		          $('#attendanceDate').val(date.format('YYYY-MM-DD'));
 		      },
 		      editable: false,
 		      eventLimit: true, // allow "more" link when too many events
@@ -59,7 +57,7 @@
 		    	  <% for(let i=0; i< list.length; ++i){%>
 		    	  {
 		    		  	seq : '<%=list[i].SEQ%>',
-						title : '<%=list[i].NAME%>', 
+								title : '<%=list[i].NAME%>', 
 	    	  			start : '<%=list[i].APPLY_DATE%>',
 	    	  			attendance_date : '<%=list[i].ATTENDANCE_DATE%>'
 		    	  },
@@ -85,57 +83,54 @@
 	</style>
   </head>
   <body>
-  	<% include ../common/header %>
+  	<form id="commonForm" name="commonForm"></form>
+  	<div class="main-wrap">
   	<% include ../common/menu %>
-    <h1><%= title %></h1>
-    <form id="commonForm" name="commonForm"></form>
-    <div id='calendar'></div>
+  		<div class="content-wrap">
+  			<h2><%= title %></h2>
+  			<div id='calendar'></div>
+  		</div>
+  	</div>
     
     <!-- 임시등록 -->
     <div class="dim-layer">
 	    <div class="dimBg"></div>
 	    <div id="addLayer" class="pop-layer">
+	        <a href="#" class="btn-layerClose popClose">X</a>
 	        <div class="pop-container">
 	            <div class="pop-conts">
-	                
-	                <a href="#" class="btn-layerClose">X</a>
-	                
 	                <div>
-	                	<div>일정등록</div>
-	                	<div>일정명: <input type="text" id="scheduleName"> </div>
-	                	<div>신청일: <input type="datetime-local" id="applyDate" readonly="readonly"> </div>
-	                	<div>출석일: <input type="datetime-local" id="attendanceDate"> </div>
-	                </div>
-	                <a href="#" id="addBtn" class="btn-layerClose">등록</a>
+	                	<p>출석고사 일정등록<p>
+	                	<div class="iptDiv" style="margin-top: 20px;"><label for="scheduleName">일정명:</label><input type="text" id="scheduleName"> </div>
+	                	<div class="iptDiv"><label for="applyDate">신청일:</label><input type="date" id="applyDate" readonly="readonly"> </div>
+	                	<div class="iptDiv"><label for="attendanceDate">출석일:</label><input type="date" id="attendanceDate"></div>
+	               	</div>
 	            </div>
 	        </div>
+	        <a href="#" id="addBtn" class="btn-layerClose">등록</a>
 	    </div>
 	</div>
 	
 	<div class="dim-layer2">
 	    <div class="dimBg"></div>
 	    <div id="updateLayer" class="pop-layer">
-	        <div class="pop-container">
-	            <div class="pop-conts">
-	                
-	                <a href="#" class="btn-layerClose">X</a>
-	                
-	                <div>
-	                	<div>일정수정 </div>
-	                	<div>일정명: <input type="text" id="udtSchName"></div>
-	                	<div>신청일: <input type="date" id="udtAppDate"></div>
-	                	<div>출석일: <input type="date" id="udtAttDate"></div>
-	                	<input type="hidden" id="udtSchSeq">
-	                	<input type="hidden" id="udtSchId">
-	                </div>
-	                <a href="#" id="updateBtn" class="btn-layerClose">수정</a>
-	                <a href="#" id="deleteBtn" class="btn-layerClose">삭제</a>
-	            </div>
+	      <a href="#" class="btn-layerClose popClose">X</a>
+        <div class="pop-container">
+	        <div class="pop-conts">
+	          <div>
+	          	<p>출석고사 일정수정<p>
+	          	<div class="iptDiv" style="margin-top: 20px;">일정명: <input type="text" id="udtSchName"></div>
+	          	<div class="iptDiv">신청일: <input type="date" id="udtAppDate"></div>
+	          	<div class="iptDiv">출석일: <input type="date" id="udtAttDate"></div>
+	          	<input type="hidden" id="udtSchSeq">
+	          	<input type="hidden" id="udtSchId">
+	          </div>
 	        </div>
+        </div>
+        <a href="#" id="updateBtn" class="btn-layerClose">수정</a>
+        <a href="#" id="deleteBtn" class="btn-layerClose">삭제</a>
 	    </div>
 	</div>
-	
-    <% include ../common/footer %>
   </body>
   <script src='/adm/js/schedule.js'></script>
 </html>

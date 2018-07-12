@@ -7,11 +7,18 @@ var connection = mysql_dbc.init();
 
 var Periods = {
 	
-	list : function(begin, size, callback) {
-		return connection.query("SELECT " +
+	list : function(word, begin, size, callback) {
+		
+		let sql = "";
+		
+		if(word !== undefined){
+			sql += " WHERE SCHEDULE_NAME LIKE '%"+word+"%' ";
+		}
+		
+		return connection.query("SELECT * FROM (SELECT " +
 				"DISTINCT  (SELECT NAME FROM SCHEDULE WHERE SEQ = P.SCHEDULE_SEQ) AS SCHEDULE_NAME, " +
 				"SCHEDULE_SEQ " +
-				"FROM PERIOD P ORDER BY SCHEDULE_SEQ DESC " +
+				"FROM PERIOD P ORDER BY SCHEDULE_SEQ DESC) S " + sql +
 				"LIMIT ?, ?", [begin, size], callback);
 	},
 	
@@ -41,23 +48,41 @@ var Periods = {
 		return connection.query("SELECT DISTINCT " +
 				"E.SEQ AS SEQ, " +
 				"E.NAME AS NAME, " +
+				"E.SCHOOL AS SCHOOL, " +
 				"(SELECT IF((SELECT DISTINCT P.SCHEDULE_SEQ  FROM PERIOD P WHERE P.EXAM_SEQ = E.SEQ AND P.SCHEDULE_SEQ = ?) IS NULL, '', 'checked')) AS CHECKED, " + 
-				"(SELECT COUNT(C.CLASS) FROM PERIOD C WHERE C.EXAM_SEQ = D.EXAM_SEQ) AS CLASS " + 
+				"(SELECT COUNT(P.CLASS) FROM PERIOD P WHERE P.SCHEDULE_SEQ = D.SCHEDULE_SEQ AND P.EXAM_SEQ = D.EXAM_SEQ) AS CLASS " + 
 				"FROM EXAM E LEFT JOIN PERIOD D " +
-				"ON E.SEQ = D.EXAM_SEQ ORDER BY NAME ASC", [seq, seq], callback);
+				"ON E.SEQ = D.EXAM_SEQ " +
+				"AND D.SCHEDULE_SEQ = ?" +
+				"ORDER BY NAME ASC", [seq, seq], callback);
 	}, 
 	
 	countApply : function (seq, callback) {
 		return connection.query('SELECT COUNT(*) AS CNT FROM APPLY WHERE SCHEDULE_SEQ = ?',[seq], callback);
 	}, 
 	
-	count : function (callback) {
-		return connection.query('SELECT COUNT(*) AS CNT FROM PERIOD', callback);
+	count : function (word, callback) {
+		
+		let sql = "SELECT COUNT(*) AS CNT FROM (SELECT " +
+				"DISTINCT  (SELECT NAME FROM SCHEDULE WHERE SEQ = P.SCHEDULE_SEQ) AS SCHEDULE_NAME, " +
+				"SCHEDULE_SEQ " +
+				"FROM PERIOD P ORDER BY SCHEDULE_SEQ DESC) S";
+		
+		if(word !== undefined){
+			sql += " WHERE SCHEDULE_NAME LIKE '%"+word+"%' ";
+		}
+		
+		return connection.query(sql, callback);
 	},
 	
-	insert : function (params, callback) {
-		return connection.query("INSERT INTO PERIOD (SCHEDULE_SEQ, EXAM_SEQ, CLASS)" +
-				"VALUES (?, ?, ?)", [params.schSeq, params.examSeq, params.examClass], callback);
+	insert : function (params, callback) {                                
+		return connection.query("INSERT INTO PERIOD (SCHEDULE_SEQ, EXAM_SEQ, CLASS_NUM, CLASS)" +
+				"VALUES (?, ?, ?, ?)", [params.schSeq, params.examSeq, params.examNum, params.examClass], callback);
+	}, 
+	
+	insertExam : function (params, callback) {
+		return connection.query("INSERT INTO EXAM (NAME, SCHOOL, ADDR)" +
+				"VALUES (?, ?, ?)", [params.name, params.school, params.addr], callback);
 	}, 
 	
 	read : function (seq, callback) {
@@ -65,6 +90,14 @@ var Periods = {
 				"SEQ, NAME, SCHOOL, ADDR " +
 				"FROM EXAM " +
 				"WHERE SEQ = ?", [seq], callback);
+	}, 
+	
+	readSeq : function (params, callback) {
+		return connection.query("SELECT " +
+				"SEQ, NAME, SCHOOL, ADDR " +
+				"FROM EXAM " +
+				"WHERE NAME = ? " +
+				"AND SCHOOL = ? ", [params.regionName, params.schoolName], callback);
 	}, 
 	
 	delete : function (seq, callback ) {

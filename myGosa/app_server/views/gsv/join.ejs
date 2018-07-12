@@ -1,52 +1,54 @@
-<div class="title">
-	<h2>회원가입</h2>
-</div>
-<div class="container join">
+<div class="join">
 	<p class="notice">
 		<span class="bullet-red">공지</span>
 		아이디와 비밀번호는 그룹웨어와 동일하게 만드세요.
 	</p>
-	<form name="" action="" method="post">
+	<form name="joinForm" action="/gsv/join/insert" method="post" id="joinForm">
 		<div class="group">
-			<input type="text" id="userId" style="width:400px" required>
-			<span class="bar" style="width:400px"></span>
+			<input type="text" name="userId" id="userId" required>
+			<span class="bar"></span>
 			<label>아이디</label>
-			<p class="no">사용 불가능 합니다.</p>
-			<p class="yes">사용 가능합니다.</p>
+			<p class="no" id="statusNoId">사용 불가능 합니다.</p>
+			<p class="yes" id="statusYesId">사용 가능합니다.</p>
 		</div>
 		<div class="group">
-			<input type="password" style="width:400px" required>
-			<span class="bar" style="width:400px"></span>
+			<input type="textbox" name="userName" id="userName" required>
+			<span class="bar"></span>
+			<label>이름</label>
+		</div>
+		<div class="group">
+			<input type="password" name="userPw" id="userPw" required>
+			<span class="bar"></span>
 			<label>비밀번호</label>
 		</div>
 		<div class="group">
-			<input type="password" id="userPw" style="width:400px" required>
-			<span class="bar" style="width:400px"></span>
+			<input type="password" id="matchPw" required>
+			<span class="bar"></span>
 			<label>비밀번호 확인</label>
-			<p class="no">비밀번호를 다시 입력해 주세요.</p>
-			<p class="yes">확인완료</p>
+			<p class="no" id="statusNoPw">비밀번호를 다시 입력해 주세요.</p>
+			<p class="yes" id="statusYesPw">확인완료</p>
 		</div>
 		<div class="group">
-			<input type="number" style="width:400px" required>
-			<span class="bar" style="width:400px"></span>
+			<input type="textbox" name="phoneNumber" id="phoneNumber" required>
+			<span class="bar"></span>
 			<label>연락처</label>
 			<p class="noti">010-0000-0000 양식으로 해주세요.</p>
 		</div>
 		<div class="department">
-			<select class="select01">
-				<option selected>부서</option>
+			<select class="select01" name="department" id="department">
+				<option selected value="">부서</option>
 				<% for(let rCnt=0; rCnt<department.length; rCnt++) { %>
 				<option value="<%=department[rCnt].SEQ%>"><%=department[rCnt].NAME%></option>
 				<% } %>
 			</select>
-			<select class="select02">
-				<option selected>직급</option>
+			<select class="select02" name="position" id="position">
+				<option selected value="">직급</option>
 				<% for(let rCnt=0; rCnt<position.length; rCnt++) { %>
 				<option value="<%=position[rCnt].SEQ%>"><%=position[rCnt].NAME%></option>
 				<% } %>
 			</select>
 		</div>
-		<input type="button" value="회원가입" id="joinBtn" style="width:400px; height:50px" class="bigbtn sky">
+		<input type="button" value="회원가입" id="joinBtn" class="joinbtn">
 	</form>
 </div>
 

@@ -3,7 +3,6 @@
  */
 
 var schedule =  require('../../models/adm/schedule');
-var bcrypt = require('bcrypt-nodejs');
 
 module.exports.insert = (req, res) => {
 	
@@ -11,8 +10,8 @@ module.exports.insert = (req, res) => {
 	
 	let params = {
 			'name': req.body.NAME, 
-			'applyDate': req.body.APPLY_DATE.replace('T', ' '), 
-			'attendanceDate': req.body.ATTENDANCE_DATE.replace('T', ' ')
+			'applyDate': req.body.APPLY_DATE.concat(' 10:00:00'), 
+			'attendanceDate': req.body.ATTENDANCE_DATE.concat(' 12:30:00')
 	};
 	
 	schedule.insert(params, function(err, rows){
@@ -34,8 +33,8 @@ module.exports.update = (req, res) => {
 	let params = {
 			'seq':  req.body.SEQ,
 			'name': req.body.NAME, 
-			'applyDate': req.body.APPLY_DATE, 
-			'attendanceDate': req.body.ATTENDANCE_DATE
+			'applyDate': req.body.APPLY_DATE.concat(' 10:00:00'), 
+			'attendanceDate': req.body.ATTENDANCE_DATE.concat(' 12:30:00')
 	};
 	
 	schedule.update(params, function(err, rows){
