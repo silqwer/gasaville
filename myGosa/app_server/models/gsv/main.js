@@ -46,6 +46,7 @@ var Main = {
 			"	CASE"+
 			"	WHEN USER_SEQ = ? THEN 1"+
 			"	WHEN USER_SEQ != ? THEN 0"+
+			"   WHEN IFNULL(MAX(SEQ), 0) = 0 THEN 0"+
 			"	END AS STATUS "+
 			"FROM APPLY WHERE SCHEDULE_SEQ=?"
 		, [params.user, params.user, params.seq], callback);
