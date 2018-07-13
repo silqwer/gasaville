@@ -45,7 +45,7 @@ var Main = {
 			"SELECT "+
 			"	CASE"+
 			"	WHEN USER_SEQ = ? THEN 1"+
-			"	WHEN USER_SEQ != ? THEN 0"+
+			"	WHEN USER_SEQ != ? THEN 2"+
 			"   WHEN IFNULL(MAX(SEQ), 0) = 0 THEN 0"+
 			"	END AS STATUS "+
 			"FROM APPLY WHERE SCHEDULE_SEQ=?"
