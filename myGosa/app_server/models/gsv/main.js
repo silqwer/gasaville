@@ -48,8 +48,8 @@ var Main = {
 			"	WHEN USER_SEQ != ? THEN 2"+
 			"   WHEN IFNULL(MAX(SEQ), 0) = 0 THEN 0"+
 			"	END AS STATUS "+
-			"FROM APPLY WHERE SCHEDULE_SEQ=?"
-		, [params.user, params.user, params.seq], callback);
+			"FROM APPLY WHERE SCHEDULE_SEQ=? AND USER_SEQ = ?"
+		, [params.user, params.user, params.seq, params.user], callback);
 	},
 	isCorrectUserData : function(params, callback) {
 		return connection.query(
