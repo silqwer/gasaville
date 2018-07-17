@@ -34,6 +34,16 @@ var Main = {
 			"ORDER BY EXAM_NAME ASC, PERIOD_CLASS ASC "
 			,[params.user, params.schedule], callback);
 	},
+	
+	checkApply : function (params, callback){
+		return connection.query(
+				"SELECT COUNT(SEQ) AS CNT " +
+				"FROM APPLY " +
+				"WHERE SCHEDULE_SEQ = ? " +
+				"AND USER_SEQ = ?"
+			, [params.schedule, params.user], callback);
+	}, 
+	
 	possibleInsert : function(params, callback) {
 		/*
 		 * [result STATUS]
@@ -42,14 +52,17 @@ var Main = {
 		 * 0 - 데이터 없음.
 		 */
 		return connection.query(
-			"SELECT "+
-			"	CASE"+
-			"	WHEN USER_SEQ = ? THEN 1"+
-			"	WHEN USER_SEQ != ? THEN 2"+
-			"   WHEN IFNULL(MAX(SEQ), 0) = 0 THEN 0"+
-			"	END AS STATUS "+
-			"FROM APPLY WHERE SCHEDULE_SEQ=? AND USER_SEQ = ?"
-		, [params.user, params.user, params.seq, params.user], callback);
+			"SELECT " +
+			"CASE " +
+			"WHEN USER_SEQ = ? THEN 1 " +
+			"WHEN USER_SEQ != ? THEN 2 " +
+			"WHEN IFNULL(MAX(SEQ), 0) = 0 THEN 0 " +
+			"END AS STATUS " +
+			"FROM APPLY " +
+			"WHERE SCHEDULE_SEQ= ? " +
+			"AND PERIOD_SEQ = ? " +
+			"AND CLASS = ?"
+		, [params.user, params.user, params.schedule, params.period, params.class], callback);
 	},
 	isCorrectUserData : function(params, callback) {
 		return connection.query(

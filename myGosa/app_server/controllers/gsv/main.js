@@ -50,46 +50,59 @@ module.exports.main = (req, res) => {
 
 module.exports.insertApply = (req, res) => {
 	let userIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	
 	let params = {
-		'user' 	: req.user.SEQ,
-		'seq'	: req.body.schedule
+		'period': req.body.period,
+		'schedule': req.body.schedule,
+		'user': req.user.SEQ,
+		'class': req.body.class,
+		'ip': userIp
 	};
-
-	main.possibleInsert(params, function(err, rows) {
-
+	
+	main.checkApply(params, function(err, rows){
+		
 		if(err) {
 			console.log(err);
 			throw err;
 		}
 		
-		if(rows[0].STATUS === 0) {
-			let insertParam = {
-				period: req.body.period,
-				schedule: req.body.schedule,
-				user: req.user.SEQ,
-				class: req.body.class,
-				ip: userIp
-			};
-
-			main.insertApply(insertParam, function(err, rows) {
+		if(rows[0].CNT > 0) {
+			res.send({
+				result : false
+			});
+		}else{
+			console.log(2); 
+			main.possibleInsert(params, function(err, rows) {
 
 				if(err) {
 					console.log(err);
 					throw err;
 				}
+				
+				if(rows[0].STATUS === 0) {
 
-				res.send({
-					result : true
-				});
-			});
+					main.insertApply(params, function(err, rows) {
 
-		} else {
-		
-			res.send({
-				result : false
+						if(err) {
+							console.log(err);
+							throw err;
+						}
+
+						res.send({
+							result : true
+						});
+					});
+
+				} else {
+				
+					res.send({
+						result : false
+					});
+				}
 			});
 		}
 	});
+	
 };
 
 module.exports.deleteApply = (req, res) => {
