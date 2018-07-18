@@ -38,18 +38,31 @@
 		      selectable: true,
 		      selectHelper: true,
 		      eventClick: function(calEvent, jsEvent, view) { 	// 스케출 선택 이벤트
-		          $(this).css('border-color', 'red');
-		          window.gosa.updateLayerPopup('#updateLayer', calEvent);
+		      	$(this).css('border-color', 'red');
+		        window.gosa.updateLayerPopup('#updateLayer', calEvent);
 
 		      }, 
 		      dayClick: function(date, jsEvent, view) {	//날짜 선택 이벤트 
-		          // 팝업 레이어 
-		          window.gosa.addLayerPopup('#addLayer');
-		      
-		      	  //신청일 초기화 
-		          $('#applyDate').val(date.format('YYYY-MM-DD'));
-		          $('#attendanceDate').val(date.format('YYYY-MM-DD'));
+		    	  var t = new Date(today);
+			      if(t > date){
+			    	  //과거를 선택하면
+			    	  return;
+			      }
+		    	 	
+	    	  	// 팝업 레이어 
+	          window.gosa.addLayerPopup('#addLayer');
+	      
+	      	  //신청일 초기화 
+	          $('#applyDate').val(date.format('YYYY-MM-DD'));
+	          $('#attendanceDate').val(date.format('YYYY-MM-DD'));
 		      },
+		      dayRender: function (date, cell) {
+		    	  var t = new Date(today);
+	          
+	          if( t > date) {
+	            cell.css('background-color', 'lightgray');
+	          }
+	        },
 		      editable: false,
 		      eventLimit: true, // allow "more" link when too many events
 		      events: [
