@@ -44,8 +44,7 @@
 		      }, 
 		      dayClick: function(date, jsEvent, view) {	//날짜 선택 이벤트 
 		    	  var t = new Date(today);
-			      if(t > date){
-			    	  //과거를 선택하면
+			      if(t > date){	 
 			    	  return;
 			      }
 		    	 	
@@ -58,8 +57,7 @@
 		      },
 		      dayRender: function (date, cell) {
 		    	  var t = new Date(today);
-	          
-	          if( t > date) {
+	          if( t > date) {	//과거를 그레이 처리
 	            cell.css('background-color', 'lightgray');
 	          }
 	        },
@@ -68,11 +66,25 @@
 		      events: [
 		    	
 		    	  <% for(let i=0; i< list.length; ++i){%>
+		    	  
+		    	  //신청일 
 		    	  {
-		    		  	seq : '<%=list[i].SEQ%>',
-								title : '<%=list[i].NAME%>', 
-	    	  			start : '<%=list[i].APPLY_DATE%>',
-	    	  			attendance_date : '<%=list[i].ATTENDANCE_DATE%>'
+		    		  	'seq' : '<%=list[i].SEQ%>',													//사용자 추가 속성
+								'title' : '<%=list[i].NAME%>'.concat(' 신청일'), 
+	    	  			'start' : '<%=list[i].APPLY_DATE%>',
+	    	  			'apply_date' : '<%=list[i].APPLY_DATE%>',						//사용자 추가 속성
+	    	  			'attendance_date' : '<%=list[i].ATTENDANCE_DATE%>',	//사용자 추가 속성
+	    	  			'class': 'apply'
+		    	  },
+		    	  
+		    	  // 출석일 
+		    	  {
+		    		  	'seq' : '<%=list[i].SEQ%>',													
+								'title' : '<%=list[i].NAME%>'.concat(' 출석일'), 
+	    	  			'start' : '<%=list[i].ATTENDANCE_DATE%>',
+	    	  			'apply_date' : '<%=list[i].APPLY_DATE%>',						
+	    	  			'attendance_date' : '<%=list[i].ATTENDANCE_DATE%>',	
+	    	  			'class': 'attendance'
 		    	  },
 		    	  <% } %>
 		      ]
@@ -105,23 +117,23 @@
   		</div>
   	</div>
     
-    <!-- 임시등록 -->
-    <div class="dim-layer">
-	    <div class="dimBg"></div>
-	    <div id="addLayer" class="pop-layer">
-	        <a href="#" class="btn-layerClose popClose">X</a>
-	        <div class="pop-container">
-	            <div class="pop-conts">
-	                <div>
-	                	<p>출석고사 일정등록<p>
-	                	<div class="iptDiv" style="margin-top: 20px;"><label for="scheduleName">일정명:</label><input type="text" id="scheduleName"> </div>
-	                	<div class="iptDiv"><label for="applyDate">신청일:</label><input type="date" id="applyDate" readonly="readonly"> </div>
-	                	<div class="iptDiv"><label for="attendanceDate">출석일:</label><input type="date" id="attendanceDate"></div>
-	               	</div>
-	            </div>
-	        </div>
-	        <a href="#" id="addBtn" class="btn-layerClose">등록</a>
-	    </div>
+   <!-- 임시등록 -->
+   <div class="dim-layer">
+    <div class="dimBg"></div>
+    <div id="addLayer" class="pop-layer">
+        <a href="#" class="btn-layerClose popClose">X</a>
+        <div class="pop-container">
+            <div class="pop-conts">
+                <div>
+                	<p>출석고사 일정등록<p>
+                	<div class="iptDiv" style="margin-top: 20px;"><label for="scheduleName">일정명:</label><input type="text" id="scheduleName"> </div>
+                	<div class="iptDiv"><label for="applyDate">신청일:</label><input type="date" id="applyDate" readonly="readonly"> </div>
+                	<div class="iptDiv"><label for="attendanceDate">출석일:</label><input type="date" id="attendanceDate"></div>
+               	</div>
+            </div>
+        </div>
+        <a href="#" id="addBtn" class="btn-layerClose">등록</a>
+    </div>
 	</div>
 	
 	<div class="dim-layer2">
@@ -131,7 +143,7 @@
         <div class="pop-container">
 	        <div class="pop-conts">
 	          <div>
-	          	<p>출석고사 일정수정<p>
+	          	<p id="pop-title">출석고사 일정수정<p>
 	          	<div class="iptDiv" style="margin-top: 20px;">일정명: <input type="text" id="udtSchName"></div>
 	          	<div class="iptDiv">신청일: <input type="date" id="udtAppDate"></div>
 	          	<div class="iptDiv">출석일: <input type="date" id="udtAttDate"></div>

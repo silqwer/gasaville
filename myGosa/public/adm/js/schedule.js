@@ -8,15 +8,27 @@
 			let callback = (data) => {
 				
 				if(data.result){
-					let eventData = {
-							seq: data.seq,
-							title: $('#scheduleName').val(),
-							start: $('#applyDate').val(),
-							applyDate: $('#applyDate').val(),
-							attendanceDate: $('#attendanceDate').val()
-				    };
 					
-					$('#calendar').fullCalendar('renderEvent', eventData, true);
+					//신청일
+					let applyDate = {
+						'seq': data.seq,
+						'title': $('#scheduleName').val().concat(' 신청일'),	
+						'start': $('#applyDate').val(),			
+						'applyDate': $('#applyDate').val(),		
+						'attendanceDate': $('#attendanceDate').val()
+					};
+					
+					//출석일
+					let attendanceDate = {
+						'seq': data.seq,								
+						'title': $('#scheduleName').val().concat(' 출석일'),	
+						'start': $('#attendanceDate').val(),			
+						'applyDate': $('#applyDate').val(),		
+						'attendanceDate': $('#attendanceDate').val()
+					};
+					
+					$('#calendar').fullCalendar('renderEvent', applyDate, true);
+					$('#calendar').fullCalendar('renderEvent', attendanceDate, true);
 				}
 				
 				$('#calendar').fullCalendar('unselect');
@@ -60,23 +72,22 @@
 	});
 	
 	//일정 수정
-	$("#updateBtn").on({
+	/*$("#updateBtn").on({
 		click:function(){
 			
 			let callback = (data) => {
 				
 				if(data.result){
 					let eventDate = window.gosa.schedule;
-					eventDate.title = $('#udtSchName').val();
-					eventDate.start._i= $('#udtAppDate').val();
+					eventDate.title = $('#udtSchName').val().concat(' 신청일');
+					eventDate.start = moment($('#udtAppDate').val());
 					eventDate.attendance_date = $('#udtAttDate').val();
+					console.log(eventDate); 
 					
 					$('#calendar').fullCalendar('updateEvent', eventDate);
 					
 				}
-				
-				$('#calendar').fullCalendar('unselect');
-				
+		
 			}
 		
 			let comAjaxForm = window.gosa.createAjaxForm('commonForm');
@@ -89,6 +100,6 @@
 			comAjaxForm.ajax();
 			
 		}
-	});
+	});*/
 	
 })();
