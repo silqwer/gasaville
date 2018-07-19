@@ -21,6 +21,8 @@
 		listeners: {
 			apply: {
 				click : function() {
+					//클릭 이벤트 제거 
+					$(this).off('click');
 					
 					let callback = (data) => {
 						if(data.result){
@@ -28,6 +30,10 @@
 						}else{
 							alert('이미 신청을 했습니다.');
 						}
+						
+						//클릭 이벤트 적용 
+						$(this).on(Main.listeners.apply);
+						location.reload();
 					}
 					
 					let self = $(this)[0];
@@ -37,7 +43,6 @@
 						'class': $(self).data('class')
 					}, callback);
 
-					location.reload();
 				}
 			},
 			
