@@ -6,8 +6,6 @@ var schedule =  require('../../models/adm/schedule');
 
 module.exports.insert = (req, res) => {
 	
-	
-	
 	let params = {
 			'name': req.body.NAME, 
 			'applyDate': req.body.APPLY_DATE.concat(' 10:00:00'), 

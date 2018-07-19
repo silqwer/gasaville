@@ -137,16 +137,29 @@ const Gosa = (function(){
 		}
 		
 		updateLayerPopup(el, schedule) {
-			let $el = $(el);        //레이어의 id를 $el 변수에 저장
-			let isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
+			let $el = $(el);       									 //레이어의 id를 $el 변수에 저장
+			let isDim = $el.prev().hasClass('dimBg');   			//dimmed 레이어를 감지하기 위한 boolean 변수
+			let schName = '';
+			let self = this;
+			let isApply = false;
 			
-			$('#udtSchName').val(schedule.title);
-			$('#udtAppDate').val(schedule.start._i);
+			if(schedule.title.match('신청일')){
+				schName = schedule.title.replace(' 신청일', '');
+				$('#udtAppDate').prop('readonly', false);
+				$('#udtAttDate').prop('readonly', true);
+				isApply = true;
+			}else{
+				schName = schedule.title.replace(' 출석일', '');
+				$('#udtAppDate').prop('readonly', true);
+				$('#udtAttDate').prop('readonly', false);
+				isApply = false;
+			}
+			
+			$('#udtSchName').val(schName);
+			$('#udtAppDate').val(schedule.apply_date);
 			$('#udtAttDate').val(schedule.attendance_date);
 			$('#udtSchSeq').val(schedule.seq);
 			$('#udtSchId').val(schedule._id);
-			
-			this.schedule = schedule;
 		
 			isDim ? $('.dim-layer2').fadeIn() : $el.fadeIn();
 
@@ -174,12 +187,47 @@ const Gosa = (function(){
 	            $('.dim-layer2').fadeOut();
 	            return false;
 	        });
+	        
+	        $("#updateBtn").click(function(){
+	    			
+    			let callback = (data) => {
+    				
+    				if(!data.result){
+    					console.log('$("#updateBtn").click Error!');
+    					return; 
+    				}
+    				
+    				if(isApply){
+    					schedule.title = $('#udtSchName').val().concat(' 신청일');
+    					schedule.start = moment($('#udtAppDate').val());
+    				}else{
+    					schedule.title = $('#udtSchName').val().concat(' 출석일');
+    					schedule.start = moment($('#udtAttDate').val());
+    				}
+    				schedule.apply_date = $('#udtAppDate').val();
+					schedule.attendance_date = $('#udtAttDate').val();
+    				$('#calendar').fullCalendar('updateEvent', schedule);
+    				
+    			}
+    		
+    			let comAjaxForm = self.createAjaxForm('commonForm');
+    			comAjaxForm.setUrl('/admin/schedule/update');
+    			comAjaxForm.addParam("SEQ", $('#udtSchSeq').val());
+    			comAjaxForm.addParam("NAME", $('#udtSchName').val());
+    			comAjaxForm.addParam("APPLY_DATE", $('#udtAppDate').val());
+    			comAjaxForm.addParam("ATTENDANCE_DATE", $('#udtAttDate').val());
+    			comAjaxForm.setCallback(callback);
+    			comAjaxForm.ajax();
+	    		
+	    	});
 		}
 		
 		addLayerPopup (el) {
 		
 			let $el = $(el);        //레이어의 id를 $el 변수에 저장
 			let isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
+			$('#udtAttDate').prop('readonly', false);
+			
 			
 	        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
 	        
