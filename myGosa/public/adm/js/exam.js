@@ -9,7 +9,7 @@
 		}else{
 			$('#searchCategory option[value='+category+']').attr('selected', 'selected');
 		}
-		
+		window.gosa.tableRowspan('examTable');
 	});
 	
 	$("#addBtn").on({

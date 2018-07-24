@@ -14,21 +14,24 @@ var Exam = {
 		if(word !== undefined){
 			switch(category){
 			case "name":
-				sql += " WHERE NAME LIKE '%"+word+"%'";
+				sql += " WHERE E.NAME LIKE '%"+word+"%'";
 				break;
 			case "school":
-				sql += " WHERE SCHOOL LIKE '%"+word+"%'";
+				sql += " WHERE E.SCHOOL LIKE '%"+word+"%'";
 				break;
 			case "addr":
-				sql += " WHERE ADDR LIKE '%"+word+"%'";
+				sql += " WHERE E.ADDR LIKE '%"+word+"%'";
 				break;		
 			}
 		}
 		
 		return connection.query("SELECT " +
-				"SEQ, NAME, SCHOOL, ADDR " +
-				"FROM EXAM " + sql + 
-				"ORDER BY NAME ASC " +
+				"E.SEQ, E.NAME, E.SCHOOL, E.ADDR, C.CNT " +
+				"FROM EXAM E LEFT " +
+				"JOIN (SELECT COUNT(NAME) AS CNT, NAME " +
+				"FROM EXAM GROUP BY NAME) C " +
+				"ON E.NAME = C.NAME " + sql + 
+				"ORDER BY E.NAME ASC " +
 				"LIMIT ?, ?", [begin, size], callback);
 	}, 
 	
