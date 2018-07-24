@@ -28,7 +28,7 @@ var Exam = {
 		return connection.query("SELECT " +
 				"SEQ, NAME, SCHOOL, ADDR " +
 				"FROM EXAM " + sql + 
-				"ORDER BY SEQ DESC " +
+				"ORDER BY NAME ASC " +
 				"LIMIT ?, ?", [begin, size], callback);
 	}, 
 	
