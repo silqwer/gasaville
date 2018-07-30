@@ -170,7 +170,7 @@
 	});
 	
 	//엑셀 파일 업로드 
-	$('#sendBtn').on({
+	/*$('#sendBtn').on({
 		click:function(){
 			
 		//일정 선택 체크
@@ -211,7 +211,31 @@
 			}
 		});
 			
-			/*$('#commonForm').submit();*/
+			$('#commonForm').submit();
+		}
+	});*/
+	
+	//엑셀 파일 업로드 
+	$('#sendBtn').on({
+		click:function(){
+			
+			//일정 선택 체크
+			let scheduleSeq = $('#scheduleCategory').val();
+			if(scheduleSeq === "null"){
+				alert('일정을 선택해주세요.');
+				return ;
+			}
+			
+			//파일 확장자 체크
+			let thumbext = $('#excelFile').val(); 	//파일을 추가한 input 박스의 값
+			thumbext = thumbext.slice(thumbext.indexOf(".") + 1).toLowerCase(); //파일 확장자를 잘라내고, 비교를 위해 소문자로 만듬 
+
+			if(thumbext !== 'xlsx' && thumbext !== 'xls'){
+				alert('엑셀파일(.xlsx, .xls)파일만 등록 가능합니다.');
+				return ;
+			}
+			
+			$('#commonForm').submit();
 		}
 	});
 	
