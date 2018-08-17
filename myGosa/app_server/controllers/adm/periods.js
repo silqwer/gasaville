@@ -258,11 +258,13 @@ module.exports.uploadPage = (req, res) => {
 
 
 //기수 엑셀 등록 페이지 uploadPage
-module.exports.upload = (req, res) => {
+module.exports.upload = (req, res, next) => {
+	
 	
 	let upload = multer({
 		storage:storage, 				//저장경로
 		fileFilter : function(req, file, callback){		//파일필터
+			
 			if(['xls', 'xlsx'].indexOf(file.originalname.split('.')[file.originalname.split('.').length-1]) === -1){
 				return callback(new Error('Wrong extension type'));
 			}
@@ -287,34 +289,7 @@ module.exports.upload = (req, res) => {
 		}
 	}; 
 	
-	let resRender = function (req, res, msg, result) {
-		
-		//파일 삭제 
-		fileDelete(req.file.path); 
-		
-		if(result === false){
-			periods.schedule(function(err, rows){
-				let schedule = rows;
-				
-				//실패 페이지로 보내기 
-				res.render('adm/periods/false', { 
-					'title' : '기수 엑셀 등록 실패',
-					'userInfo' : req.user, 
-					'msg': msg,
-					'schedule':schedule
-				});
-			});
-			
-		}else{
-			// 완료 페이지 이동  
-			res.render('adm/periods/success', { 
-				'title' : '기수 엑셀 등록 성공',
-				'userInfo' : req.user, 
-				'msg': msg
-			});
-		}
-	}; 
-	
+
 	upload(req, res, function(err){
 		
 		if(err){
@@ -338,7 +313,7 @@ module.exports.upload = (req, res) => {
 		}else{
 			excelToJson = require('xls-to-json-lc'); 
 		}
-		
+
 		try{
 			excelToJson({
 				input: req.file.path, 			//엑셀 파일이 업로드 된 경로 
@@ -347,23 +322,13 @@ module.exports.upload = (req, res) => {
 			}, function(err, result){
 				
 				if(err){
-					//실패 페이지 이동 
-					//res.json({error_code:1, err_desc:err, data: null});
 					msg = '엑셀파일에 데이터가 없습니다. 확인 후 다시 시도해주세요.['+err+']';
-					
-					//결과 페이지로 
-					resRender(req, res, msg, false); 
-				}
-				
-				if(uploadResult === false){
-					return; 
+					return res.json({'result':false, 'msg':msg});
 				}
 				
 				let length = result.length; 
 				let scheduleSeq  = req.body.scheduleCategory;
-				
 				for(let i=0; i<length; ++i){
-					
 					let exam = {
 						'regionName': result[i].지역, 
 						'schoolName': result[i].학교,
@@ -372,44 +337,28 @@ module.exports.upload = (req, res) => {
 					
 					if(exam.regionName === undefined){
 						msg = '엑셀파일에 입력된 고사장의 지역 정보가 없습니다. 엑셀파일의 데이터를 확인 후 다시 시도해주세요.';
-						
-						//결과 페이지로 
-						resRender(req, res, msg, false); 
+						return res.json({'result':false, 'msg':msg});
 					}
 					
 					if(exam.schoolName === undefined){
 						msg = '엑셀파일에 입력된 고사장의 학교 정보가 없습니다. 엑셀파일의 데이터를 확인 후 다시 시도해주세요.';
-						
-						//결과 페이지로 
-						resRender(req, res, msg, false);
-						return; 
+						return res.json({'result':false, 'msg':msg});
 					}
 					
 					if(exam.classNum === undefined){
 						msg = '엑셀파일에 입력된 고사장의 반수 정보가 없습니다. 엑셀파일의 데이터를 확인 후 다시 시도해주세요.';
-						
-						//결과 페이지로 
-						resRender(req, res, msg, false); 
-						return; 
+						return res.json({'result':false, 'msg':msg});
 					}
 					
 					if(exam.classNum <= 0){
 						msg = '엑셀파일에 입력된 고사장의 반수 정보가 없습니다. 엑셀파일의 데이터를 확인 후 다시 시도해주세요.';
-						
-						//결과 페이지로 
-						resRender(req, res, msg, false); 
-						return; 
+						return res.json({'result':false, 'msg':msg});
 					}
 					
 					//시험장 읽어오기
 					periods.readSeq(exam, function(err, rows){
 						
 						if(rows[0] === undefined){
-							//msg = '엑셀파일에 입력된 고사장 정보가 시스템에 없습니다. 해당 고사장 정보를 시스템에 입력 후 다시 시도해주세요.';
-							
-							//결과 페이지로 
-							//resRender(req, res, msg, false); 
-							
 							//여기서 바로 고사장 정보를 입력하고 일정도 등록한다. 
 							let params = {
 									'name':exam.regionName,
@@ -419,8 +368,8 @@ module.exports.upload = (req, res) => {
 							
 							periods.insertExam(params ,function(err, rows){
 								if (err) {
-									console.error(err);
-									throw err;
+									msg = '엑셀파일에 데이터가 없습니다. 확인 후 다시 시도해주세요.['+err+']';
+									return res.json({'result':false, 'msg':msg});
 								}
 							})
 							
@@ -437,8 +386,8 @@ module.exports.upload = (req, res) => {
 									
 									periods.insert(period, function(err, rows){
 										if (err) {
-											console.error(err);
-											throw err;
+											msg = '엑셀파일에 데이터가 없습니다. 확인 후 다시 시도해주세요.['+err+']';
+											return res.json({'result':false, 'msg':msg});
 										}
 									});
 								}
@@ -457,8 +406,8 @@ module.exports.upload = (req, res) => {
 								
 								periods.insert(period, function(err, rows){
 									if (err) {
-										console.error(err);
-										throw err;
+										msg = '엑셀파일에 데이터가 없습니다. 확인 후 다시 시도해주세요.['+err+']';
+										return res.json({'result':false, 'msg':msg});
 									}
 								});
 							}
@@ -466,19 +415,16 @@ module.exports.upload = (req, res) => {
 					});
 				}
 				
-				resRender(req, res, msg, true); 
+				msg = '엑셀파일 등록을 완료했습니다.';
+				return res.json({'result':true, 'msg':msg});
 			});
 			
 		} catch (e) {
 			msg = '손상된 엑셀파일입니다. 엑셀파일을 다시 생성해서 시도해주세요.['+e+']';
-			
-			//결과 페이지로 
-			resRender(req, res, msg, false); 
-			return; 
+			return res.json({'result':false, 'msg':msg});
 		}
 	});
-	
-	
+
 };
 
 

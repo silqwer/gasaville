@@ -17,7 +17,7 @@
 			var dd = today.getDate();
 			var mm = today.getMonth()+1; //January is 0!
 			var yyyy = today.getFullYear();
-		
+			
 			if(dd<10) {
 			    dd='0'+dd
 			} 
@@ -43,17 +43,35 @@
 
 		      }, 
 		      dayClick: function(date, jsEvent, view) {	//날짜 선택 이벤트 
+		    	  
 		    	  var t = new Date(today);
-			      if(t > date){	 
+		     			
+		      	if(t > date){	 
 			    	  return;
 			      }
 		    	 	
-	    	  	// 팝업 레이어 
-	          window.gosa.addLayerPopup('#addLayer');
-	      
-	      	  //신청일 초기화 
-	          $('#applyDate').val(date.format('YYYY-MM-DD'));
-	          $('#attendanceDate').val(date.format('YYYY-MM-DD'));
+			      // 스케줄 등록 확인 
+						let callback = (data) => {
+							
+							if(data.result){
+								// 스케줄 등록  팝업 레이어 
+			          window.gosa.addLayerPopup('#addLayer');
+			      
+			      	  //신청일 초기화 
+			          $('#applyDate').val(date.format('YYYY-MM-DD'));
+			          $('#attendanceDate').val(date.format('YYYY-MM-DD'));
+							}else{
+								alert(data.thisMonth + '월에 '+data.cnt+'개의 등록된 스케줄이 있습니다.');
+							 	return; 
+							}
+							
+						}
+						
+						let comAjaxForm = window.gosa.createAjaxForm('commonForm');
+						comAjaxForm.setUrl('/admin/schedule/count');
+						comAjaxForm.setCallback(callback);
+						comAjaxForm.ajax(); 
+	    	 
 		      },
 		      dayRender: function (date, cell) {
 		    	  var t = new Date(today);

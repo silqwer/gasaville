@@ -39,7 +39,14 @@ var Schedule = {
 				"APPLY_DATE = ?, " +
 				"ATTENDANCE_DATE = ? " +
 				"WHERE SEQ = ?", [params.name, params.applyDate, params.attendanceDate, params.seq], callback);
-	} 
+	}, 
+	
+	count : function (callback){
+		return connection.query("SELECT COUNT(*) AS CNT, DATE_FORMAT(APPLY_DATE, '%Y-%m') AS THIS_MONTH " +
+				"FROM SCHEDULE " +
+				"GROUP BY APPLY_DATE " +
+				"HAVING DATE_FORMAT(APPLY_DATE, '%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m')", callback);
+	}
 
 	
 };
