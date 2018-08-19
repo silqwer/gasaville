@@ -643,3 +643,16 @@ h4{color:#000}
   float: left;
   margin-right: 2%;
 }
+.cheduleInfo{
+	float: left;
+}
+
+.excelbtn{
+	float: right;
+  background-color: black;
+  margin-right: 33px;
+  color: white;
+  font-weight: bold;
+  width: 180px;
+  height: 30px;
+}
