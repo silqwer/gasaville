@@ -8,7 +8,7 @@
 			<h3>출석고사일 : <%=schedule[0].ATTENDANCE_DATE%></h3>
 		</div>
 		<div>
-			<button type="button" class="mbtn excelbtn" >신청정보 엑셀파일 다운로드</button>
+			<button type="button" id="excDwBtn" data-name="<%=schedule[0].NAME%>" data-schedule="<%=schedule[0].SEQ%>" class="mbtn excelbtn" >신청정보 엑셀파일 다운로드</button>
 		</div>
 		
 		<table class="thead-tbl">

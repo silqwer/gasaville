@@ -38,7 +38,9 @@ module.exports = function (passport){
 	
 	router.post('/main/insertApply', ensureAuthenticated, ctrlMain.insertApply);	// 출석고사 신청정보 insert
 	router.post('/main/deleteApply', ensureAuthenticated, ctrlMain.deleteApply);	// 출석고사 신청정보 delete
-
+	router.post('/main/downloadApply', ensureAuthenticated, ctrlMain.downloadApply);	// 출석고사 신청정보 다운로드
+	router.get('/main/download/:fileName', ensureAuthenticated, ctrlMain.download);	// 출석고사 신청정보 다운로드
+	
 	router.get('/main/exam/history/list/:exam', ensureAuthenticated, ctrlExam.hstList);				// 출석고사 고사장 참여이력 목록
 	router.get('/main/exam/history/list/:exam/:page', ensureAuthenticated, ctrlExam.hstListPage);	// 출석고사 고사장 참여이력 목록
 	router.post('/main/exam/apply/history', ensureAuthenticated, ctrlExam.selectApply);				// 출석고사 고사장 참여이력 
@@ -49,6 +51,7 @@ module.exports = function (passport){
 	router.get('/main/exam/comment/list/:exam', ensureAuthenticated, ctrlExam.cmtList);				// 출석고사 고사장 후기 목록
 	router.get('/main/exam/comment/list/:exam/:start', ensureAuthenticated, ctrlExam.cmtListPage);	// 출석고사 고사장 후기 목록
 	router.post('/main/exam/comment/list/more', ensureAuthenticated, ctrlExam.cmtListMore);			// 출석고사 고사장 후기 목록 더가져오기
+	
 	
 	
 	//로그인 

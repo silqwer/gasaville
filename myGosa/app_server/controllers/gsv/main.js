@@ -71,7 +71,7 @@ module.exports.insertApply = (req, res) => {
 				result : false
 			});
 		}else{
-			console.log(2); 
+			
 			main.possibleInsert(params, function(err, rows) {
 
 				if(err) {
@@ -136,14 +136,131 @@ module.exports.deleteApply = (req, res) => {
 	});
 }
 
+
+module.exports.download = (req, res) => {
+	
+	let fn = req.params.fileName;
+	
+	res.download(process.cwd()+'\\public\\gsv\\excel\\'+fn);
+	
+};
+
+
+module.exports.downloadApply = (req, res) => {
+	const user = req.user.SEQ;
+	let scheduleSeq = req.body.schedule;
+	let name = req.body.name;
+	
+	main.applyList(scheduleSeq, function(err, rows) {
+		
+		if (err) {
+			console.error(err);
+			
+			res.send({
+				'result' : false, 
+				'msg': '엑셀 다운로드 실행 중 시스템 오류가 발생했습니다 ['+err+'] 시스템 관리자에게 문의하세요.'
+			});
+			
+			throw err;
+		}
+		
+		//엑셀 파일 작성 라이브러리 
+		
+		let xl = require('excel4node');
+		let wb = new xl.Workbook(); 
+		let ws = wb.addWorksheet('신청정보');
+		let titleStyle = wb.createStyle({
+			
+			alignment:{
+				horizontal : ['center'],
+				vertical : ['center']
+			},
+			
+			font: {
+				color: '#231815', 
+				size: 12
+			},
+			
+			border:{
+				left:{
+					style: 'thin', 
+					color: '#000000'
+				},
+				right:{
+					style: 'thin', 
+					color: '#000000'
+				},
+				top:{
+					style: 'thin', 
+					color: '#000000'
+				},
+				bottom:{
+					style: 'thin', 
+					color: '#000000'
+				}
+			}
+		});
+		let contentStyle = wb.createStyle({
+			
+			font: {
+				color: '#231815', 
+				size: 12
+			}, 
+			
+			border:{
+				left:{
+					style: 'thin', 
+					color: '#000000'
+				},
+				right:{
+					style: 'thin', 
+					color: '#000000'
+				},
+				top:{
+					style: 'thin', 
+					color: '#000000'
+				},
+				bottom:{
+					style: 'thin', 
+					color: '#000000'
+				}, 
+			} 
+		});
+		
+		ws.cell(1,1).string('고사장').style(titleStyle); 
+		ws.cell(1,2).string('학교').style(titleStyle); 
+		ws.cell(1,3).string('반').style(titleStyle); 
+		ws.cell(1,4).string('주소').style(titleStyle); 
+		ws.cell(1,5).string('부서').style(titleStyle); 
+		ws.cell(1,6).string('이름').style(titleStyle); 
+		ws.cell(1,7).string('신청한 반').style(titleStyle); 
+		
+		for(let i=0; i<rows.length; ++i){
+			let temp = rows[i]; 
+			let rowNm = i+2; 
+			ws.cell(rowNm,1).string(temp.EXAM_NAME).style(contentStyle); 
+			ws.cell(rowNm,2).string(temp.EXAM_SCHOOL).style(contentStyle); 
+			ws.cell(rowNm,3).string(temp.PERIOD_CLASS.toString()).style(contentStyle); 
+			ws.cell(rowNm,4).string(temp.EXAM_ADDR).style(contentStyle); 
+			ws.cell(rowNm,5).string(temp.DEPARTMENT_NAME).style(contentStyle); 
+			ws.cell(rowNm,6).string(temp.USER_NAME).style(contentStyle); 
+			ws.cell(rowNm,7).string(temp.APPLY_CLASS.toString()).style(contentStyle); 
+	
+		}
+		let fileNm = name+'.xlsx';
+
+		wb.write('public/gsv/excel/'+fileNm);	//파일 작성 
+		
+		res.send({
+			result : true, 
+			url : '/gsv/main/download/'+fileNm 
+		});
+
+	});
+};
+
+
 module.exports.logout = (req, res) => {						
 	req.logout();
 	res.redirect('/');
-}
-
-// module.exports.join = function(req, res){
-// 	res.render('gsv/index', { 
-// 		title : 'join',
-// 		contents : 'join'
-// 	} );
-// };
+};
