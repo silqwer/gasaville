@@ -147,7 +147,7 @@ module.exports.worst = (req, res) => {
 		
 		res.render('adm/apply/worst', { 
 			'list': rows,
-			'title': '가장 신청 마감이 늦은 고사장'
+			'title': '신청 마감이 가장 늦은 고사장'
 		}); 
 		
 	});

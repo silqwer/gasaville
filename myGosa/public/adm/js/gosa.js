@@ -260,6 +260,33 @@ const Gosa = (function(){
 	            return false;
 	        });
 		}
+		
+		tableRowspan (examTable) {
+			let mergeItem = '';
+			let mergeCount = 0;
+			let mergeRowNum = 0;
+		
+			$('tr', '#'+examTable).each(function(i, e){
+				if(i>1){
+					let item = $(e).find('td').eq(1).text();
+				
+					if(mergeItem != item){
+						mergeCount = 1;
+						mergeItem = item;
+						mergeRowNum = Number(i);
+					}else{
+						mergeCount = Number(mergeCount) + 1;
+						$('tr:eq('+mergeRowNum+')>td:first-child').attr('rowspan', mergeCount); // 첫번째 td rowspan
+						$('tr:eq('+mergeRowNum+')').find('td').eq(1).attr('rowspan', mergeCount); // 2번째 td rowspan
+						
+						$('td:first-child', e).remove(); // 첫번째 td remove
+						$('td:first-child', e).remove();
+						$('td:first-child', e).css('text-align','left');
+						
+					}
+				}
+			});
+		}
 
 	}
 	

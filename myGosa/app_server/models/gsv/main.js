@@ -35,6 +35,28 @@ var Main = {
 			,[params.user, params.schedule], callback);
 	},
 	
+	applyList : function (scheduleSeq, callback){
+		return connection.query(
+			"SELECT " +
+				"EXAM_NAME, " +
+				"EXAM_SCHOOL, " +
+				"PERIOD.CLASS AS PERIOD_CLASS, " +
+				"EXAM_ADDR, " +
+				"IF ( ISNULL(DEPARTMENT.NAME), '없음', DEPARTMENT.NAME ) AS DEPARTMENT_NAME, " +
+				"IF ( ISNULL(USER.NAME), '없음', USER.NAME ) AS USER_NAME, " +
+				"IF ( ISNULL(APPLY.CLASS), '없음', APPLY.CLASS ) AS APPLY_CLASS " +
+			"FROM " +
+			"(SELECT " +
+			"P.SEQ AS SEQ, P.EXAM_SEQ AS EXAM_SEQ, P.CLASS AS CLASS, E.NAME AS EXAM_NAME, E.SCHOOL AS EXAM_SCHOOL, E.ADDR AS EXAM_ADDR " +
+			"FROM PERIOD AS P LEFT JOIN EXAM AS E ON (P.EXAM_SEQ=E.SEQ) " +
+			"WHERE P.SCHEDULE_SEQ = ? ) AS PERIOD " +
+			"LEFT JOIN APPLY AS APPLY ON(PERIOD.SEQ=APPLY.PERIOD_SEQ AND PERIOD.CLASS=APPLY.CLASS) " +
+			"LEFT JOIN USER AS USER ON(APPLY.USER_SEQ=USER.SEQ) " +
+			"LEFT JOIN DEPARTMENT AS DEPARTMENT ON(USER.DEPARTMENT_SEQ=DEPARTMENT.SEQ) " +
+			"ORDER BY EXAM_NAME ASC, PERIOD.CLASS ASC "
+			,[scheduleSeq], callback);
+	}, 
+	
 	checkApply : function (params, callback){
 		return connection.query(
 				"SELECT COUNT(SEQ) AS CNT " +

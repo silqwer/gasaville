@@ -49,6 +49,8 @@ module.exports = function (passport){
 	router.post('/schedule/insert', ensureAuthenticated, ctrlSchedule.insert);		// 일정 등록 
 	router.post('/schedule/delete', ensureAuthenticated, ctrlSchedule.delete);		// 일정 삭제 
 	router.post('/schedule/update', ensureAuthenticated, ctrlSchedule.update);		// 일정 수정 
+	router.post('/schedule/count', ensureAuthenticated, ctrlSchedule.count);		// 일정 횟수
+	
 	
 	//고사장 관리 
 	router.get('/exam', ensureAuthenticated, ctrlExam.exam);									// 고사장 관리 
@@ -90,8 +92,6 @@ module.exports = function (passport){
 	
 	router.get('/periods/excel', ensureAuthenticated, ctrlPeriods.uploadPage);				// 기수 엑셀 등록 페이지
 	router.post('/periods/excel/upload', ensureAuthenticated, ctrlPeriods.upload);			// 기수 엑셀 등록 페이지
-	
-	
 	
 	//신청관리 
 	router.get('/apply', ensureAuthenticated, ctrlApply.apply);											// 신청 관리  

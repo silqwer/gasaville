@@ -25,7 +25,7 @@ module.exports.logout = (req, res) => {
 //관리자 홈
 module.exports.main = (req, res) => {
 	res.render('adm/main/index', { 
-		title : '관리자 로그인',
+		title : '메인',
 		userInfo : req.user				//세션 정보
 	}); 	
 };
