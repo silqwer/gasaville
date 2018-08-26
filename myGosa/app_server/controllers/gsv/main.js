@@ -140,6 +140,12 @@ module.exports.deleteApply = (req, res) => {
 module.exports.download = (req, res) => {
 	
 	let fn = req.params.fileName;
+	console.log('__dirname:'+__dirname); 
+	console.log('process.cwd():'+process.cwd()); 
+	
+	var path = require('path');
+	global.appRoot = path.resolve(__dirname);
+	console.log('appRoot:'+appRoot); 
 	
 	res.download(process.cwd()+'\\public\\gsv\\excel\\'+fn);
 	
