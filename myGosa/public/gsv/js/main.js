@@ -15,6 +15,7 @@
 			enter : $('.entBtn'),
 			table : $('#cmtList'), 
 			cmtInst : $('#cmtIstBtn'),
+			excDwBtn : $('#excDwBtn')
 		},
 
 		
@@ -45,6 +46,34 @@
 
 				}
 			},
+			
+			excelDownload : {
+				click : function(){
+					//클릭 이벤트 제거 
+					$(this).off('click');
+					
+					let callback = (data) => {
+						if(data.result){
+							
+							//파일다운로드 로직 
+							window.location.assign(data.url);
+							
+						}else{
+							alert(data.err);
+						}
+						
+						//클릭 이벤트 적용 
+						$(this).on(Main.listeners.excelDownload);
+					}
+					
+					let self = $(this)[0];
+					let isSuccess = Main.fn.connectAjax('/gsv/main/downloadApply', 'post', 'false', {
+						'schedule': $(self).data('schedule'), 
+						'name': $(self).data('name') 
+					}, callback);
+
+				}
+			}, 
 			
 			cancel: {
 				click : function() {
@@ -392,7 +421,7 @@
 			Main.triggers.delete.on(Main.listeners.delete);
 			Main.triggers.enter.on(Main.listeners.enter);
 			Main.triggers.cmtInst.on(Main.listeners.cmtInst);
-			//Main.triggers.table.on('click', '.wrtBtn', Main.listeners.write);
+			Main.triggers.excDwBtn.on(Main.listeners.excelDownload);
 			
 		}
 	};

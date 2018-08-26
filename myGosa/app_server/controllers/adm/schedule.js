@@ -4,6 +4,27 @@
 
 var schedule =  require('../../models/adm/schedule');
 
+module.exports.count = (req, res) => {
+	schedule.count(function(err, rows){
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		console.log(rows); 
+		if(rows.length === 0){
+			res.send({
+				'result': true
+			});
+		}else{
+			res.send({
+				'result': false, 
+				'cnt': rows[0].CNT,
+				'thisMonth' : rows[0].THIS_MONTH
+			});
+		}
+	});
+};
+
 module.exports.insert = (req, res) => {
 	
 	let params = {
