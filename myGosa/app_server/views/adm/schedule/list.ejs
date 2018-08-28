@@ -45,11 +45,12 @@
 		      dayClick: function(date, jsEvent, view) {	//날짜 선택 이벤트 
 		    	  
 		    	  var t = new Date(today);
-		     			
-		      	if(t > date){	 
+		    	  var d = new Date(date);
+		     		
+		      	if(t > d ){	 
 			    	  return;
 			      }
-		    	 	
+		     
 			      // 스케줄 등록 확인 
 						let callback = (data) => {
 							
@@ -66,9 +67,10 @@
 							}
 							
 						}
-						
+			
 						let comAjaxForm = window.gosa.createAjaxForm('commonForm');
 						comAjaxForm.setUrl('/admin/schedule/count');
+						comAjaxForm.addParam('APPLY_DATE', d);
 						comAjaxForm.setCallback(callback);
 						comAjaxForm.ajax(); 
 	    	 

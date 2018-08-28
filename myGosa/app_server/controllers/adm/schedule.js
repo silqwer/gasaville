@@ -5,12 +5,19 @@
 var schedule =  require('../../models/adm/schedule');
 
 module.exports.count = (req, res) => {
-	schedule.count(function(err, rows){
+	
+	let applyDate = req.body.APPLY_DATE;
+	let date = new Date(applyDate);
+	
+	let month = (date.getMonth()+1) < 10 ? '0'+(date.getMonth()+1) : (date.getMonth()+1);
+  	applyDate = date.getFullYear() + '-' + month;
+	
+	schedule.count(applyDate, function(err, rows){
 		if (err) {
 			console.error(err);
 			throw err;
 		}
-		console.log(rows); 
+	
 		if(rows.length === 0){
 			res.send({
 				'result': true
