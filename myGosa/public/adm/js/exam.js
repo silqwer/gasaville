@@ -24,13 +24,20 @@
 	$("#insertBtn").on({
 		click:function(){
 			
+			let data = {
+				'NAME': $('#examName'),
+				'SCHOOL': $('#examSch'),
+				'ADDR': $('#examAddr')
+			};
+			
 			//수정값 벨리데이션 체크 	
+			if(window.gosa.dataValidation(data)){
+				return; 
+			}
 			
 			let comSubmitForm = window.gosa.createSubmitForm('commonForm');
 			comSubmitForm.setUrl('/admin/exam/insert');
-			comSubmitForm.addParam("NAME", $('#examName').val());
-			comSubmitForm.addParam("SCHOOL", $('#examSch').val());
-			comSubmitForm.addParam("ADDR", $('#examAddr').val());
+			comSubmitForm.addParams(data);
 			comSubmitForm.submit();
 		}
 	});
@@ -40,15 +47,22 @@
 	$("#updateBtn").on({
 		click:function(){
 			
+			let data = {
+				'NAME': $('#examName'),
+				'SCHOOL': $('#examSch'),
+				'ADDR': $('#examAddr'), 
+				'PAGE': $('#examPage'), 
+				'SEQ': $('#examSeq')
+			};
+			
 			//수정값 벨리데이션 체크 	
+			if(window.gosa.dataValidation(data)){
+				return; 
+			} 	
 			
 			let comSubmitForm = window.gosa.createSubmitForm('commonForm');
 			comSubmitForm.setUrl('/admin/exam/update');
-			comSubmitForm.addParam("NAME", $('#examName').val());
-			comSubmitForm.addParam("SCHOOL", $('#examSch').val());
-			comSubmitForm.addParam("ADDR", $('#examAddr').val());
-			comSubmitForm.addParam("PAGE", $('#examPage').val());
-			comSubmitForm.addParam("SEQ", $('#examSeq').val());
+			comSubmitForm.addParams(data);
 			comSubmitForm.submit();
 		}
 	});

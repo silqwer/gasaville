@@ -45,6 +45,14 @@ const Gosa = (function(){
 					$('#'+this.formId).append(str);
 				}
 				
+				addParams (data) {
+					for(let key in data){
+						let value = data[key].val();
+						let str = '<input type="hidden" name="'+key+'" id="'+key+'" value="'+value+'">';
+						$('#'+this.formId).append(str);
+					}
+				}
+				
 				submit () {
 					let frm = $('#'+this.formId)[0];
 					frm.action = this.url;
@@ -90,6 +98,13 @@ const Gosa = (function(){
 					this.param = this.param + '&' + key + '=' + value;
 				}
 				
+				addParams (data) {
+					for(let key in data){
+						let value = data[key].val();
+						this.param = this.param + '&' + key + '=' + value;
+					}
+				}
+				
 				ajax () {
 					if(this.formId !== 'commonForm'){
 						this.param += '&' + $('#'+this.formId).serialize();
@@ -112,6 +127,21 @@ const Gosa = (function(){
 				}
 			}
 			return new ComAjax(comAjaxFormId);
+		}
+		
+		dataValidation (data) {
+			
+			for(let key in data){
+				let el = data[key];
+
+				if(this.isNull(el.val())){
+					let t = el.attr('title');
+					alert(t+'의 내용을 입력해주세요.');
+					return true;
+				}
+			}
+			
+			return false; 
 		}
 		
 		isNull (str) {
