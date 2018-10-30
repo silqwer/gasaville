@@ -69,11 +69,14 @@
 	
 	$("#deleteBtn").on({
 		click:function(){
-			let comSubmitForm = window.gosa.createSubmitForm('commonForm');
-			comSubmitForm.setUrl('/admin/exam/delete');
-			comSubmitForm.addParam("PAGE", $('#examPage').val());
-			comSubmitForm.addParam("SEQ", $('#examSeq').val());
-			comSubmitForm.submit();
+			if(confirm('삭제하시겠습니까?')){
+				let comSubmitForm = window.gosa.createSubmitForm('commonForm');
+				comSubmitForm.setUrl('/admin/exam/delete');
+				comSubmitForm.addParam("PAGE", $('#examPage').val());
+				comSubmitForm.addParam("SEQ", $('#examSeq').val());
+				comSubmitForm.submit();
+			}
+			
 		}
 	});
 	

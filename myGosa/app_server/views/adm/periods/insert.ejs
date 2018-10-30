@@ -11,7 +11,10 @@
      	<% include ../common/menu %>
      	<div class="content-wrap">
      		<h2><%= title %></h2>
+     		
      		<div class="tablist">
+     			<% if(schedule.length > 0){ %>
+     			<!-- 일정 리스트  -->
      			<ul class="monthlist">
 						<% for(let i=0; i<schedule.length; ++i){ %>
 			  			<% if(schedule[i].CHECKED === "checked"){ %>
@@ -43,13 +46,16 @@
 			   			</ul>
 						</fieldset>
 					</form>
-					
+     			
      		</div>
      	</div>
-				<div class="btnfr">     
-					<button type="button" id="insertBtn"  class="mbtn skybtn">등록</button>
-    			<button type="button" id="cancelBtn" class="mbtn whitebtn">취소</button>
-     		</div>
+			<div class="btnfr">     
+				<button type="button" id="insertBtn"  class="mbtn skybtn">등록</button>
+   			<button type="button" id="cancelBtn" class="mbtn whitebtn">취소</button>
+   		</div>
+    	<% }else{ %>
+  			<div>일정관리에서 일정을 등록해주세요</div>
+ 			<% } %>
      </div>
   </body>
  

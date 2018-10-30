@@ -186,7 +186,7 @@ module.exports.checkApply = (req, res) => {
 			throw err;
 		}
 		
-		if(rows[0] > 0){
+		if(rows[0].CNT > 0){
 			res.send({
 				'result': false, 
 				'seq': seq

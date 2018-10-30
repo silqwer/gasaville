@@ -6,6 +6,9 @@ var connection = mysql_dbc.init();
 
 
 var Apply = {
+	delete : function (seq, callback ) {
+		return connection.query("DELETE FROM APPLY WHERE SCHEDULE_SEQ = ?", [seq], callback);
+	},
 	
 	count : function (scheduleSeq, category, word, callback) {
 		
