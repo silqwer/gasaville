@@ -41,11 +41,12 @@ var Schedule = {
 				"WHERE SEQ = ?", [params.name, params.applyDate, params.attendanceDate, params.seq], callback);
 	}, 
 	
-	count : function (callback){
+	count : function (applyDate, callback){
+		
 		return connection.query("SELECT COUNT(*) AS CNT, DATE_FORMAT(APPLY_DATE, '%Y-%m') AS THIS_MONTH " +
 				"FROM SCHEDULE " +
 				"GROUP BY APPLY_DATE " +
-				"HAVING DATE_FORMAT(APPLY_DATE, '%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m')", callback);
+				"HAVING THIS_MONTH = ?", applyDate, callback);
 	}
 
 	

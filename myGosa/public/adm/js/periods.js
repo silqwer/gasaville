@@ -18,17 +18,41 @@
 		}
 	});
 	
+	//고사장 선택 버튼 
+	$('.examName').on({
+		click:function(){
+			let checked = $(this).is(':checked');
+			let ecId = '#examClass_' + $(this).val(); 
+			checked === true ? $(ecId).val(1) : $(ecId).val(0);
+		}
+	});
+	
 	//등록버튼 
 	$('#insertBtn').on({
 		click:function(){
+			
+			//일정 선택 확인
+			let schNmChk = $('.schName').is(':checked');
+			if(schNmChk === false){
+				alert('일정을 선택해주세요.');
+				return;
+			}
+			
+			//고사장 선택 확인 
+			let emCsChk = $('.schName').is(':checked');
+			if(emCsChk === false){
+				alert('고사장을 선택해주세요.');
+				return;
+			}
 			
 			let periodsArr = [];
 			
 			$('.examName:checked').each( function() {
 				let periods ={};
+				let ecNum =  parseInt($('#examClass_'+this.value).val());
 				periods.schSeq = parseInt($('.schName:checked').val());
 				periods.examSeq = parseInt(this.value);
-				periods.examClass = parseInt($('#examClass_'+this.value).val());
+				periods.examClass = ecNum > 0 ? ecNum : 1;	//선택한 고사장 반 수가 0이면 1로 변경
 				periodsArr.push(periods);
 			});
 		
