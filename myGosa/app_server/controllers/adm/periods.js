@@ -296,14 +296,14 @@ module.exports.upload = (req, res, next) => {
 			msg = '엑셀 파일 업로드 서버 에러입니다. 담당 개발자에게 문의해주세요. ['+err+']';
 			
 			//결과 페이지로 
-			resRender(req, res, msg, false); 
+			return res.json({'result':false, 'msg':msg});
 		}
 		
 		if(!req.file){
 			msg = '엑셀 파일이 서버로 전송되지 않았습니다.  담당 개발자에게 문의해주세요. ';
 			
 			//결과 페이지로 
-			resRender(req, res, msg, false); 
+			return res.json({'result':false, 'msg':msg});
 		}
 		
 		//엑셀 파일 컨버팅 시작, 엑셀 > Json
@@ -328,6 +328,35 @@ module.exports.upload = (req, res, next) => {
 				
 				let length = result.length; 
 				let scheduleSeq  = req.body.scheduleCategory;
+				
+				for(let i=0; i<length; ++i){
+					let exam = {
+						'regionName': result[i].지역, 
+						'schoolName': result[i].학교,
+						'classNum': result[i].반수 
+					};
+					
+					if(exam.regionName === undefined){
+						msg = '엑셀파일에 입력된 고사장의 지역 정보가 없습니다. 엑셀파일의 데이터를 확인 후 다시 시도해주세요.';
+						return res.json({'result':false, 'msg':msg});
+					}
+					
+					if(exam.schoolName === undefined){
+						msg = '엑셀파일에 입력된 고사장의 학교 정보가 없습니다. 엑셀파일의 데이터를 확인 후 다시 시도해주세요.';
+						return res.json({'result':false, 'msg':msg});
+					}
+					
+					if(exam.classNum === undefined){
+						msg = '엑셀파일에 입력된 고사장의 반수 정보가 없습니다. 엑셀파일의 데이터를 확인 후 다시 시도해주세요.';
+						return res.json({'result':false, 'msg':msg});
+					}
+					
+					if(exam.classNum <= 0){
+						msg = '엑셀파일에 입력된 고사장의 반수 정보가 없습니다. 엑셀파일의 데이터를 확인 후 다시 시도해주세요.';
+						return res.json({'result':false, 'msg':msg});
+					}
+				}//end for
+				
 				for(let i=0; i<length; ++i){
 					let exam = {
 						'regionName': result[i].지역, 
@@ -413,7 +442,7 @@ module.exports.upload = (req, res, next) => {
 							}
 						}
 					});
-				}
+				}//end for
 				
 				msg = '엑셀파일 등록을 완료했습니다.';
 				return res.json({'result':true, 'msg':msg});
