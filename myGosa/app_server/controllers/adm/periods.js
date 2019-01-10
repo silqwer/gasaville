@@ -7,7 +7,9 @@ const apply =  require('../../models/adm/apply');
 const multer = require('multer');			//파일업로드 프레임워크? 
 const storage = multer.diskStorage({		//업로드 파일 경로 설정 
 	destination: function (req, file, cb) {
-		cb(null, 'public/adm/excel/');	//콜백함수를 통해 전송된 파일을 저장할 디렉토리 설정 
+		//cb(null, 'public/adm/excel/');	//콜백함수를 통해 전송된 파일을 저장할 디렉토리 설정 (로컬)
+		cb(null, '/home/tekville/gosa/myGosa/public/adm/excel/');	//콜백함수를 통해 전송된 파일을 저장할 디렉토리 설정 (로컬)
+		
 	}, 
 	
 	filename: function(req, file, cb) {
