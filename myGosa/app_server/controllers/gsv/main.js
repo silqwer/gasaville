@@ -141,8 +141,8 @@ module.exports.download = (req, res) => {
 	
 	let fn = req.params.fileName;
 	
-	//res.download(process.cwd()+'\\public\\gsv\\excel\\'+fn); // 로컬 
-	res.download('/home/tekville/gosa/myGosa/public/gsv/excel/'+fn);
+	//res.download(process.cwd()+'\\public\\gsv\\excel\\'+fn);       // 로컬 
+	res.download('/home/tekville/gosa/myGosa/public/gsv/excel/'+fn); //서버 
 };
 
 
